@@ -1,21 +1,12 @@
 <html>
 <head>
   <script>
-    var fetchMetar = function() {
+    var fetch = function(what) {
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
-          document.getElementById('metar').innerHTML = JSON.parse(xhr.responseText).data[0];
+          document.getElementById(what).innerHTML = JSON.parse(xhr.responseText).data[0];
       };
-      xhr.open('GET', 'https://api.checkwx.com/metar/cyyj');
-      xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
-      xhr.send(null);
-    };
-    var fetchTaf = function() {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-          document.getElementById('taf').innerHTML = JSON.parse(xhr.responseText).data[0];
-      };
-      xhr.open('GET', 'https://api.checkwx.com/taf/cyyj');
+      xhr.open('GET', 'https://api.checkwx.com/' + what + '/cyyj');
       xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
       xhr.send(null);
     };
@@ -26,8 +17,8 @@
   <div id="taf"></div>
   
   <script>
-    fetchMetar();
-    fetchTaf();
+    fetch('metar');
+    fetch('taf');
   </script>
 </body>
 </html>
