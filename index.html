@@ -1,7 +1,7 @@
 <html>
 <head>
   <script>
-    var fetch = function() {
+    var fetchMetar = function() {
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
           document.getElementById('metar').innerHTML = JSON.parse(xhr.responseText).data[0];
@@ -9,12 +9,25 @@
       xhr.open('GET', 'https://api.checkwx.com/metar/cyyj');
       xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
       xhr.send(null);
-    }
+    };
+    var fetchTaf = function() {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+          document.getElementById('taf').innerHTML = JSON.parse(xhr.responseText).data[0];
+      };
+      xhr.open('GET', 'https://api.checkwx.com/taf/cyyj');
+      xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
+      xhr.send(null);
+    };
   </script>
 </head>
 <body>
   <div id="metar"></div>
+  <div id="taf"></div>
   
-  <script>fetch();</script>
+  <script>
+    fetchMetar();
+    fetchTaf();
+  </script>
 </body>
 </html>
