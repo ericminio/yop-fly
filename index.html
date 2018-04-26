@@ -1,0 +1,20 @@
+<html>
+<head>
+  <script>
+    var fetch = function() {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+          document.getElementById('metar').innerHTML = JSON.parse(xhr.responseText).data[0];
+      };
+      xhr.open('GET', 'https://api.checkwx.com/metar/cyyj');
+      xhr..setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
+      xhr.send(null);
+    }
+  </script>
+</head>
+<body>
+  <div id="metar"></div>
+  
+  <script>fetch();</script>
+</body>
+</html>
