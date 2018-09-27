@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8" />
+<head>
+    <style>
+        .graph {
+            position:absolute;
+            width:80%;
+            left:10%
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="graph">
+        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
+
+        </svg>
+    </div>
+
+    <script>
+        let convertPointForLoadGraph = function(point) {
+            return {
+                x:point.x*100/35,
+                y:100-point.y*100/450
+            };
+        }
+        let drawLineOnLoad = function(document, point) {
+            let load = document.getElementById('load');
+            let line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            line.setAttribute('x1', '0');
+            line.setAttribute('y1', '100');
+            line.setAttribute('x2', ''+convertPointForLoadGraph(point).x);
+            line.setAttribute('y2', ''+convertPointForLoadGraph(point).y);
+            line.setAttribute('stroke', point.color);
+            line.setAttribute('stroke-width', '0.3');
+            load.appendChild(line);
+        };
+        drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
+        drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
+        drawLineOnLoad(document, { x:400*73/1000, y:400, color:'orange' });
+        drawLineOnLoad(document, { x:120*95/1000, y:120, color:'green' });
+        drawLineOnLoad(document, { x:50*123/1000, y:50, color:'purple' });
+
+        let load = document.getElementById('load');
+        let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        let center = {
+            x:(170+165)*37/1000,
+            y:170+165,
+        }
+        circle.setAttribute('cx', ''+convertPointForLoadGraph(center).x);
+        circle.setAttribute('cy', ''+convertPointForLoadGraph(center).y);
+        circle.setAttribute('r', '1');
+        circle.setAttribute('stroke', 'blue');
+        circle.setAttribute('stroke-width', '0.3');
+        circle.setAttribute('fill', 'lightgray');
+        load.appendChild(circle);
+
+    </script>
+</body>
+</html>
