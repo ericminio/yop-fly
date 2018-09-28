@@ -3,6 +3,12 @@
 <head>
     <link rel="stylesheet" href="wb.css">
     <script src="wb.js"></script>
+    <script>
+        let updateFuel = function(document) {
+            let gallons = parseInt(document.getElementById('gallons').value);
+            document.getElementById('fuel').value = gallons * 6;
+        }
+    </script>
 </head>
 <body>
     <div class="title">
@@ -19,7 +25,7 @@
         <input id="back-seat-left" value="0" />lbs
         <input id="back-seat-right" value="0" />lbs
         <br/>
-        <input id="gallons" value="40" />gallons x 6 lbs/gal =
+        <input id="gallons" value="40" onkeyup="updateFuel(document);" />gallons x 6 lbs/gal =
         <input id="fuel" value="240" />lbs
         <br/>
         <input id="baggage-1" value="0" />lbs baggage #1
