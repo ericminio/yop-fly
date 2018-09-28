@@ -1,3 +1,3 @@
-https://ericminio.github.io/yop-fly/metar-taf
+[Metar-Taf](https://ericminio.github.io/yop-fly/metar-taf)
 
-https://ericminio.github.io/yop-fly/wb
+[Weight and balance](https://ericminio.github.io/yop-fly/wb)
