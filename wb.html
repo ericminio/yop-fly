@@ -68,10 +68,10 @@
         }
     </script>
 </head>
-<body onload="load(document)">
+<body>
     <div class="data">
         <input id="front-seat-left" value="170" />lbs
-        <input id="front-seat-right" value="105" />lbs
+        <input id="front-seat-right" value="110" />lbs
         <br/>
         <button id="go" onclick="load(document)">Refresh</button>
     </div>
@@ -81,5 +81,9 @@
             <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
         </svg>
     </div>
+
+    <script>
+        setTimeout(function(){ load(document); }, 300);
+    </script>
 </body>
 </html>
