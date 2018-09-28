@@ -2,6 +2,10 @@
     <meta charset="utf-8" />
 <head>
     <style>
+        .title {
+            margin:10px;
+            padding:10px;
+        }
         .data {
             margin:10px;
             padding:10px;
@@ -101,18 +105,18 @@
             points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
             points.push(convertPointForEnvelopeGraph({ x:68, y:1950 }));
             points.push(convertPointForEnvelopeGraph({ x:83, y:2200 }));
-            points.push(convertPointForEnvelopeGraph({ x:104.5, y:2550 }));
-            points.push(convertPointForEnvelopeGraph({ x:121, y:2550 }));
-            points.push(convertPointForEnvelopeGraph({ x:70.5, y:1500 }));
-            drawEnvelope(document, points, 'blue');
+            points.push(convertPointForEnvelopeGraph({ x:89, y:2200 }));
+            points.push(convertPointForEnvelopeGraph({ x:60.5, y:1500 }));
+            drawEnvelope(document, points, 'green');
 
             points = [];
             points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
             points.push(convertPointForEnvelopeGraph({ x:68, y:1950 }));
             points.push(convertPointForEnvelopeGraph({ x:83, y:2200 }));
-            points.push(convertPointForEnvelopeGraph({ x:89, y:2200 }));
-            points.push(convertPointForEnvelopeGraph({ x:60.5, y:1500 }));
-            drawEnvelope(document, points, 'green');
+            points.push(convertPointForEnvelopeGraph({ x:104.5, y:2550 }));
+            points.push(convertPointForEnvelopeGraph({ x:121, y:2550 }));
+            points.push(convertPointForEnvelopeGraph({ x:70.5, y:1500 }));
+            drawEnvelope(document, points, 'blue');
 
             let ramp = convertPointForEnvelopeGraph({ x:data.totals.moment/1000, y:data.totals.weight });
             let zerofuel = convertPointForEnvelopeGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight });
@@ -231,6 +235,9 @@
     </script>
 </head>
 <body>
+    <div class="title">
+        172s
+    </div>
     <div class="data">
         <input id="zerofuel-weight" value="1649.90" />lbs
         <input id="zerofuel-moment" value="66232.4" />lbs-in
@@ -252,15 +259,13 @@
         <button id="go" onclick="drawGraph(document)">Refresh</button>
     </div>
     <div class="graph">
-        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
         	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
-            <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
         </svg>
     </div>
     <div class="graph">
-        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
         	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
-            <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
         </svg>
     </div>
 
