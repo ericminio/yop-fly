@@ -1,24 +1,22 @@
-<!DOCTYPE html>
 <html>
     <meta charset="utf-8" />
 <head>
     <style>
+        .data {
+            margin:10px;
+            padding:10px;
+            border:1px gray solid;
+        }
+        #go {
+            width:100px;
+            height:50px;
+        }
         .graph {
             position:absolute;
             width:80%;
             left:10%
         }
     </style>
-</head>
-<body>
-
-
-    <div class="graph">
-        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
-            <circle cx="80" cy="20" r="3" stroke="black" stroke-width="3" fill="red" />
-        </svg>
-    </div>
 
     <script>
         let convertPointForLoadGraph = function(point) {
@@ -26,7 +24,7 @@
                 x:point.x*100/35,
                 y:100-point.y*100/450
             };
-        }
+        };
         let drawLineOnLoad = function(document, point) {
             let load = document.getElementById('load');
             let line = document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -38,26 +36,42 @@
             line.setAttribute('stroke-width', '0.3');
             load.appendChild(line);
         };
-        drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
-        drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
-        drawLineOnLoad(document, { x:400*73/1000, y:400, color:'orange' });
-        drawLineOnLoad(document, { x:120*95/1000, y:120, color:'green' });
-        drawLineOnLoad(document, { x:50*123/1000, y:50, color:'purple' });
+        let load = function(document) {
+            drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
+            drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
+            drawLineOnLoad(document, { x:400*73/1000, y:400, color:'orange' });
+            drawLineOnLoad(document, { x:120*95/1000, y:120, color:'green' });
+            drawLineOnLoad(document, { x:50*123/1000, y:50, color:'purple' });
 
-        let load = document.getElementById('load');
-        let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-        let center = {
-            x:(170+165)*37/1000,
-            y:170+165,
+            let load = document.getElementById('load');
+            let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+            let weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
+            let center = {
+                x:weight*37/1000,
+                y:weight,
+            }
+            circle.setAttribute('cx', '' + convertPointForLoadGraph(center).x);
+            circle.setAttribute('cy', '' + convertPointForLoadGraph(center).y);
+            circle.setAttribute('r', '1');
+            circle.setAttribute('stroke', 'blue');
+            circle.setAttribute('stroke-width', '0.3');
+            circle.setAttribute('fill', 'lightgray');
+            load.appendChild(circle);
         }
-        circle.setAttribute('cx', '60');
-        circle.setAttribute('cy', '20');
-        circle.setAttribute('r', '1');
-        circle.setAttribute('stroke', 'blue');
-        circle.setAttribute('stroke-width', '0.3');
-        circle.setAttribute('fill', 'lightgray');
-        load.appendChild(circle);
-
     </script>
+</head>
+<body>
+    <div class="data">
+        <input id="front-seat-left" value="170" />lbs
+        <input id="front-seat-right" value="165" />lbs
+        <br/>
+        <button id="go" onclick="load(document)">go</button>
+    </div>
+    <div class="graph">
+        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
+            <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
+        </svg>
+    </div>
 </body>
 </html>
