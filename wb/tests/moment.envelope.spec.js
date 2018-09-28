@@ -1,7 +1,12 @@
 let expect = require('chai').expect;
 let jsdom = require("jsdom");
 let { JSDOM } = jsdom;
-let { drawGraph, drawEnvelope, convertPointForEnvelopeGraph } = require('../wb.js');
+let {
+    drawGraph,
+    drawEnvelope,
+    convertPointForEnvelopeGraph,
+    drawEnvelopeGraph
+} = require('../wb.js');
 
 describe('Moment envelope graph', ()=>{
 
@@ -60,11 +65,54 @@ describe('Moment envelope graph', ()=>{
         });
         it('are what we expect', ()=>{
             let points = [];
-            points.push(convertPointForEnvelopeGraph({ x:45, y:1500 }));
-            points.push(convertPointForEnvelopeGraph({ x:130, y:2600 }));
+            points.push({ x:45, y:1500 });
+            points.push({ x:130, y:2600 });
             drawEnvelope(document, points, 'blue');
 
             expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " style="fill:none;stroke:blue;stroke-width:1"></polyline>');
         });
+    });
+
+    let data = {
+        totals: {
+            weight:2164.90,
+            moment:87930
+        },
+        zerofuel: {
+            weight:1924.90,
+            moment:76410
+        },
+        plane: {
+            envelopes: {
+                normal: {
+                    color: 'blue',
+                    points: [
+                        { x:45, y:1500 },
+                        { x:130, y:2600 }
+                    ]
+                },
+                utility: {
+                    color: 'green',
+                    points: [
+                        { x:45, y:2600 },
+                        { x:130, y:1500 }
+                    ]
+                }
+            }
+        }
+    };
+
+    it('displays normal category shape', ()=>{
+        drawEnvelopeGraph(document, data);
+        graph = document.getElementById('envelope');
+
+        expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " style="fill:none;stroke:blue;stroke-width:1"></polyline>');
+    });
+
+    it('displays utility category shape', ()=>{
+        drawEnvelopeGraph(document, data);
+        graph = document.getElementById('envelope');
+
+        expect(graph.innerHTML).to.contain('<polyline points="0,0 100,100 " style="fill:none;stroke:green;stroke-width:1"></polyline>');
     });
 });

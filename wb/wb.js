@@ -66,7 +66,8 @@ let drawLoadingGraph = function(document, data) {
 let drawEnvelope = function(document, points, color) {
     let line = '';
     for (let i=0; i<points.length; i++) {
-        line += points[i].x + ',' + points[i].y + ' ';
+        let point = convertPointForEnvelopeGraph(points[i]);
+        line += point.x + ',' + point.y + ' ';
     }
     let graph = document.getElementById('envelope');
     let polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
@@ -98,22 +99,9 @@ let drawPointOnEnvelopeGraph = function(document, point, color, text) {
     childs.push(label);
 }
 let drawEnvelopeGraph = function(document, data) {
-    let points = [];
-    points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
-    points.push(convertPointForEnvelopeGraph({ x:68, y:1950 }));
-    points.push(convertPointForEnvelopeGraph({ x:83, y:2200 }));
-    points.push(convertPointForEnvelopeGraph({ x:89, y:2200 }));
-    points.push(convertPointForEnvelopeGraph({ x:60.5, y:1500 }));
-    drawEnvelope(document, points, 'green');
-
-    points = [];
-    points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
-    points.push(convertPointForEnvelopeGraph({ x:68, y:1950 }));
-    points.push(convertPointForEnvelopeGraph({ x:83, y:2200 }));
-    points.push(convertPointForEnvelopeGraph({ x:104.5, y:2550 }));
-    points.push(convertPointForEnvelopeGraph({ x:121, y:2550 }));
-    points.push(convertPointForEnvelopeGraph({ x:70.5, y:1500 }));
-    drawEnvelope(document, points, 'blue');
+    
+    drawEnvelope(document, data.plane.envelopes.utility.points, data.plane.envelopes.utility.color);
+    drawEnvelope(document, data.plane.envelopes.normal.points, data.plane.envelopes.normal.color);
 
     let ramp = convertPointForEnvelopeGraph({ x:data.totals.moment/1000, y:data.totals.weight });
     let zerofuel = convertPointForEnvelopeGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight });
@@ -177,7 +165,30 @@ let drawGraph = function(document) {
         },
         plane: {
             weight: parseInt(document.getElementById('zerofuel-weight').value),
-            moment: parseInt(document.getElementById('zerofuel-moment').value)
+            moment: parseInt(document.getElementById('zerofuel-moment').value),
+            envelopes: {
+                normal: {
+                    color: 'blue',
+                    points: [
+                        { x:52, y:1500 },
+                        { x:68, y:1950 },
+                        { x:83, y:2200 },
+                        { x:104.5, y:2550 },
+                        { x:121, y:2550 },
+                        { x:70.5, y:1500 }
+                    ]
+                },
+                utility: {
+                    color: 'green',
+                    points: [
+                        { x:52, y:1500 },
+                        { x:68, y:1950 },
+                        { x:83, y:2200 },
+                        { x:89, y:2200 },
+                        { x:60.5, y:1500 }
+                    ]
+                }
+            }
         },
         totals: {
 
@@ -197,6 +208,7 @@ if (typeof module == 'object') {
     module.exports = {
         drawGraph:drawGraph,
         drawEnvelope:drawEnvelope,
+        drawEnvelopeGraph:drawEnvelopeGraph,
         convertPointForEnvelopeGraph:convertPointForEnvelopeGraph
     };
 }
