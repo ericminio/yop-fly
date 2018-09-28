@@ -63,16 +63,16 @@ let drawLoadingGraph = function(document, data) {
     drawContributionOnLoadingGraph(document, data.baggage2);
 };
 
-let drawEnvelope = function(document, points, color) {
+let drawEnvelope = function(document, envelope) {
     let line = '';
-    for (let i=0; i<points.length; i++) {
-        let point = convertPointForEnvelopeGraph(points[i]);
+    for (let i=0; i<envelope.points.length; i++) {
+        let point = convertPointForEnvelopeGraph(envelope.points[i]);
         line += point.x + ',' + point.y + ' ';
     }
     let graph = document.getElementById('envelope');
     let polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
     polyline.setAttribute('points', line);
-    polyline.setAttribute('style', 'fill:none;stroke:' + color + ';stroke-width:1')
+    polyline.setAttribute('style', 'fill:none;stroke:' + envelope.color + ';stroke-width:1')
     graph.appendChild(polyline);
     childs.push(polyline);
 }
@@ -99,9 +99,9 @@ let drawPointOnEnvelopeGraph = function(document, point, color, text) {
     childs.push(label);
 }
 let drawEnvelopeGraph = function(document, data) {
-    
-    drawEnvelope(document, data.plane.envelopes.utility.points, data.plane.envelopes.utility.color);
-    drawEnvelope(document, data.plane.envelopes.normal.points, data.plane.envelopes.normal.color);
+
+    drawEnvelope(document, data.plane.envelopes.utility);
+    drawEnvelope(document, data.plane.envelopes.normal);
 
     let ramp = convertPointForEnvelopeGraph({ x:data.totals.moment/1000, y:data.totals.weight });
     let zerofuel = convertPointForEnvelopeGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight });

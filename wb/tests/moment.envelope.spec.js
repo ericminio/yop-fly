@@ -67,7 +67,7 @@ describe('Moment envelope graph', ()=>{
             let points = [];
             points.push({ x:45, y:1500 });
             points.push({ x:130, y:2600 });
-            drawEnvelope(document, points, 'blue');
+            drawEnvelope(document, { points:points, color:'blue' });
 
             expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " style="fill:none;stroke:blue;stroke-width:1"></polyline>');
         });
