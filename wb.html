@@ -12,9 +12,9 @@
             height:50px;
         }
         .graph {
-            position:absolute;
             width:80%;
-            left:10%
+            margin:auto;
+            margin-bottom:30px;
         }
     </style>
 
@@ -24,6 +24,12 @@
             return {
                 x:point.x*100/35,
                 y:100-point.y*100/450
+            };
+        };
+        let convertPointForEnvelopeGraph = function(point) {
+            return {
+                x:(point.x-45)*100/(130-45),
+                y:100-(point.y-1500)*100/(2600-1500)
             };
         };
         let drawLineOnLoadingGraph = function(document, point) {
@@ -65,7 +71,69 @@
             drawContributionOnLoadingGraph(document, data.baggage1);
             drawContributionOnLoadingGraph(document, data.baggage2);
         };
-        let load = function(document) {
+
+
+        let drawEnvelopeGraph = function(document, data) {
+            let points = [];
+            points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
+            points.push(convertPointForEnvelopeGraph({ x:68, y:1950 }));
+            points.push(convertPointForEnvelopeGraph({ x:83, y:2200 }));
+            points.push(convertPointForEnvelopeGraph({ x:104.5, y:2550 }));
+            points.push(convertPointForEnvelopeGraph({ x:121, y:2550 }));
+            points.push(convertPointForEnvelopeGraph({ x:70.5, y:1500 }));
+            let line = '';
+            for (let i=0; i<points.length; i++) {
+                line += points[i].x + ',' + points[i].y + ' ';
+            }
+            let graph = document.getElementById('envelope');
+            let polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+            polyline.setAttribute('points', line);
+            polyline.setAttribute('style', 'fill:none;stroke:blue;stroke-width:1')
+            graph.appendChild(polyline);
+            document.childs.push(polyline);
+
+            points = [];
+            points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
+            points.push(convertPointForEnvelopeGraph({ x:68, y:1950 }));
+            points.push(convertPointForEnvelopeGraph({ x:83, y:2200 }));
+            points.push(convertPointForEnvelopeGraph({ x:89, y:2200 }));
+            points.push(convertPointForEnvelopeGraph({ x:60.5, y:1500 }));
+            line = '';
+            for (let i=0; i<points.length; i++) {
+                line += points[i].x + ',' + points[i].y + ' ';
+            }
+            polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+            polyline.setAttribute('points', line);
+            polyline.setAttribute('style', 'fill:none;stroke:green;stroke-width:1')
+            graph.appendChild(polyline);
+            document.childs.push(polyline);
+
+            let ramp = convertPointForEnvelopeGraph({ x:data.totals.moment/1000, y:data.totals.weight });
+            let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+            circle.setAttribute('cx', '' + Math.round(ramp.x));
+            circle.setAttribute('cy', '' + Math.round(ramp.y));
+            circle.setAttribute('r', '1');
+            circle.setAttribute('stroke', 'orange');
+            circle.setAttribute('stroke-width', '1');
+            circle.setAttribute('fill', 'lightgray');
+            graph.appendChild(circle);
+            document.childs.push(circle);
+        };
+        let computeMoment = function(data, field) {
+            data[field].moment = data[field].weight * data[field].arm;
+        }
+        let computeMoments = function(data) {
+            computeMoment(data, 'frontSeat');
+            computeMoment(data, 'backSeat');
+            computeMoment(data, 'fuel');
+            computeMoment(data, 'baggage1');
+            computeMoment(data, 'baggage2');
+        }
+        let computeTotals = function(data) {
+            data.totals.weight = data.plane.weight + data.frontSeat.weight + data.backSeat.weight + data.fuel.weight + data.baggage1.weight + data.baggage2.weight;
+            data.totals.moment = data.plane.moment + data.frontSeat.moment + data.backSeat.moment + data.fuel.moment + data.baggage1.moment + data.baggage2.moment;
+        }
+        let drawGraph = function(document) {
             for (let i=0;i<document.childs.length;i++) {
                 document.childs[i].remove();
             }
@@ -99,16 +167,30 @@
                     weight: parseInt(document.getElementById('baggage-2').value),
                     max:50,
                     color:'purple'
+                },
+                plane: {
+                    weight: parseInt(document.getElementById('empty-weight').value),
+                    moment: parseInt(document.getElementById('empty-moment').value)
+                },
+                totals: {
+
                 }
             };
+            computeMoments(data);
+            computeTotals(data);
             drawLoadingGraph(document, data);
+            drawEnvelopeGraph(document, data);
         }
     </script>
 </head>
 <body>
     <div class="data">
+        <input id="empty-weight" value="1649.90" />lbs
+        <input id="empty-moment" value="66232.4" />lbs-in
+        <br/>
+        <br/>
         <input id="front-seat-left" value="170" />lbs
-        <input id="front-seat-right" value="116" />lbs
+        <input id="front-seat-right" value="117" />lbs
         <br/>
         <input id="back-seat-left" value="100" />lbs
         <input id="back-seat-right" value="0" />lbs
@@ -120,7 +202,7 @@
         <br/>
         <input id="baggage-2" value="0" />lbs baggage #2
         <br/>
-        <button id="go" onclick="load(document)">Refresh</button>
+        <button id="go" onclick="drawGraph(document)">Refresh</button>
     </div>
     <div class="graph">
         <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -128,7 +210,14 @@
             <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
         </svg>
     </div>
+    <div class="graph">
+        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
+            <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
 
-    <script>setTimeout(function(){ load(document); }, 100);</script>
+        </svg>
+    </div>
+
+    <script>setTimeout(function(){ drawGraph(document); }, 100);</script>
 </body>
 </html>
