@@ -26,52 +26,99 @@
                 y:100-point.y*100/450
             };
         };
-        let drawLineOnLoad = function(document, point) {
-            let load = document.getElementById('load');
+        let drawLineOnLoadingGraph = function(document, point) {
+            let graph = document.getElementById('load');
             let line = document.createElementNS('http://www.w3.org/2000/svg','line');
             line.setAttribute('x1', '0');
             line.setAttribute('y1', '100');
             line.setAttribute('x2', ''+convertPointForLoadGraph(point).x);
             line.setAttribute('y2', ''+convertPointForLoadGraph(point).y);
             line.setAttribute('stroke', point.color);
-            line.setAttribute('stroke-width', '0.3');
-            load.appendChild(line);
+            line.setAttribute('stroke-width', '1');
+            graph.appendChild(line);
             document.childs.push(line);
         };
-        let drawCircleOnLoad = function(document, weight, arm, color) {
-            let load = document.getElementById('load');
+        let drawCircleOnLoadingGraph = function(document, load) {
+            let graph = document.getElementById('load');
             let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
             let center = {
-                x:weight*arm/1000,
-                y:weight,
+                x:load.weight*load.arm/1000,
+                y:load.weight,
             }
             circle.setAttribute('cx', '' + convertPointForLoadGraph(center).x);
             circle.setAttribute('cy', '' + convertPointForLoadGraph(center).y);
-            circle.setAttribute('r', '1');
-            circle.setAttribute('stroke', color);
+            circle.setAttribute('r', '2');
+            circle.setAttribute('stroke', load.color);
             circle.setAttribute('stroke-width', '0.3');
             circle.setAttribute('fill', 'lightgray');
-            load.appendChild(circle);
+            graph.appendChild(circle);
             document.childs.push(circle);
-        }
+        };
+        let drawContributionOnLoadingGraph = function(document, contribution) {
+            drawLineOnLoadingGraph(document, { x:contribution.max*contribution.arm/1000, y:contribution.max, color:contribution.color });
+            drawCircleOnLoadingGraph(document, contribution);
+        };
+        let drawLoadingGraph = function(document, data) {
+            drawContributionOnLoadingGraph(document, data.frontSeat);
+            drawContributionOnLoadingGraph(document, data.fuel);
+            drawContributionOnLoadingGraph(document, data.backSeat);
+            drawContributionOnLoadingGraph(document, data.baggage1);
+            drawContributionOnLoadingGraph(document, data.baggage2);
+        };
         let load = function(document) {
             for (let i=0;i<document.childs.length;i++) {
                 document.childs[i].remove();
             }
-            drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
-            drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
-            drawLineOnLoad(document, { x:400*73/1000, y:400, color:'orange' });
-            drawLineOnLoad(document, { x:120*95/1000, y:120, color:'green' });
-            drawLineOnLoad(document, { x:50*123/1000, y:50, color:'purple' });
-            let weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
-            drawCircleOnLoad(document, weight, 37, 'blue');
+            let data = {
+                frontSeat: {
+                    arm: 37,
+                    weight: parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value),
+                    max:400,
+                    color:'blue'
+                },
+                backSeat: {
+                    arm: 73,
+                    weight: parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value),
+                    max:400,
+                    color:'orange'
+                },
+                fuel: {
+                    arm: 48,
+                    weight: parseInt(document.getElementById('fuel').value),
+                    max:318,
+                    color:'red'
+                },
+                baggage1: {
+                    arm: 95,
+                    weight: parseInt(document.getElementById('baggage-1').value),
+                    max:120,
+                    color:'green'
+                },
+                baggage2: {
+                    arm: 123,
+                    weight: parseInt(document.getElementById('baggage-2').value),
+                    max:50,
+                    color:'purple'
+                }
+            };
+            drawLoadingGraph(document, data);
         }
     </script>
 </head>
 <body>
     <div class="data">
         <input id="front-seat-left" value="170" />lbs
-        <input id="front-seat-right" value="115" />lbs
+        <input id="front-seat-right" value="116" />lbs
+        <br/>
+        <input id="back-seat-left" value="100" />lbs
+        <input id="back-seat-right" value="0" />lbs
+        <br/>
+        <input id="gallons" value="40" />gallons x 6 lbs/gal =
+        <input id="fuel" value="240" />lbs
+        <br/>
+        <input id="baggage-1" value="0" />lbs baggage #1
+        <br/>
+        <input id="baggage-2" value="0" />lbs baggage #2
         <br/>
         <button id="go" onclick="load(document)">Refresh</button>
     </div>
@@ -81,5 +128,7 @@
             <circle cx="100" cy="0" r="3" stroke="green" stroke-width="1" fill="green" />
         </svg>
     </div>
+
+    <script>setTimeout(function(){ load(document); }, 100);</script>
 </body>
 </html>
