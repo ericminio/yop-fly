@@ -19,7 +19,7 @@
     </style>
 
     <script>
-        let childs = [];
+        document.childs = [];
         let convertPointForLoadGraph = function(point) {
             return {
                 x:point.x*100/35,
@@ -36,7 +36,7 @@
             line.setAttribute('stroke', point.color);
             line.setAttribute('stroke-width', '0.3');
             load.appendChild(line);
-            childs.push(line);
+            document.childs.push(line);
         };
         let drawCircleOnLoad = function(document, weight, arm, color) {
             let load = document.getElementById('load');
@@ -52,11 +52,11 @@
             circle.setAttribute('stroke-width', '0.3');
             circle.setAttribute('fill', 'lightgray');
             load.appendChild(circle);
-            childs.push(circle);
+            document.childs.push(circle);
         }
         let load = function(document) {
-            for (let i=0;i<childs.length;i++) {
-                childs[i].remove();
+            for (let i=0;i<document.childs.length;i++) {
+                document.childs[i].remove();
             }
             drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
             drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
@@ -71,7 +71,7 @@
 <body>
     <div class="data">
         <input id="front-seat-left" value="170" />lbs
-        <input id="front-seat-right" value="111" />lbs
+        <input id="front-seat-right" value="113" />lbs
         <br/>
         <button id="go" onclick="load(document)">Refresh</button>
     </div>
