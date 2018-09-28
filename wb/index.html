@@ -1,0 +1,44 @@
+<html>
+    <meta charset="utf-8" />
+<head>
+    <link rel="stylesheet" href="wb.css">
+    <script src="wb.js"></script>
+</head>
+<body>
+    <div class="title">
+        172s
+    </div>
+    <div class="data">
+        <input id="zerofuel-weight" value="1649.90" />lbs
+        <input id="zerofuel-moment" value="66232.4" />lbs-in
+        <br/>
+        <br/>
+        <input id="front-seat-left" value="170" />lbs
+        <input id="front-seat-right" value="105" />lbs
+        <br/>
+        <input id="back-seat-left" value="0" />lbs
+        <input id="back-seat-right" value="0" />lbs
+        <br/>
+        <input id="gallons" value="40" />gallons x 6 lbs/gal =
+        <input id="fuel" value="240" />lbs
+        <br/>
+        <input id="baggage-1" value="0" />lbs baggage #1
+        <br/>
+        <input id="baggage-2" value="0" />lbs baggage #2
+        <br/>
+        <button id="go" onclick="drawGraph(document)">Refresh</button>
+    </div>
+    <div class="graph">
+        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
+        </svg>
+    </div>
+    <div class="graph">
+        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
+        </svg>
+    </div>
+
+    <script>setTimeout(function(){ drawGraph(document); }, 100);</script>
+</body>
+</html>

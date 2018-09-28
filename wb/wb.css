@@ -1,0 +1,18 @@
+.title {
+    margin:10px;
+    padding:10px;
+}
+.data {
+    margin:10px;
+    padding:10px;
+    border:1px gray solid;
+}
+#go {
+    width:100px;
+    height:50px;
+}
+.graph {
+    width:80%;
+    margin:auto;
+    margin-bottom:30px;
+}
