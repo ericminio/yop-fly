@@ -206,4 +206,10 @@ let drawGraph = function(document) {
     computeZeroFuel(data);
     drawLoadingGraph(document, data);
     drawEnvelopeGraph(document, data);
+};
+
+if (typeof module == 'object') {
+    module.exports = {
+        drawGraph:drawGraph
+    };
 }
