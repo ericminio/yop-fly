@@ -1,7 +1,7 @@
 let expect = require('chai').expect;
 let jsdom = require("jsdom");
 let { JSDOM } = jsdom;
-let { drawGraph } = require('../wb.js');
+let { drawGraph, drawEnvelope, convertPointForEnvelopeGraph } = require('../wb.js');
 
 describe('Moment envelope graph', ()=>{
 
@@ -28,12 +28,13 @@ describe('Moment envelope graph', ()=>{
             </svg>
         `, { runScripts: 'dangerously' }).window;
         document = window.document;
-        drawGraph(document);
-        graph = document.getElementById('envelope');
-        // console.log(graph.innerHTML);
     });
 
     describe('ramp point', ()=>{
+        beforeEach(()=>{
+            drawGraph(document);
+            graph = document.getElementById('envelope');
+        });
         it('is displayed', ()=>{
             expect(graph.innerHTML).to.contain('<circle cx="51" cy="40" r="1" stroke="orange" stroke-width="1" fill="lightgray">');
         });
@@ -42,11 +43,28 @@ describe('Moment envelope graph', ()=>{
         });
     });
     describe('zero-fuel point', ()=>{
+        beforeEach(()=>{
+            drawGraph(document);
+            graph = document.getElementById('envelope');
+        });
         it('is displayed', ()=>{
             expect(graph.innerHTML).to.contain('<circle cx="37" cy="61" r="1" stroke="orange" stroke-width="1" fill="lightgray"></circle>');
         });
         it('is marked', ()=>{
             expect(graph.innerHTML).to.contain('<text fill="black" x="37" y="61" font-size="3">zero fuel</text>');
+        });
+    });
+    describe('boundaries', ()=>{
+        beforeEach(()=>{
+            graph = document.getElementById('envelope');
+        });
+        it('are what we expect', ()=>{
+            let points = [];
+            points.push(convertPointForEnvelopeGraph({ x:45, y:1500 }));
+            points.push(convertPointForEnvelopeGraph({ x:130, y:2600 }));
+            drawEnvelope(document, points, 'blue');
+
+            expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " style="fill:none;stroke:blue;stroke-width:1"></polyline>');
         });
     });
 });

@@ -75,6 +75,28 @@ let drawEnvelope = function(document, points, color) {
     graph.appendChild(polyline);
     childs.push(polyline);
 }
+let drawPointOnEnvelopeGraph = function(document, point, color, text) {
+    let graph = document.getElementById('envelope');
+
+    let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', '' + point.x);
+    circle.setAttribute('cy', '' + point.y);
+    circle.setAttribute('r', '1');
+    circle.setAttribute('stroke', color);
+    circle.setAttribute('stroke-width', '1');
+    circle.setAttribute('fill', 'lightgray');
+    graph.appendChild(circle);
+    childs.push(circle);
+
+    let label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('fill', 'black');
+    label.setAttribute('x', '' + point.x);
+    label.setAttribute('y', '' + point.y);
+    label.setAttribute('font-size', '3');
+    label.innerHTML = text;
+    graph.appendChild(label);
+    childs.push(label);
+}
 let drawEnvelopeGraph = function(document, data) {
     let points = [];
     points.push(convertPointForEnvelopeGraph({ x:52, y:1500 }));
@@ -97,45 +119,8 @@ let drawEnvelopeGraph = function(document, data) {
     let zerofuel = convertPointForEnvelopeGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight });
     drawLineOnEnvelopeGraph(document, ramp, zerofuel, 'orange');
 
-    let graph = document.getElementById('envelope');
-
-    let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    circle.setAttribute('cx', '' + ramp.x);
-    circle.setAttribute('cy', '' + ramp.y);
-    circle.setAttribute('r', '1');
-    circle.setAttribute('stroke', 'orange');
-    circle.setAttribute('stroke-width', '1');
-    circle.setAttribute('fill', 'lightgray');
-    graph.appendChild(circle);
-    childs.push(circle);
-
-    let rampText = document.createElementNS('http://www.w3.org/2000/svg','text');
-    rampText.setAttribute('fill', 'black');
-    rampText.setAttribute('x', '' + ramp.x);
-    rampText.setAttribute('y', '' + ramp.y);
-    rampText.setAttribute('font-size', '3');
-    rampText.innerHTML = 'ramp';
-    graph.appendChild(rampText);
-    childs.push(rampText);
-
-    circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    circle.setAttribute('cx', '' + zerofuel.x);
-    circle.setAttribute('cy', '' + zerofuel.y);
-    circle.setAttribute('r', '1');
-    circle.setAttribute('stroke', 'orange');
-    circle.setAttribute('stroke-width', '1');
-    circle.setAttribute('fill', 'lightgray');
-    graph.appendChild(circle);
-    childs.push(circle);
-
-    let zerofuelText = document.createElementNS('http://www.w3.org/2000/svg','text');
-    zerofuelText.setAttribute('fill', 'black');
-    zerofuelText.setAttribute('x', '' + zerofuel.x);
-    zerofuelText.setAttribute('y', '' + zerofuel.y);
-    zerofuelText.setAttribute('font-size', '3');
-    zerofuelText.innerHTML = 'zero fuel';
-    graph.appendChild(zerofuelText);
-    childs.push(zerofuelText);
+    drawPointOnEnvelopeGraph(document, ramp, 'orange', 'ramp');
+    drawPointOnEnvelopeGraph(document, zerofuel, 'orange', 'zero fuel');
 };
 let computeMoment = function(data, field) {
     data[field].moment = data[field].weight * data[field].arm;
@@ -210,6 +195,8 @@ let drawGraph = function(document) {
 
 if (typeof module == 'object') {
     module.exports = {
-        drawGraph:drawGraph
+        drawGraph:drawGraph,
+        drawEnvelope:drawEnvelope,
+        convertPointForEnvelopeGraph:convertPointForEnvelopeGraph
     };
 }
