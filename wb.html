@@ -19,6 +19,7 @@
     </style>
 
     <script>
+        let childs = [];
         let convertPointForLoadGraph = function(point) {
             return {
                 x:point.x*100/35,
@@ -35,37 +36,44 @@
             line.setAttribute('stroke', point.color);
             line.setAttribute('stroke-width', '0.3');
             load.appendChild(line);
+            childs.push(line);
         };
-        let load = function(document) {
-            drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
-            drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
-            drawLineOnLoad(document, { x:400*73/1000, y:400, color:'orange' });
-            drawLineOnLoad(document, { x:120*95/1000, y:120, color:'green' });
-            drawLineOnLoad(document, { x:50*123/1000, y:50, color:'purple' });
-
+        let drawCircleOnLoad = function(document, weight, arm, color) {
             let load = document.getElementById('load');
             let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-            let weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
             let center = {
-                x:weight*37/1000,
+                x:weight*arm/1000,
                 y:weight,
             }
             circle.setAttribute('cx', '' + convertPointForLoadGraph(center).x);
             circle.setAttribute('cy', '' + convertPointForLoadGraph(center).y);
             circle.setAttribute('r', '1');
-            circle.setAttribute('stroke', 'blue');
+            circle.setAttribute('stroke', color);
             circle.setAttribute('stroke-width', '0.3');
             circle.setAttribute('fill', 'lightgray');
             load.appendChild(circle);
+            childs.push(circle);
+        }
+        let load = function(document) {
+            for (let i=0;i<childs.length;i++) {
+                childs[i].remove();
+            }
+            drawLineOnLoad(document, { x:400*37/1000, y:400, color:'blue' });
+            drawLineOnLoad(document, { x:318*48/1000, y:318, color:'red' });
+            drawLineOnLoad(document, { x:400*73/1000, y:400, color:'orange' });
+            drawLineOnLoad(document, { x:120*95/1000, y:120, color:'green' });
+            drawLineOnLoad(document, { x:50*123/1000, y:50, color:'purple' });
+            let weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
+            drawCircleOnLoad(document, weight, 37, 'blue');
         }
     </script>
 </head>
-<body>
+<body onload="load(document)">
     <div class="data">
         <input id="front-seat-left" value="170" />lbs
-        <input id="front-seat-right" value="165" />lbs
+        <input id="front-seat-right" value="105" />lbs
         <br/>
-        <button id="go" onclick="load(document)">go</button>
+        <button id="go" onclick="load(document)">Refresh</button>
     </div>
     <div class="graph">
         <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
