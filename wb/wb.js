@@ -38,6 +38,10 @@ var drawGraphs = function(document) {
             weight: parseInt(document.getElementById('zerofuel-weight').value),
             moment: parseInt(document.getElementById('zerofuel-moment').value),
             envelopes: {
+                ranges: {
+                    min: { x:45, y:1500 },
+                    max: { x:130, y:2600 }
+                },
                 normal: {
                     color: 'blue',
                     points: [
@@ -94,14 +98,14 @@ let computeZeroFuel = function(data) {
 };
 
 let drawEnvelopeGraph = function(document, data) {
-    let graph = document.getElementById('envelope');
+    let graph = { element:document.getElementById('envelope'), ranges:data.plane.envelopes.ranges };
 
     drawEnvelope(document, graph, data.plane.envelopes.utility);
     drawEnvelope(document, graph, data.plane.envelopes.normal);
 
-    let ramp = convertPointForEnvelopeGraph({ x:data.totals.moment/1000, y:data.totals.weight });
-    let zerofuel = convertPointForEnvelopeGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight });
-    drawLineOnGraph(document, graph, ramp, zerofuel, 'orange');
+    let ramp = convertPointForGraph({ x:data.totals.moment/1000, y:data.totals.weight }, graph.ranges);
+    let zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
+    drawLineOnGraph(document, graph.element, ramp, zerofuel, 'orange');
 
     drawPointOnEnvelope(document, graph, ramp, 'orange', 'ramp');
     drawPointOnEnvelope(document, graph, zerofuel, 'orange', 'zero fuel');
@@ -109,14 +113,14 @@ let drawEnvelopeGraph = function(document, data) {
 let drawEnvelope = function(document, graph, envelope) {
     let line = '';
     for (let i=0; i<envelope.points.length; i++) {
-        let point = convertPointForEnvelopeGraph(envelope.points[i]);
+        let point = convertPointForGraph(envelope.points[i], graph.ranges);
         line += point.x + ',' + point.y + ' ';
     }
-    drawPolylineOnGraph(document, graph, line, envelope.color);
+    drawPolylineOnGraph(document, graph.element, line, envelope.color);
 };
 let drawPointOnEnvelope = function(document, graph, point, color, text) {
-    drawCircleOnGraph(document, graph, point, {color:color, radius:'1', strokeWidth:'1'});
-    drawLabelOnGraph(document, graph, point, text);
+    drawCircleOnGraph(document, graph.element, point, {color:color, radius:'1', strokeWidth:'1'});
+    drawLabelOnGraph(document, graph.element, point, text);
 };
 
 let drawLoadingGraph = function(document, data) {
@@ -147,10 +151,10 @@ let convertPointForLoadGraph = function(point) {
         y:Math.round(100-point.y*100/450)
     };
 };
-let convertPointForEnvelopeGraph = function(point) {
+let convertPointForGraph = function(point, ranges) {
     return {
-        x:Math.round((point.x-45)*100/(130-45)),
-        y:Math.round(100-(point.y-1500)*100/(2600-1500))
+        x:Math.round((point.x-ranges.min.x)*100/(ranges.max.x-ranges.min.x)),
+        y:Math.round(100-(point.y-ranges.min.y)*100/(ranges.max.y-ranges.min.y))
     };
 };
 let drawLineOnGraph = function(document, graph, p1, p2, color) {
@@ -198,7 +202,6 @@ if (typeof module == 'object') {
     module.exports = {
         drawGraphs:drawGraphs,
         drawEnvelope:drawEnvelope,
-        drawEnvelopeGraph:drawEnvelopeGraph,
-        convertPointForEnvelopeGraph:convertPointForEnvelopeGraph
+        drawEnvelopeGraph:drawEnvelopeGraph
     };
 }

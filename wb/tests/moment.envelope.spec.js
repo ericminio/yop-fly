@@ -4,7 +4,6 @@ let { JSDOM } = jsdom;
 let {
     drawGraphs,
     drawEnvelope,
-    convertPointForEnvelopeGraph,
     drawEnvelopeGraph
 } = require('../wb.js');
 
@@ -67,7 +66,7 @@ describe('Moment envelope graph', ()=>{
             let points = [];
             points.push({ x:45, y:1500 });
             points.push({ x:130, y:2600 });
-            drawEnvelope(document, graph, { points:points, color:'blue' });
+            drawEnvelope(document, { element:graph, ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600}} }, { points:points, color:'blue' });
 
             expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " style="fill:none;stroke:blue;stroke-width:1"></polyline>');
         });
@@ -84,6 +83,7 @@ describe('Moment envelope graph', ()=>{
         },
         plane: {
             envelopes: {
+                ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600} },
                 normal: {
                     color: 'blue',
                     points: [
