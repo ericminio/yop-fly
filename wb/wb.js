@@ -8,31 +8,31 @@ var drawGraphs = function(document) {
             arm: 37,
             weight: parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value),
             max:400,
-            css:'station-frontseat'
+            css:'station station-frontseat'
         },
         backSeat: {
             arm: 73,
             weight: parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value),
             max:400,
-            css:'station-backseat'
+            css:'station station-backseat'
         },
         fuel: {
             arm: 48,
             weight: parseInt(document.getElementById('fuel').value),
             max:318,
-            css:'station-fuel'
+            css:'station station-fuel'
         },
         baggage1: {
             arm: 95,
             weight: parseInt(document.getElementById('baggage-1').value),
             max:120,
-            css:'station-baggage1'
+            css:'station station-baggage1'
         },
         baggage2: {
             arm: 123,
             weight: parseInt(document.getElementById('baggage-2').value),
             max:50,
-            css:'station-baggage2'
+            css:'station station-baggage2'
         },
         plane: {
             weight: parseInt(document.getElementById('zerofuel-weight').value),
@@ -177,7 +177,6 @@ let drawCircleOnGraph = function(document, graph, center, attributes) {
     circle.setAttribute('cy', '' + center.y);
     circle.setAttribute('r', attributes.radius);
     circle.setAttribute('class', attributes.className);
-    circle.setAttribute('fill', 'lightgray');
     graph.appendChild(circle);
     childs.push(circle);
 };

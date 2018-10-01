@@ -15,6 +15,7 @@
     width:80%;
     margin:auto;
     margin-bottom:30px;
+    fill: lightgray;
 }
 
 .normal-category {
@@ -30,25 +31,25 @@
 .actual {
     stroke: orange;
     stroke-width: 1;
+    fill: lightgray;
 }
 
+.station {
+    stroke-width: 1;
+    fill: lightgray;
+}
 .station-frontseat {
     stroke:blue;
-    stroke-width: 1;
 }
 .station-backseat {
     stroke:orange;
-    stroke-width: 1;
 }
 .station-fuel {
     stroke:red;
-    stroke-width: 1;
 }
 .station-baggage1 {
     stroke:green;
-    stroke-width: 1;
 }
 .station-baggage2 {
     stroke:purple;
-    stroke-width: 1;
 }
