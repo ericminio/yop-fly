@@ -63,6 +63,12 @@ var drawGraphs = function(document) {
                         { x:60.5, y:1500 }
                     ]
                 }
+            },
+            loading: {
+                ranges: {
+                    min: { x:0, y:0 },
+                    max: { x:35, y:450 }
+                }
             }
         },
         totals: {
@@ -124,7 +130,7 @@ let drawPointOnEnvelope = function(document, graph, point, color, text) {
 };
 
 let drawLoadingGraph = function(document, data) {
-    let graph = document.getElementById('load');
+    let graph = { element:document.getElementById('load'), ranges:data.plane.loading.ranges };
 
     drawStation(document, graph, data.frontSeat);
     drawStation(document, graph, data.fuel);
@@ -133,24 +139,18 @@ let drawLoadingGraph = function(document, data) {
     drawStation(document, graph, data.baggage2);
 };
 let drawStation = function(document, graph, station) {
-    drawLineOnGraph(document, graph,
+    drawLineOnGraph(document, graph.element,
         { x:0, y:100 },
-        convertPointForLoadGraph({ x:station.max*station.arm/1000, y:station.max }),
+        convertPointForGraph({ x:station.max*station.arm/1000, y:station.max }, graph.ranges),
         station.color
     );
-    let center = convertPointForLoadGraph({
+    let center = convertPointForGraph({
         x:station.weight*station.arm/1000,
         y:station.weight,
-    });
-    drawCircleOnGraph(document, graph, center, {color:station.color, radius:'2', strokeWidth:'0.3'});
+    }, graph.ranges);
+    drawCircleOnGraph(document, graph.element, center, {color:station.color, radius:'2', strokeWidth:'0.3'});
 };
 
-let convertPointForLoadGraph = function(point) {
-    return {
-        x:Math.round(point.x*100/35),
-        y:Math.round(100-point.y*100/450)
-    };
-};
 let convertPointForGraph = function(point, ranges) {
     return {
         x:Math.round((point.x-ranges.min.x)*100/(ranges.max.x-ranges.min.x)),
