@@ -16,3 +16,14 @@
     margin:auto;
     margin-bottom:30px;
 }
+
+.normal-category {
+    fill: none;
+    stroke: blue;
+    stroke-width: 1;
+}
+.utility-category {
+    fill: none;
+    stroke: green;
+    stroke-width: 1;
+}

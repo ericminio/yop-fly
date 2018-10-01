@@ -42,8 +42,11 @@ var drawGraphs = function(document) {
                     min: { x:45, y:1500 },
                     max: { x:130, y:2600 }
                 },
+                actual: {
+                    color: 'orange'
+                },
                 normal: {
-                    color: 'blue',
+                    css: 'normal-category',
                     points: [
                         { x:52, y:1500 },
                         { x:68, y:1950 },
@@ -54,7 +57,7 @@ var drawGraphs = function(document) {
                     ]
                 },
                 utility: {
-                    color: 'green',
+                    css: 'utility-category',
                     points: [
                         { x:52, y:1500 },
                         { x:68, y:1950 },
@@ -111,10 +114,10 @@ let drawEnvelopeGraph = function(document, data) {
 
     let ramp = convertPointForGraph({ x:data.totals.moment/1000, y:data.totals.weight }, graph.ranges);
     let zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
-    drawLineOnGraph(document, graph.element, ramp, zerofuel, 'orange');
+    drawLineOnGraph(document, graph.element, ramp, zerofuel, data.plane.envelopes.actual.color);
 
-    drawPointOnEnvelope(document, graph, ramp, 'orange', 'ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, 'orange', 'zero fuel');
+    drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.color, 'ramp');
+    drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.color, 'zero fuel');
 };
 let drawEnvelope = function(document, graph, envelope) {
     let line = '';
@@ -122,7 +125,7 @@ let drawEnvelope = function(document, graph, envelope) {
         let point = convertPointForGraph(envelope.points[i], graph.ranges);
         line += point.x + ',' + point.y + ' ';
     }
-    drawPolylineOnGraph(document, graph.element, line, envelope.color);
+    drawPolylineOnGraph(document, graph.element, line, envelope.css);
 };
 let drawPointOnEnvelope = function(document, graph, point, color, text) {
     drawCircleOnGraph(document, graph.element, point, {color:color, radius:'1', strokeWidth:'1'});
@@ -189,10 +192,10 @@ let drawLabelOnGraph = function(document, graph, point, text) {
     graph.appendChild(label);
     childs.push(label);
 };
-let drawPolylineOnGraph = function(document, graph, points, color) {
+let drawPolylineOnGraph = function(document, graph, points, category) {
     let polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
     polyline.setAttribute('points', points);
-    polyline.setAttribute('style', 'fill:none;stroke:' + color + ';stroke-width:1')
+    polyline.setAttribute('class', category);
     graph.appendChild(polyline);
     childs.push(polyline);
 };
