@@ -2,7 +2,7 @@ let expect = require('chai').expect;
 let jsdom = require("jsdom");
 let { JSDOM } = jsdom;
 let {
-    drawGraph,
+    drawGraphs,
     drawEnvelope,
     convertPointForEnvelopeGraph,
     drawEnvelopeGraph
@@ -37,7 +37,7 @@ describe('Moment envelope graph', ()=>{
 
     describe('ramp point', ()=>{
         beforeEach(()=>{
-            drawGraph(document);
+            drawGraphs(document);
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
@@ -49,7 +49,7 @@ describe('Moment envelope graph', ()=>{
     });
     describe('zero-fuel point', ()=>{
         beforeEach(()=>{
-            drawGraph(document);
+            drawGraphs(document);
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
@@ -67,7 +67,7 @@ describe('Moment envelope graph', ()=>{
             let points = [];
             points.push({ x:45, y:1500 });
             points.push({ x:130, y:2600 });
-            drawEnvelope(document, { points:points, color:'blue' });
+            drawEnvelope(document, graph, { points:points, color:'blue' });
 
             expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " style="fill:none;stroke:blue;stroke-width:1"></polyline>');
         });
