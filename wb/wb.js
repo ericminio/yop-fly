@@ -8,31 +8,31 @@ var drawGraphs = function(document) {
             arm: 37,
             weight: parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value),
             max:400,
-            color:'blue'
+            css:'station-frontseat'
         },
         backSeat: {
             arm: 73,
             weight: parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value),
             max:400,
-            color:'orange'
+            css:'station-backseat'
         },
         fuel: {
             arm: 48,
             weight: parseInt(document.getElementById('fuel').value),
             max:318,
-            color:'red'
+            css:'station-fuel'
         },
         baggage1: {
             arm: 95,
             weight: parseInt(document.getElementById('baggage-1').value),
             max:120,
-            color:'green'
+            css:'station-baggage1'
         },
         baggage2: {
             arm: 123,
             weight: parseInt(document.getElementById('baggage-2').value),
             max:50,
-            color:'purple'
+            css:'station-baggage2'
         },
         plane: {
             weight: parseInt(document.getElementById('zerofuel-weight').value),
@@ -43,7 +43,7 @@ var drawGraphs = function(document) {
                     max: { x:130, y:2600 }
                 },
                 actual: {
-                    color: 'orange'
+                    css: 'actual'
                 },
                 normal: {
                     css: 'normal-category',
@@ -114,10 +114,10 @@ let drawEnvelopeGraph = function(document, data) {
 
     let ramp = convertPointForGraph({ x:data.totals.moment/1000, y:data.totals.weight }, graph.ranges);
     let zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
-    drawLineOnGraph(document, graph.element, ramp, zerofuel, data.plane.envelopes.actual.color);
+    drawLineOnGraph(document, graph.element, ramp, zerofuel, data.plane.envelopes.actual.css);
 
-    drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.color, 'ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.color, 'zero fuel');
+    drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.css, 'ramp');
+    drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.css, 'zero fuel');
 };
 let drawEnvelope = function(document, graph, envelope) {
     let line = '';
@@ -127,8 +127,8 @@ let drawEnvelope = function(document, graph, envelope) {
     }
     drawPolylineOnGraph(document, graph.element, line, envelope.css);
 };
-let drawPointOnEnvelope = function(document, graph, point, color, text) {
-    drawCircleOnGraph(document, graph.element, point, {color:color, radius:'1', strokeWidth:'1'});
+let drawPointOnEnvelope = function(document, graph, point, className, text) {
+    drawCircleOnGraph(document, graph.element, point, {className:className, radius:'2'});
     drawLabelOnGraph(document, graph.element, point, text);
 };
 
@@ -145,13 +145,13 @@ let drawStation = function(document, graph, station) {
     drawLineOnGraph(document, graph.element,
         { x:0, y:100 },
         convertPointForGraph({ x:station.max*station.arm/1000, y:station.max }, graph.ranges),
-        station.color
+        station.css
     );
     let center = convertPointForGraph({
         x:station.weight*station.arm/1000,
         y:station.weight,
     }, graph.ranges);
-    drawCircleOnGraph(document, graph.element, center, {color:station.color, radius:'2', strokeWidth:'0.3'});
+    drawCircleOnGraph(document, graph.element, center, {className:station.css, radius:'2'});
 };
 
 let convertPointForGraph = function(point, ranges) {
@@ -160,14 +160,14 @@ let convertPointForGraph = function(point, ranges) {
         y:Math.round(100-(point.y-ranges.min.y)*100/(ranges.max.y-ranges.min.y))
     };
 };
-let drawLineOnGraph = function(document, graph, p1, p2, color) {
+
+let drawLineOnGraph = function(document, graph, p1, p2, className) {
     let line = document.createElementNS('http://www.w3.org/2000/svg','line');
     line.setAttribute('x1', ''+p1.x);
     line.setAttribute('y1', ''+p1.y);
     line.setAttribute('x2', ''+p2.x);
     line.setAttribute('y2', ''+p2.y);
-    line.setAttribute('stroke', color);
-    line.setAttribute('stroke-width', '1');
+    line.setAttribute('class', className);
     graph.appendChild(line);
     childs.push(line);
 };
@@ -176,8 +176,7 @@ let drawCircleOnGraph = function(document, graph, center, attributes) {
     circle.setAttribute('cx', '' + center.x);
     circle.setAttribute('cy', '' + center.y);
     circle.setAttribute('r', attributes.radius);
-    circle.setAttribute('stroke', attributes.color);
-    circle.setAttribute('stroke-width', attributes.strokeWidth);
+    circle.setAttribute('class', attributes.className);
     circle.setAttribute('fill', 'lightgray');
     graph.appendChild(circle);
     childs.push(circle);

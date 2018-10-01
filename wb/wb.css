@@ -27,3 +27,28 @@
     stroke: green;
     stroke-width: 1;
 }
+.actual {
+    stroke: orange;
+    stroke-width: 1;
+}
+
+.station-frontseat {
+    stroke:blue;
+    stroke-width: 1;
+}
+.station-backseat {
+    stroke:orange;
+    stroke-width: 1;
+}
+.station-fuel {
+    stroke:red;
+    stroke-width: 1;
+}
+.station-baggage1 {
+    stroke:green;
+    stroke-width: 1;
+}
+.station-baggage2 {
+    stroke:purple;
+    stroke-width: 1;
+}

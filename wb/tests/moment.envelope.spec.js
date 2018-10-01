@@ -40,10 +40,7 @@ describe('Moment envelope graph', ()=>{
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
-            expect(graph.innerHTML).to.contain('<circle cx="51" cy="40" r="1" stroke="orange" stroke-width="1" fill="lightgray">');
-        });
-        it('is marked', ()=>{
-            expect(graph.innerHTML).to.contain('<text fill="black" x="51" y="40" font-size="3">ramp</text>');
+            expect(graph.innerHTML).to.contain('<circle cx="51" cy="40" r="2" class="actual" fill="lightgray"></circle><text fill="black" x="51" y="40" font-size="3">ramp</text>');
         });
     });
     describe('zero-fuel point', ()=>{
@@ -52,10 +49,7 @@ describe('Moment envelope graph', ()=>{
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
-            expect(graph.innerHTML).to.contain('<circle cx="37" cy="61" r="1" stroke="orange" stroke-width="1" fill="lightgray"></circle>');
-        });
-        it('is marked', ()=>{
-            expect(graph.innerHTML).to.contain('<text fill="black" x="37" y="61" font-size="3">zero fuel</text>');
+            expect(graph.innerHTML).to.contain('<circle cx="37" cy="61" r="2" class="actual" fill="lightgray"></circle><text fill="black" x="37" y="61" font-size="3">zero fuel</text>');
         });
     });
     describe('boundaries', ()=>{
