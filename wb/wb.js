@@ -21,6 +21,17 @@ let drawCircleOnGraph = function(document, graph, center, attributes) {
     graph.appendChild(circle);
     childs.push(circle);
 };
+let drawLabelOnGraph = function(document, graph, point, text) {
+    let label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('fill', 'black');
+    label.setAttribute('x', '' + point.x);
+    label.setAttribute('y', '' + point.y);
+    label.setAttribute('font-size', '3');
+    label.innerHTML = text;
+    graph.appendChild(label);
+    childs.push(label);
+};
+
 
 let convertPointForLoadGraph = function(point) {
     return {
@@ -38,15 +49,7 @@ let drawPointOnEnvelopeGraph = function(document, point, color, text) {
     let graph = document.getElementById('envelope');
 
     drawCircleOnGraph(document, graph, point, {color:color, radius:'1', strokeWidth:'1'});
-
-    let label = document.createElementNS('http://www.w3.org/2000/svg','text');
-    label.setAttribute('fill', 'black');
-    label.setAttribute('x', '' + point.x);
-    label.setAttribute('y', '' + point.y);
-    label.setAttribute('font-size', '3');
-    label.innerHTML = text;
-    graph.appendChild(label);
-    childs.push(label);
+    drawLabelOnGraph(document, graph, point, text);
 };
 let drawContributionOnLoadingGraph = function(document, station) {
     drawLineOnGraph(document, document.getElementById('load'),
