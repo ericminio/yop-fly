@@ -1,4 +1,27 @@
 let childs = [];
+let drawLineOnGraph = function(document, graph, p1, p2, color) {
+    let line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', ''+p1.x);
+    line.setAttribute('y1', ''+p1.y);
+    line.setAttribute('x2', ''+p2.x);
+    line.setAttribute('y2', ''+p2.y);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '1');
+    graph.appendChild(line);
+    childs.push(line);
+};
+let drawCircleOnGraph = function(document, graph, center, attributes) {
+    let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', '' + center.x);
+    circle.setAttribute('cy', '' + center.y);
+    circle.setAttribute('r', attributes.radius);
+    circle.setAttribute('stroke', attributes.color);
+    circle.setAttribute('stroke-width', attributes.strokeWidth);
+    circle.setAttribute('fill', 'lightgray');
+    graph.appendChild(circle);
+    childs.push(circle);
+};
+
 let convertPointForLoadGraph = function(point) {
     return {
         x:Math.round(point.x*100/35),
@@ -11,40 +34,31 @@ let convertPointForEnvelopeGraph = function(point) {
         y:Math.round(100-(point.y-1500)*100/(2600-1500))
     };
 };
-let drawLineOnGraph = function(document, graph, p1, p2, color) {
-    let line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1', ''+p1.x);
-    line.setAttribute('y1', ''+p1.y);
-    line.setAttribute('x2', ''+p2.x);
-    line.setAttribute('y2', ''+p2.y);
-    line.setAttribute('stroke', color);
-    line.setAttribute('stroke-width', '1');
-    graph.appendChild(line);
-    childs.push(line);
+let drawPointOnEnvelopeGraph = function(document, point, color, text) {
+    let graph = document.getElementById('envelope');
+
+    drawCircleOnGraph(document, graph, point, {color:color, radius:'1', strokeWidth:'1'});
+
+    let label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('fill', 'black');
+    label.setAttribute('x', '' + point.x);
+    label.setAttribute('y', '' + point.y);
+    label.setAttribute('font-size', '3');
+    label.innerHTML = text;
+    graph.appendChild(label);
+    childs.push(label);
 };
-let drawCircleOnLoadingGraph = function(document, load) {
-    let graph = document.getElementById('load');
-    let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    let center = {
-        x:load.weight*load.arm/1000,
-        y:load.weight,
-    }
-    circle.setAttribute('cx', '' + convertPointForLoadGraph(center).x);
-    circle.setAttribute('cy', '' + convertPointForLoadGraph(center).y);
-    circle.setAttribute('r', '2');
-    circle.setAttribute('stroke', load.color);
-    circle.setAttribute('stroke-width', '0.3');
-    circle.setAttribute('fill', 'lightgray');
-    graph.appendChild(circle);
-    childs.push(circle);
-};
-let drawContributionOnLoadingGraph = function(document, contribution) {
+let drawContributionOnLoadingGraph = function(document, station) {
     drawLineOnGraph(document, document.getElementById('load'),
         { x:0, y:100 },
-        convertPointForLoadGraph({ x:contribution.max*contribution.arm/1000, y:contribution.max, color:contribution.color }),
-        contribution.color
+        convertPointForLoadGraph({ x:station.max*station.arm/1000, y:station.max }),
+        station.color
     );
-    drawCircleOnLoadingGraph(document, contribution);
+    let center = convertPointForLoadGraph({
+        x:station.weight*station.arm/1000,
+        y:station.weight,
+    });
+    drawCircleOnGraph(document, document.getElementById('load'), center, {color:station.color, radius:'2', strokeWidth:'0.3'});
 };
 let drawLoadingGraph = function(document, data) {
     drawContributionOnLoadingGraph(document, data.frontSeat);
@@ -66,28 +80,6 @@ let drawEnvelope = function(document, envelope) {
     polyline.setAttribute('style', 'fill:none;stroke:' + envelope.color + ';stroke-width:1')
     graph.appendChild(polyline);
     childs.push(polyline);
-}
-let drawPointOnEnvelopeGraph = function(document, point, color, text) {
-    let graph = document.getElementById('envelope');
-
-    let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    circle.setAttribute('cx', '' + point.x);
-    circle.setAttribute('cy', '' + point.y);
-    circle.setAttribute('r', '1');
-    circle.setAttribute('stroke', color);
-    circle.setAttribute('stroke-width', '1');
-    circle.setAttribute('fill', 'lightgray');
-    graph.appendChild(circle);
-    childs.push(circle);
-
-    let label = document.createElementNS('http://www.w3.org/2000/svg','text');
-    label.setAttribute('fill', 'black');
-    label.setAttribute('x', '' + point.x);
-    label.setAttribute('y', '' + point.y);
-    label.setAttribute('font-size', '3');
-    label.innerHTML = text;
-    graph.appendChild(label);
-    childs.push(label);
 }
 let drawEnvelopeGraph = function(document, data) {
 
