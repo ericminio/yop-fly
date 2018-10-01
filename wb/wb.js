@@ -11,20 +11,7 @@ let convertPointForEnvelopeGraph = function(point) {
         y:Math.round(100-(point.y-1500)*100/(2600-1500))
     };
 };
-let drawLineOnLoadingGraph = function(document, point) {
-    let graph = document.getElementById('load');
-    let line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1', '0');
-    line.setAttribute('y1', '100');
-    line.setAttribute('x2', ''+convertPointForLoadGraph(point).x);
-    line.setAttribute('y2', ''+convertPointForLoadGraph(point).y);
-    line.setAttribute('stroke', point.color);
-    line.setAttribute('stroke-width', '1');
-    graph.appendChild(line);
-    childs.push(line);
-};
-let drawLineOnEnvelopeGraph = function(document, p1, p2, color) {
-    let graph = document.getElementById('envelope');
+let drawLineOnGraph = function(document, graph, p1, p2, color) {
     let line = document.createElementNS('http://www.w3.org/2000/svg','line');
     line.setAttribute('x1', ''+p1.x);
     line.setAttribute('y1', ''+p1.y);
@@ -52,7 +39,11 @@ let drawCircleOnLoadingGraph = function(document, load) {
     childs.push(circle);
 };
 let drawContributionOnLoadingGraph = function(document, contribution) {
-    drawLineOnLoadingGraph(document, { x:contribution.max*contribution.arm/1000, y:contribution.max, color:contribution.color });
+    drawLineOnGraph(document, document.getElementById('load'),
+        { x:0, y:100 },
+        convertPointForLoadGraph({ x:contribution.max*contribution.arm/1000, y:contribution.max, color:contribution.color }),
+        contribution.color
+    );
     drawCircleOnLoadingGraph(document, contribution);
 };
 let drawLoadingGraph = function(document, data) {
@@ -105,7 +96,7 @@ let drawEnvelopeGraph = function(document, data) {
 
     let ramp = convertPointForEnvelopeGraph({ x:data.totals.moment/1000, y:data.totals.weight });
     let zerofuel = convertPointForEnvelopeGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight });
-    drawLineOnEnvelopeGraph(document, ramp, zerofuel, 'orange');
+    drawLineOnGraph(document, document.getElementById('envelope'), ramp, zerofuel, 'orange');
 
     drawPointOnEnvelopeGraph(document, ramp, 'orange', 'ramp');
     drawPointOnEnvelopeGraph(document, zerofuel, 'orange', 'zero fuel');
