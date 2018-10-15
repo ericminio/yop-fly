@@ -1,3 +1,13 @@
+body, input, select, button {
+    font-size: 18px;
+}
+input, select {
+    width: 100px;
+}
+input.small {
+    width: 70px
+}
+
 .title {
     margin:10px;
     padding:10px;
@@ -7,15 +17,20 @@
     color: lightgray;
 }
 .data {
-    margin:10px;
-    padding:10px;
+    width: 100%;
+    margin:auto;
+    margin-bottom: 10px;
+    padding:0px;
     border:1px gray solid;
 }
 #go {
     height:50px;
 }
 .graph {
-    margin:10px;
+    display:inline-block;
+    width: 100%;
+    margin:auto;
+    margin-bottom: 10px;
     padding:0px;
     border:1px gray solid;
     fill: lightgray;
