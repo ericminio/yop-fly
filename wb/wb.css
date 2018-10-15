@@ -1,11 +1,14 @@
 body, input, select, button {
-    font-size: 18px;
+    font-size: 33px;
 }
-input, select {
-    width: 100px;
+select {
+    width: 250px;
+}
+input {
+    width: 200px;
 }
 input.small {
-    width: 70px
+    width: 100px
 }
 
 .title {
@@ -24,7 +27,7 @@ input.small {
     border:1px gray solid;
 }
 #go {
-    height:50px;
+    height:90px;
 }
 .graph {
     display:inline-block;
