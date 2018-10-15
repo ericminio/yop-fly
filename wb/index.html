@@ -2,12 +2,38 @@
     <meta charset="utf-8" />
 <head>
     <link rel="stylesheet" href="wb.css">
+    <script src="planes.js"></script>
     <script src="wb.js"></script>
     <script>
+        let loadPlanes = function(document) {
+            for (var i=0; i<planes.length; i++) {
+                let plane = document.createElement('option');
+                plane.id = planes[i].name;
+                plane.innerHTML = planes[i].name;
+                document.getElementById('planes').appendChild(plane);
+            }
+        };
+        let selectPlane = function(document, name) {
+            let plane;
+            for (var i=0; i<planes.length; i++) {
+                if (planes[i].name == name) {
+                    plane = planes[i];
+                }
+            }
+            document.getElementById('zerofuel-weight').value = plane.weight
+            document.getElementById('zerofuel-moment').value = plane.moment
+            updatePlaneArm(document);
+        };
         let updateFuel = function(document) {
             let gallons = parseInt(document.getElementById('gallons').value);
             document.getElementById('fuel').value = gallons * 6;
-        }
+        };
+        let updatePlaneArm = function(document) {
+            let moment = parseFloat(document.getElementById('zerofuel-moment').value)
+            let weight = parseFloat(document.getElementById('zerofuel-weight').value)
+            let arm = (moment / weight).toFixed(3);
+            document.getElementById('zerofueld-arm').innerHTML = '(arm:'+arm + 'in)';
+        };
     </script>
 </head>
 <body>
@@ -15,12 +41,15 @@
         172s
     </div>
     <div class="data">
+        <select id="planes" onchange="selectPlane(document, this.options[this.selectedIndex].id);"></select>
+        <br/>
         <input id="zerofuel-weight" value="1649.90" />lbs
         <input id="zerofuel-moment" value="66232.4" />lbs-in
+        <label id="zerofueld-arm"></label>
         <br/>
         <br/>
-        <input id="front-seat-left" value="170" />lbs
-        <input id="front-seat-right" value="105" />lbs
+        <input id="front-seat-left" value="180" />lbs
+        <input id="front-seat-right" value="110" />lbs
         <br/>
         <input id="back-seat-left" value="0" />lbs
         <input id="back-seat-right" value="0" />lbs
@@ -32,19 +61,26 @@
         <br/>
         <input id="baggage-2" value="0" />lbs baggage #2
         <br/>
-        <button id="go" onclick="drawGraphs(document)">Refresh</button>
+        <button id="go" onclick="drawGraphs(document)">Refresh graphics</button>
     </div>
     <div class="graph">
-        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
         	<rect x="0" y="0" width="100" height="100"/>
         </svg>
     </div>
     <div class="graph">
-        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
         	<rect x="0" y="0" width="100" height="100"/>
         </svg>
     </div>
 
-    <script>setTimeout(function(){ drawGraphs(document); }, 100);</script>
+    <script>
+        setTimeout(function(){
+            loadPlanes(document);
+            selectPlane(document, planes[0].name)
+            updatePlaneArm(document);
+            drawGraphs(document);
+        }, 100);
+    </script>
 </body>
 </html>

@@ -24,10 +24,10 @@ describe('Moment envelope graph', ()=>{
             <input id="fuel" value="240" />
             <input id="baggage-1" value="0" />
             <input id="baggage-2" value="0" />
-            <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
             	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
             </svg>
-            <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
             	<rect x="0" y="0" width="100" height="100" stroke="WhiteSmoke" fill="lightgray" stroke-width="0"/>
             </svg>
         `, { runScripts: 'dangerously' }).window;
@@ -40,7 +40,7 @@ describe('Moment envelope graph', ()=>{
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
-            expect(graph.innerHTML).to.contain('<circle cx="51" cy="40" r="2" class="actual"></circle><text fill="black" x="51" y="40" font-size="3">ramp</text>');
+            expect(graph.innerHTML).to.contain('<circle cx="51" cy="32" r="2" class="actual"></circle><text fill="black" x="51" y="32" font-size="3">ramp</text>');
         });
     });
     describe('zero-fuel point', ()=>{
@@ -49,7 +49,7 @@ describe('Moment envelope graph', ()=>{
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
-            expect(graph.innerHTML).to.contain('<circle cx="37" cy="61" r="2" class="actual"></circle><text fill="black" x="37" y="61" font-size="3">zero fuel</text>');
+            expect(graph.innerHTML).to.contain('<circle cx="37" cy="49" r="2" class="actual"></circle><text fill="black" x="37" y="49" font-size="3">zero fuel</text>');
         });
     });
     describe('boundaries', ()=>{
@@ -62,7 +62,7 @@ describe('Moment envelope graph', ()=>{
             points.push({ x:130, y:2600 });
             drawEnvelope(document, { element:graph, ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600}} }, { points:points, css:'blue' });
 
-            expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " class="blue"></polyline>');
+            expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0 " class="blue"></polyline>');
         });
     });
 
@@ -101,13 +101,13 @@ describe('Moment envelope graph', ()=>{
         drawEnvelopeGraph(document, data);
         graph = document.getElementById('envelope');
 
-        expect(graph.innerHTML).to.contain('<polyline points="0,100 100,0 " class="blue"></polyline>');
+        expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0 " class="blue"></polyline>');
     });
 
     it('displays utility category shape', ()=>{
         drawEnvelopeGraph(document, data);
         graph = document.getElementById('envelope');
 
-        expect(graph.innerHTML).to.contain('<polyline points="0,0 100,100 " class="green"></polyline>');
+        expect(graph.innerHTML).to.contain('<polyline points="0,0 100,80 " class="green"></polyline>');
     });
 });

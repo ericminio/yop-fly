@@ -143,7 +143,7 @@ let drawLoadingGraph = function(document, data) {
 };
 let drawStation = function(document, graph, station) {
     drawLineOnGraph(document, graph.element,
-        { x:0, y:100 },
+        { x:0, y:80 },
         convertPointForGraph({ x:station.max*station.arm/1000, y:station.max }, graph.ranges),
         station.css
     );
@@ -157,7 +157,7 @@ let drawStation = function(document, graph, station) {
 let convertPointForGraph = function(point, ranges) {
     return {
         x:Math.round((point.x-ranges.min.x)*100/(ranges.max.x-ranges.min.x)),
-        y:Math.round(100-(point.y-ranges.min.y)*100/(ranges.max.y-ranges.min.y))
+        y:Math.round(80-(point.y-ranges.min.y)*80/(ranges.max.y-ranges.min.y))
     };
 };
 
