@@ -26,3 +26,10 @@ Scenario: First plane is selected by default
     And I see that the plane's weight is "1642.15"
     And I see that the plane's moment is "66200.42"
     And I see that the plane's arm is "40.313"
+
+Scenario: Select a different plane
+    When I access the home page
+    When I select the plane "CGINH"
+    Then I see that the plane's weight is "1509.1"
+    And I see that the plane's moment is "65080.81"
+    And I see that the plane's arm is "43.126"

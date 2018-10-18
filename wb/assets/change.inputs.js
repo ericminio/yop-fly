@@ -1,4 +1,4 @@
-let selectPlane = function(document, name) {
+var selectPlane = function(document, name) {
     let plane;
     for (var i = 0; i < planes.length; i++) {
         if (planes[i].name == name) {
