@@ -53,7 +53,7 @@ Then('I see that the only planes that can be selected are:', (value) => {
         }
     }
 });
-Given('The selected plane is {string}', function (name) {
+Given('the selected plane is {string}', function (name) {
     browser.assert.input('#planes', name)
 });
 When('I select the plane {string}', function (name) {
@@ -79,4 +79,30 @@ When('I change the fuel\'s volume to {string}', function (value) {
 });
 Then('I see that the fuel\'s weight is {string}', function (value) {
     browser.assert.input('#fuel', value)
+});
+When('I click to refresh the graphs', function() {
+    browser.click('#go')
+});
+Then('I see the normal envelope\'s points: {string}', function(value) {
+    browser.assert.attribute('#envelope polyline.normal-category', 'points', value)
+});
+Then('I see the utility envelope\'s points: {string}', function(value) {
+    browser.assert.attribute('#envelope polyline.utility-category', 'points', value)
+});
+Given('load is:', function (dataTable) {
+    let loads = dataTable.rows();
+    for (let i=0; i<loads.length; i++) {
+        let station = loads[i][0];
+        let weight = loads[i][1];
+        browser.fill('#'+station, weight);
+    }
+});
+Then('I see the {string} point at {string} with label {string}', function(point, value, label) {
+    let x = value.split(',')[0].trim()
+    let y = value.split(',')[1].trim()
+    browser.assert.attribute('#envelope circle#'+point+'-circle', 'cx', x)
+    browser.assert.attribute('#envelope circle#'+point+'-circle', 'cy', y)
+    browser.assert.attribute('#envelope text#'+point+'-text', 'x', x)
+    browser.assert.attribute('#envelope text#'+point+'-text', 'y', y)
+    browser.assert.text('#envelope text#'+point+'-text', label)
 });

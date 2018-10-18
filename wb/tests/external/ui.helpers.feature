@@ -10,7 +10,7 @@ Background:
             }
         """
     Given I access the home page
-    Given The selected plane is "CGSAM"
+    Given the selected plane is "CGSAM"
     Given I see that the plane's weight is "1642.15"
     Given I see that the plane's moment is "66200.42"
     Given I see that the plane's arm is "40.313"

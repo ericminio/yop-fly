@@ -116,8 +116,8 @@ let drawEnvelopeGraph = function(document, data) {
     let zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
     drawLineOnGraph(document, graph.element, ramp, zerofuel, data.plane.envelopes.actual.css);
 
-    drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.css, 'ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.css, 'zero fuel');
+    drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.css, 'ramp', 'ramp');
+    drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.css, 'zero fuel', 'zero-fuel');
 };
 let drawEnvelope = function(document, graph, envelope) {
     let line = '';
@@ -125,11 +125,11 @@ let drawEnvelope = function(document, graph, envelope) {
         let point = convertPointForGraph(envelope.points[i], graph.ranges);
         line += point.x + ',' + point.y + ' ';
     }
-    drawPolylineOnGraph(document, graph.element, line, envelope.css);
+    drawPolylineOnGraph(document, graph.element, line.trim(), envelope.css);
 };
-let drawPointOnEnvelope = function(document, graph, point, className, text) {
-    drawCircleOnGraph(document, graph.element, point, {className:className, radius:'2'});
-    drawLabelOnGraph(document, graph.element, point, text);
+let drawPointOnEnvelope = function(document, graph, point, className, text, id) {
+    drawCircleOnGraph(document, graph.element, point, {className:className, radius:'2', id:id+'-circle'});
+    drawLabelOnGraph(document, graph.element, point, text, id+'-text');
 };
 
 let drawLoadingGraph = function(document, data) {
@@ -173,6 +173,7 @@ let drawLineOnGraph = function(document, graph, p1, p2, className) {
 };
 let drawCircleOnGraph = function(document, graph, center, attributes) {
     let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.id = attributes.id;
     circle.setAttribute('cx', '' + center.x);
     circle.setAttribute('cy', '' + center.y);
     circle.setAttribute('r', attributes.radius);
@@ -180,8 +181,9 @@ let drawCircleOnGraph = function(document, graph, center, attributes) {
     graph.appendChild(circle);
     childs.push(circle);
 };
-let drawLabelOnGraph = function(document, graph, point, text) {
+let drawLabelOnGraph = function(document, graph, point, text, id) {
     let label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.id = id;
     label.setAttribute('fill', 'black');
     label.setAttribute('x', '' + point.x);
     label.setAttribute('y', '' + point.y);

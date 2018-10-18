@@ -22,7 +22,7 @@ Scenario: First plane is selected by default
             CGSAM
             CGINH
         """
-    And The selected plane is "CGSAM"
+    And the selected plane is "CGSAM"
     And I see that the plane's weight is "1642.15"
     And I see that the plane's moment is "66200.42"
     And I see that the plane's arm is "40.313"

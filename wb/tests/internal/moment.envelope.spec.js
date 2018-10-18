@@ -40,7 +40,7 @@ describe('Moment envelope graph', ()=>{
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
-            expect(graph.innerHTML).to.contain('<circle cx="51" cy="32" r="2" class="actual"></circle><text fill="black" x="51" y="32" font-size="3">ramp</text>');
+            expect(graph.innerHTML).to.contain('<circle id="ramp-circle" cx="51" cy="32" r="2" class="actual"></circle><text id="ramp-text" fill="black" x="51" y="32" font-size="3">ramp</text>');
         });
     });
     describe('zero-fuel point', ()=>{
@@ -49,7 +49,7 @@ describe('Moment envelope graph', ()=>{
             graph = document.getElementById('envelope');
         });
         it('is displayed', ()=>{
-            expect(graph.innerHTML).to.contain('<circle cx="37" cy="49" r="2" class="actual"></circle><text fill="black" x="37" y="49" font-size="3">zero fuel</text>');
+            expect(graph.innerHTML).to.contain('<circle id="zero-fuel-circle" cx="37" cy="49" r="2" class="actual"></circle><text id="zero-fuel-text" fill="black" x="37" y="49" font-size="3">zero fuel</text>');
         });
     });
     describe('boundaries', ()=>{
@@ -62,7 +62,7 @@ describe('Moment envelope graph', ()=>{
             points.push({ x:130, y:2600 });
             drawEnvelope(document, { element:graph, ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600}} }, { points:points, css:'blue' });
 
-            expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0 " class="blue"></polyline>');
+            expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0" class="blue"></polyline>');
         });
     });
 
@@ -101,13 +101,13 @@ describe('Moment envelope graph', ()=>{
         drawEnvelopeGraph(document, data);
         graph = document.getElementById('envelope');
 
-        expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0 " class="blue"></polyline>');
+        expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0" class="blue"></polyline>');
     });
 
     it('displays utility category shape', ()=>{
         drawEnvelopeGraph(document, data);
         graph = document.getElementById('envelope');
 
-        expect(graph.innerHTML).to.contain('<polyline points="0,0 100,80 " class="green"></polyline>');
+        expect(graph.innerHTML).to.contain('<polyline points="0,0 100,80" class="green"></polyline>');
     });
 });
