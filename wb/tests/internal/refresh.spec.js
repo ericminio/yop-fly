@@ -1,6 +1,6 @@
 const Browser = require('zombie');
 let browser = new Browser();
-let LocalServer = require('./support/local.server');
+let LocalServer = require('../support/local.server');
 let fs = require('fs');
 
 describe('Page', function() {
@@ -14,7 +14,8 @@ describe('Page', function() {
     beforeEach((done)=>{
         server = new LocalServer({
             '/': fs.readFileSync('./index.html').toString(),
-            '/wb.js': fs.readFileSync('./wb.js').toString()
+            '/assets/wb.js': fs.readFileSync('./assets/wb.js').toString(),
+            '/assets/planes.js': fs.readFileSync('./assets/planes.js').toString()
         });
         server.start(()=>{
             browser.visit('http://localhost:' + server.port, done);
@@ -22,7 +23,7 @@ describe('Page', function() {
     });
 
     it('loads', ()=> {
-        browser.assert.text('.title', '172s');
+        browser.assert.text('.title', 'Cessna 172s');
     });
 
     describe('refresh button', ()=>{

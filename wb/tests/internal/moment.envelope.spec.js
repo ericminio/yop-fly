@@ -5,7 +5,7 @@ let {
     drawGraphs,
     drawEnvelope,
     drawEnvelopeGraph
-} = require('../wb.js');
+} = require('../../assets/wb.js');
 
 describe('Moment envelope graph', ()=>{
 

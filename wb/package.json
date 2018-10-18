@@ -4,13 +4,15 @@
   "description": "",
   "main": "wb.js",
   "scripts": {
-    "test": "mocha tests"
+    "tests:internal": "mocha tests/internal",
+    "tests:external": "./node_modules/.bin/cucumber-js  -r tests/external/steps --exit tests/external"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
-    "jsdom": "^12.0.0",
+    "cucumber": "^5.0.2",
+    "jsdom": "^12.2.0",
     "mocha": "^5.2.0",
     "zombie": "^6.1.3"
   }

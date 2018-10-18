@@ -11,24 +11,24 @@ LocalServer.prototype.wrapHandler = function() {
     }
     else {
         let self = this;
-        return function(request, response) {   
+        return function(request, response) {)
             response.setHeader('Access-Control-Allow-Origin', '*');
-            var parsed = url.parse(request.url, true);
-            var pattern = /^\/(.*)\.js$/;
-            if (pattern.test(parsed.pathname)) {
-                var path = require('path').join(__dirname, '..', '..', pattern.exec(parsed.pathname)[1] + '.js');
-                var content = require('fs').readFileSync(path).toString();
-                response.setHeader('Content-Type', 'application/javascript');
-                response.write(content);
+            if (self.handler[request.url]) {
+                response.write(self.handler[request.url]);
             }
             else {
-                if (typeof self.handler == 'string') {
-                    response.setHeader('Content-Type', 'text/html');
-                    response.write(self.handler);
+                var parsed = url.parse(request.url, true);
+                var pattern = /^\/(.*)\.js$/;
+                if (pattern.test(parsed.pathname)) {
+                    var path = require('path').join(__dirname, '..', '..', pattern.exec(parsed.pathname)[1] + '.js');
+                    var content = require('fs').readFileSync(path).toString();
+                    response.setHeader('Content-Type', 'application/javascript');
+                    response.write(content);
                 }
                 else {
-                    if (self.handler[request.url]) {
-                        response.write(self.handler[request.url]);
+                    if (typeof self.handler == 'string') {
+                        response.setHeader('Content-Type', 'text/html');
+                        response.write(self.handler);
                     }
                     else {
                         if (self.handler.json && self.handler.json[request.url]) {
