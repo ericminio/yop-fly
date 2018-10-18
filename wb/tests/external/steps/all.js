@@ -71,3 +71,9 @@ When('I change the plane\'s weight to {string}', function (value) {
 When('I change the plane\'s moment to {string}', function (value) {
     browser.fill('#zerofuel-moment', value)
 });
+When('I change the fuel\'s volume to {string}', function (value) {
+    browser.fill('#gallons', value)
+});
+Then('I see that the fuel\'s weight is {string}', function (value) {
+    expect(browser.document.getElementById('fuel').value).to.equal(value)
+});

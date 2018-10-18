@@ -15,3 +15,7 @@ var updatePlaneArm = function(document) {
     let arm = (moment / weight).toFixed(3);
     document.getElementById('zerofuel-arm').innerHTML = '(arm:' + arm + 'in)';
 };
+var updateFuel = function(document) {
+    let gallons = parseInt(document.getElementById('gallons').value);
+    document.getElementById('fuel').value = gallons * 6;
+};
