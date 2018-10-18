@@ -1,6 +1,6 @@
-Feature: Plane selection
+Feature: Ui helpers
 
-Scenario: First plane is selected by default
+Scenario: Live update of plane's arm
     Given the following planes:
         """
             {
