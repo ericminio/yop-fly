@@ -53,17 +53,20 @@ Then('I see that the only planes that can be selected are:', (value) => {
         }
     }
 });
+Given('The selected plane is {string}', function (name) {
+    browser.assert.input('#planes', name)
+});
 When('I select the plane {string}', function (name) {
     browser.select('planes', name)
 });
-Then('I see that the field for plane\'s weight contains {string}', function (value) {
-    expect(browser.document.getElementById('zerofuel-weight').value).to.equal(value)
+Then('I see that the plane\'s weight is {string}', function (value) {
+    browser.assert.input('#zerofuel-weight', value)
 });
-Then('I see that the field for plane\'s moment contains {string}', function (value) {
-    expect(browser.document.getElementById('zerofuel-moment').value).to.equal(value)
+Then('I see that the plane\'s moment is {string}', function (value) {
+    browser.assert.input('#zerofuel-moment', value)
 });
-Then('I see that the field for plane\'s arm contains {string}', function (value) {
-    expect(browser.document.getElementById('zerofuel-arm').innerHTML).to.equal('(arm:'+value+'in)')
+Then('I see that the plane\'s arm is {string}', function (value) {
+    browser.assert.text('#zerofuel-arm', '(arm:'+value+'in)')
 });
 When('I change the plane\'s weight to {string}', function (value) {
     browser.fill('#zerofuel-weight', value)
@@ -75,5 +78,5 @@ When('I change the fuel\'s volume to {string}', function (value) {
     browser.fill('#gallons', value)
 });
 Then('I see that the fuel\'s weight is {string}', function (value) {
-    expect(browser.document.getElementById('fuel').value).to.equal(value)
+    browser.assert.input('#fuel', value)
 });
