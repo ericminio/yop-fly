@@ -11,7 +11,7 @@ LocalServer.prototype.wrapHandler = function() {
     }
     else {
         let self = this;
-        return function(request, response) {)
+        return function(request, response) {
             response.setHeader('Access-Control-Allow-Origin', '*');
             if (self.handler[request.url]) {
                 response.write(self.handler[request.url]);
