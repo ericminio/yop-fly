@@ -1,21 +1,15 @@
 <html>
-    <meta charset="utf-8" />
+<meta charset="utf-8" />
+
 <head>
     <link rel="stylesheet" href="assets/wb.css">
     <script src="assets/planes.js"></script>
+    <script src="assets/digest.js"></script>
     <script src="assets/wb.js"></script>
     <script>
-        let loadPlanes = function(document) {
-            for (var i=0; i<planes.length; i++) {
-                let plane = document.createElement('option');
-                plane.id = planes[i].name;
-                plane.innerHTML = planes[i].name;
-                document.getElementById('planes').appendChild(plane);
-            }
-        };
         let selectPlane = function(document, name) {
             let plane;
-            for (var i=0; i<planes.length; i++) {
+            for (var i = 0; i < planes.length; i++) {
                 if (planes[i].name == name) {
                     plane = planes[i];
                 }
@@ -32,10 +26,11 @@
             let moment = parseFloat(document.getElementById('zerofuel-moment').value)
             let weight = parseFloat(document.getElementById('zerofuel-weight').value)
             let arm = (moment / weight).toFixed(3);
-            document.getElementById('zerofueld-arm').innerHTML = '(arm:'+arm + 'in)';
+            document.getElementById('zerofueld-arm').innerHTML = '(arm:' + arm + 'in)';
         };
     </script>
 </head>
+
 <body>
     <div class="title">
         Cessna 172s
@@ -76,12 +71,13 @@
     </div>
 
     <script>
-        setTimeout(function(){
-            loadPlanes(document);
+        setTimeout(function() {
+            loadPlanes(document, planes);
             selectPlane(document, planes[0].name)
             updatePlaneArm(document);
             drawGraphs(document);
         }, 100);
     </script>
 </body>
+
 </html>
