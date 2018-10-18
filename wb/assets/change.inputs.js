@@ -9,7 +9,7 @@ let selectPlane = function(document, name) {
     document.getElementById('zerofuel-moment').value = plane.moment
     updatePlaneArm(document);
 };
-let updatePlaneArm = function(document) {
+var updatePlaneArm = function(document) {
     let moment = parseFloat(document.getElementById('zerofuel-moment').value)
     let weight = parseFloat(document.getElementById('zerofuel-weight').value)
     let arm = (moment / weight).toFixed(3);

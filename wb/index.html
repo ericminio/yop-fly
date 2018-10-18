@@ -22,8 +22,8 @@
     <div class="data">
         <select name="planes" id="planes" onchange="selectPlane(document, this.options[this.selectedIndex].id);"></select>
         <br/>
-        <input id="zerofuel-weight" />lbs
-        <input id="zerofuel-moment" />lbs-in
+        <input id="zerofuel-weight" onchange="updatePlaneArm(document);"/>lbs
+        <input id="zerofuel-moment" onchange="updatePlaneArm(document);"/>lbs-in
         <br/>
         <label id="zerofuel-arm"></label>
         <br/>
