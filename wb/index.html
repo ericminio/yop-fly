@@ -5,28 +5,12 @@
     <link rel="stylesheet" href="assets/wb.css">
     <script src="assets/planes.js"></script>
     <script src="assets/digest.js"></script>
+    <script src="assets/change.inputs.js"></script>
     <script src="assets/wb.js"></script>
-    <script>
-        let selectPlane = function(document, name) {
-            let plane;
-            for (var i = 0; i < planes.length; i++) {
-                if (planes[i].name == name) {
-                    plane = planes[i];
-                }
-            }
-            document.getElementById('zerofuel-weight').value = plane.weight
-            document.getElementById('zerofuel-moment').value = plane.moment
-            updatePlaneArm(document);
-        };
+    <script>        
         let updateFuel = function(document) {
             let gallons = parseInt(document.getElementById('gallons').value);
             document.getElementById('fuel').value = gallons * 6;
-        };
-        let updatePlaneArm = function(document) {
-            let moment = parseFloat(document.getElementById('zerofuel-moment').value)
-            let weight = parseFloat(document.getElementById('zerofuel-weight').value)
-            let arm = (moment / weight).toFixed(3);
-            document.getElementById('zerofueld-arm').innerHTML = '(arm:' + arm + 'in)';
         };
     </script>
 </head>
@@ -41,7 +25,7 @@
         <input id="zerofuel-weight" />lbs
         <input id="zerofuel-moment" />lbs-in
         <br/>
-        <label id="zerofueld-arm"></label>
+        <label id="zerofuel-arm"></label>
         <br/>
         <br/>
         <input id="front-seat-left" value="180" />lbs
@@ -74,7 +58,6 @@
         setTimeout(function() {
             loadPlanes(document, planes);
             selectPlane(document, planes[0].name)
-            updatePlaneArm(document);
             drawGraphs(document);
         }, 100);
     </script>

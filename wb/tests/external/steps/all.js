@@ -62,3 +62,6 @@ Then('I see that the field for plane\'s weight contains {string}', function (val
 Then('I see that the field for plane\'s moment contains {string}', function (value) {
     expect(browser.document.getElementById('zerofuel-moment').value).to.equal(value)
 });
+Then('I see that the field for plane\'s arm contains {string}', function (value) {
+    expect(browser.document.getElementById('zerofuel-arm').innerHTML).to.equal('(arm:'+value+'in)')
+});
