@@ -1,17 +1,17 @@
 body, input, select, button {
-    font-size: 42px;
+    font-size: 50px;
 }
 select {
-    width: 330px;
+    width: 350px;
     height: 150px;
     text-indent: 15px;
 }
 input {
-    width: 200px;
+    width: 250px;
     height: 70px;
 }
 input.small {
-    width: 100px
+    width: 150px
 }
 
 .title {
