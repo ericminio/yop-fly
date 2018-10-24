@@ -8,10 +8,13 @@ select {
 }
 input {
     width: 250px;
-    height: 70px;
+    height: 90px;
 }
 input.small {
     width: 150px
+}
+input.large {
+    width: 300px
 }
 
 .title {
