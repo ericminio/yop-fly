@@ -16,9 +16,6 @@ input.small {
     padding:10px;
     text-align: center;
 }
-#zerofueld-arm {
-    color: lightgray;
-}
 .data {
     width: 100%;
     margin:auto;
@@ -36,7 +33,6 @@ input.small {
     margin-bottom: 10px;
     padding:0px;
     border:1px gray solid;
-    fill: lightgray;
 }
 
 .normal-category {
@@ -52,12 +48,10 @@ input.small {
 .actual {
     stroke: orange;
     stroke-width: 1;
-    fill: lightgray;
 }
 
 .station {
     stroke-width: 1;
-    fill: lightgray;
 }
 .station-frontseat {
     stroke:blue;
@@ -73,4 +67,8 @@ input.small {
 }
 .station-baggage2 {
     stroke:purple;
+}
+
+.graph, .actual, .station {
+    fill: lightgray;
 }
