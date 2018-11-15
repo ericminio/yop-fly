@@ -25,3 +25,5 @@ Scenario: Live update of plane's arm
 Scenario: Live update of fuel weight
     When I change the fuel's volume to "30"
     Then I see that the fuel's weight is "180"
+    When I change the fuel's volume to "40"
+    Then I see that the fuel's weight is "240"
