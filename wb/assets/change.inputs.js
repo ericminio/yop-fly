@@ -1,5 +1,5 @@
 var selectPlane = function(document, name) {
-    let plane;
+    var plane;
     for (var i = 0; i < planes.length; i++) {
         if (planes[i].name == name) {
             plane = planes[i];
@@ -10,17 +10,17 @@ var selectPlane = function(document, name) {
     updatePlaneArm(document);
 };
 var updatePlaneArm = function(document) {
-    let moment = parseFloat(document.getElementById('zerofuel-moment').value)
-    let weight = parseFloat(document.getElementById('zerofuel-weight').value)
-    let arm = (moment / weight).toFixed(3);
+    var moment = parseFloat(document.getElementById('zerofuel-moment').value)
+    var weight = parseFloat(document.getElementById('zerofuel-weight').value)
+    var arm = (moment / weight).toFixed(3);
     document.getElementById('zerofuel-arm').innerHTML = '(arm:' + arm + 'in)';
 };
 var updateFuel = function(document) {
-    let gallons = parseFloat(document.getElementById('gallons').value);
+    var gallons = parseFloat(document.getElementById('gallons').value);
     document.getElementById('fuel').value = gallons * 6;
 };
 var updateTotalWeight = function(document) {
-    let weight = parseFloat(document.getElementById('baggage-2').value)
+    var weight = parseFloat(document.getElementById('baggage-2').value)
 		+ parseFloat(document.getElementById('baggage-1').value)
 		+ parseFloat(document.getElementById('fuel').value)
 		+ parseFloat(document.getElementById('back-seat-left').value)

@@ -1,4 +1,4 @@
-let planes = [
+var planes = [
     {
         name: 'CGBMO',
         weight: 1657.65,

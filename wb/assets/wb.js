@@ -1,9 +1,9 @@
-let childs = [];
+var childs = [];
 var drawGraphs = function(document) {
-    for (let i=0;i<childs.length;i++) {
+    for (var i=0;i<childs.length;i++) {
         childs[i].remove();
     }
-    let data = {
+    var data = {
         frontSeat: {
             arm: 37,
             weight: parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value),
@@ -87,53 +87,53 @@ var drawGraphs = function(document) {
     drawEnvelopeGraph(document, data);
     drawLoadingGraph(document, data);
 };
-let computeMoment = function(data, field) {
+var computeMoment = function(data, field) {
     data[field].moment = data[field].weight * data[field].arm;
 };
-let computeMoments = function(data) {
+var computeMoments = function(data) {
     computeMoment(data, 'frontSeat');
     computeMoment(data, 'backSeat');
     computeMoment(data, 'fuel');
     computeMoment(data, 'baggage1');
     computeMoment(data, 'baggage2');
 };
-let computeTotals = function(data) {
+var computeTotals = function(data) {
     data.totals.weight = data.plane.weight + data.frontSeat.weight + data.backSeat.weight + data.fuel.weight + data.baggage1.weight + data.baggage2.weight;
     data.totals.moment = data.plane.moment + data.frontSeat.moment + data.backSeat.moment + data.fuel.moment + data.baggage1.moment + data.baggage2.moment;
 };
-let computeZeroFuel = function(data) {
+var computeZeroFuel = function(data) {
     data.zerofuel.weight = data.plane.weight + data.frontSeat.weight + data.backSeat.weight + data.baggage1.weight + data.baggage2.weight;
     data.zerofuel.moment = data.plane.moment + data.frontSeat.moment + data.backSeat.moment + data.baggage1.moment + data.baggage2.moment;
 };
 
-let drawEnvelopeGraph = function(document, data) {
-    let graph = { element:document.getElementById('envelope'), ranges:data.plane.envelopes.ranges };
+var drawEnvelopeGraph = function(document, data) {
+    var graph = { element:document.getElementById('envelope'), ranges:data.plane.envelopes.ranges };
 
     drawEnvelope(document, graph, data.plane.envelopes.utility);
     drawEnvelope(document, graph, data.plane.envelopes.normal);
 
-    let ramp = convertPointForGraph({ x:data.totals.moment/1000, y:data.totals.weight }, graph.ranges);
-    let zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
+    var ramp = convertPointForGraph({ x:data.totals.moment/1000, y:data.totals.weight }, graph.ranges);
+    var zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
     drawLineOnGraph(document, graph.element, ramp, zerofuel, data.plane.envelopes.actual.css);
 
     drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.css, 'ramp', 'ramp');
     drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.css, 'zero fuel', 'zero-fuel');
 };
-let drawEnvelope = function(document, graph, envelope) {
-    let line = '';
-    for (let i=0; i<envelope.points.length; i++) {
-        let point = convertPointForGraph(envelope.points[i], graph.ranges);
+var drawEnvelope = function(document, graph, envelope) {
+    var line = '';
+    for (var i=0; i<envelope.points.length; i++) {
+        var point = convertPointForGraph(envelope.points[i], graph.ranges);
         line += point.x + ',' + point.y + ' ';
     }
     drawPolylineOnGraph(document, graph.element, line.trim(), envelope.css);
 };
-let drawPointOnEnvelope = function(document, graph, point, className, text, id) {
+var drawPointOnEnvelope = function(document, graph, point, className, text, id) {
     drawCircleOnGraph(document, graph.element, point, {className:className, radius:'2', id:id+'-circle'});
     drawLabelOnGraph(document, graph.element, point, text, id+'-text');
 };
 
-let drawLoadingGraph = function(document, data) {
-    let graph = { element:document.getElementById('load'), ranges:data.plane.loading.ranges };
+var drawLoadingGraph = function(document, data) {
+    var graph = { element:document.getElementById('load'), ranges:data.plane.loading.ranges };
 
     drawStation(document, graph, data.frontSeat);
     drawStation(document, graph, data.fuel);
@@ -141,28 +141,28 @@ let drawLoadingGraph = function(document, data) {
     drawStation(document, graph, data.baggage1);
     drawStation(document, graph, data.baggage2);
 };
-let drawStation = function(document, graph, station) {
+var drawStation = function(document, graph, station) {
     drawLineOnGraph(document, graph.element,
         { x:0, y:80 },
         convertPointForGraph({ x:station.max*station.arm/1000, y:station.max }, graph.ranges),
         station.css
     );
-    let center = convertPointForGraph({
+    var center = convertPointForGraph({
         x:station.weight*station.arm/1000,
         y:station.weight,
     }, graph.ranges);
     drawCircleOnGraph(document, graph.element, center, {className:station.css, radius:'2'});
 };
 
-let convertPointForGraph = function(point, ranges) {
+var convertPointForGraph = function(point, ranges) {
     return {
         x:Math.round((point.x-ranges.min.x)*100/(ranges.max.x-ranges.min.x)),
         y:Math.round(80-(point.y-ranges.min.y)*80/(ranges.max.y-ranges.min.y))
     };
 };
 
-let drawLineOnGraph = function(document, graph, p1, p2, className) {
-    let line = document.createElementNS('http://www.w3.org/2000/svg','line');
+var drawLineOnGraph = function(document, graph, p1, p2, className) {
+    var line = document.createElementNS('http://www.w3.org/2000/svg','line');
     line.setAttribute('x1', ''+p1.x);
     line.setAttribute('y1', ''+p1.y);
     line.setAttribute('x2', ''+p2.x);
@@ -171,8 +171,8 @@ let drawLineOnGraph = function(document, graph, p1, p2, className) {
     graph.appendChild(line);
     childs.push(line);
 };
-let drawCircleOnGraph = function(document, graph, center, attributes) {
-    let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+var drawCircleOnGraph = function(document, graph, center, attributes) {
+    var circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
     circle.id = attributes.id;
     circle.setAttribute('cx', '' + center.x);
     circle.setAttribute('cy', '' + center.y);
@@ -181,8 +181,8 @@ let drawCircleOnGraph = function(document, graph, center, attributes) {
     graph.appendChild(circle);
     childs.push(circle);
 };
-let drawLabelOnGraph = function(document, graph, point, text, id) {
-    let label = document.createElementNS('http://www.w3.org/2000/svg','text');
+var drawLabelOnGraph = function(document, graph, point, text, id) {
+    var label = document.createElementNS('http://www.w3.org/2000/svg','text');
     label.id = id;
     label.setAttribute('fill', 'black');
     label.setAttribute('x', '' + point.x);
@@ -192,8 +192,8 @@ let drawLabelOnGraph = function(document, graph, point, text, id) {
     graph.appendChild(label);
     childs.push(label);
 };
-let drawPolylineOnGraph = function(document, graph, points, category) {
-    let polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+var drawPolylineOnGraph = function(document, graph, points, category) {
+    var polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
     polyline.setAttribute('points', points);
     polyline.setAttribute('class', category);
     graph.appendChild(polyline);
