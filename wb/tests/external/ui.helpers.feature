@@ -27,3 +27,15 @@ Scenario: Live update of fuel weight
     Then I see that the fuel's weight is "180"
     When I change the fuel's volume to "40"
     Then I see that the fuel's weight is "240"
+
+Scenario: Live update of ramp weight
+	Given load is:
+        |     station      | weight |
+        | front-seat-left  |    180 |
+        | front-seat-right |    110 |
+		| back-seat-left   |    120 |
+        | back-seat-right  |    130 |
+        | fuel             |    240 |
+		| baggage-1        |     20 |
+		| baggage-2        |     20 |
+	Then I see that the ramp weight is "2462.15"

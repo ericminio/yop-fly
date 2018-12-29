@@ -106,3 +106,6 @@ Then('I see the {string} point at {string} with label {string}', function(point,
     browser.assert.attribute('#envelope text#'+point+'-text', 'y', y)
     browser.assert.text('#envelope text#'+point+'-text', label)
 });
+Then('I see that the ramp weight is {string}', function (value) {
+	browser.assert.text('#total-weight', 'Ramp weight: ' + value + ' lbs')
+});

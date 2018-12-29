@@ -14,27 +14,31 @@
         Cessna 172s
     </div>
     <div class="data">
-        <select name="planes" id="planes" onchange="selectPlane(document, this.options[this.selectedIndex].id);"></select>
+        <select name="planes" id="planes" onchange="selectPlane(document, this.options[this.selectedIndex].id); updateTotalWeight(document);"></select>
         <br/>
-        <input id="zerofuel-weight" oninput="updatePlaneArm(document);"/>lbs
+        <input id="zerofuel-weight" oninput="updatePlaneArm(document); updateTotalWeight(document);"/>lbs
         <input id="zerofuel-moment" oninput="updatePlaneArm(document);" class="large"/>lbs-in
         <br/>
         <label id="zerofuel-arm"></label>
         <br/>
         <br/>
-        <input id="front-seat-left" value="180" />lbs
-        <input id="front-seat-right" value="110" />lbs
+        <input id="front-seat-left" value="180" oninput="updateTotalWeight(document);" />lbs
+        <input id="front-seat-right" value="110" oninput="updateTotalWeight(document);" />lbs
         <br/>
-        <input id="back-seat-left" value="0" />lbs
-        <input id="back-seat-right" value="0" />lbs
+        <input id="back-seat-left" value="0" oninput="updateTotalWeight(document);" />lbs
+        <input id="back-seat-right" value="0" oninput="updateTotalWeight(document);" />lbs
         <br/>
-        <input id="gallons" value="40" class="small" oninput="updateFuel(document);" />gallons x 6 lbs/gal =
-        <input id="fuel" value="240" class="small" />lbs
+        <input id="gallons" value="40" class="small" oninput="updateFuel(document); updateTotalWeight(document);" />gallons x 6 lbs/gal =
+        <input id="fuel" value="240" class="small" oninput="updateTotalWeight(document);" />lbs
         <br/>
-        <input id="baggage-1" value="0" />lbs baggage #1
+        <input id="baggage-1" value="0" oninput="updateTotalWeight(document);" />lbs baggage #1
         <br/>
-        <input id="baggage-2" value="0" />lbs baggage #2
+        <input id="baggage-2" value="0" oninput="updateTotalWeight(document);" />lbs baggage #2
+		<br/>
+		<br/>
+        <label id="total-weight"></label>
         <br/>
+		<br/>
         <button id="go" onclick="drawGraphs(document)">Refresh graphics</button>
     </div>
     <div class="graph">
@@ -51,7 +55,8 @@
     <script>
         setTimeout(function() {
             loadPlanes(document, planes);
-            selectPlane(document, planes[0].name)
+            selectPlane(document, planes[0].name);
+			updateTotalWeight(document);
             drawGraphs(document);
         }, 100);
     </script>
