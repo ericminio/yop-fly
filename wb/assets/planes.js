@@ -5,11 +5,6 @@ var planes = [
         moment: 67045.35
     },
     {
-        name: 'CGINH',
-        weight: 1509.1,
-        moment: 65080.81
-    },
-    {
         name: 'CGJZB',
         weight: 1647.3,
         moment: 66200.94
