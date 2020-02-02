@@ -17,7 +17,7 @@ After PPL, 65h|93.7|
 &nbsp;&nbsp;&nbsp;&nbsp;5h night|13.8| 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 landings|41| 
 
-200h total                        1
+200h total                        
 * 100h PIC                         
 * 20h cross-country                
 
