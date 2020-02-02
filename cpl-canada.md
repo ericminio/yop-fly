@@ -1,8 +1,8 @@
 ||category|2020-01-09|
 |-|---------|----------|
 ||200h total|162.1|
-||100h PIC|64.8|
-|![#32CD32](https://placehold.it/15/32CD32/000000?text=+)|20h cross-country|21.7|
+||&nbsp;&nbsp;&nbsp;&nbsp;100h PIC|64.8|
+|![#32CD32](https://placehold.it/15/32CD32/000000?text=+)|&nbsp;&nbsp;&nbsp;&nbsp;20h cross-country|21.7|
 | | | |
 |![#32CD32](https://placehold.it/15/32CD32/000000?text=+)|After PPL, 65h|93.7| 
 ||35h dual|32.5| 
