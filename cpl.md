@@ -28,8 +28,8 @@ After PPL, 65h
   * 5h cross-country               
   * 10h instrument in plane         
   * 10h instrument on sim           
-* 30h solo                         61.2
-  * 25h solo                       47.4
-    * 300 nm trip                     x
-  * 5h night                       13.8
-    * 10 landings                  41
+* 30h solo                        
+  * 25h solo                       
+    * 300 nm trip                     
+  * 5h night                       
+    * 10 landings                  
