@@ -1,7 +1,5 @@
 const { expect } = require('chai')
-const rules = [
-    require('./rule.one')
-]
+const rule = require('./rule.one')
 
 describe('rule #1', ()=>{
 
@@ -14,7 +12,7 @@ describe('rule #1', ()=>{
         }
         let today = { day: 22, month:1, year:2015 }
 
-        expect(rules[0].isCleared(today, log)).to.equal(true)
+        expect(rule.isCleared(today, log)).to.equal(true)
     })
     it('says you cannot fly after 2 months', ()=>{
         let log = {
@@ -25,6 +23,6 @@ describe('rule #1', ()=>{
         }
         let today = { day: 20, month:3, year:2015 }
 
-        expect(rules[0].isCleared(today, log)).to.equal(false)
+        expect(rule.isCleared(today, log)).to.equal(false)
     })
 })
