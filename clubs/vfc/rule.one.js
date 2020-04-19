@@ -1,16 +1,19 @@
-let toDate = (entry)=> {
-    return new Date(entry.year, entry.month-1, entry.day)
-}
-let dayDiff = (entry1, entry2)=>{
-    let diff = toDate(entry2).getTime() - toDate(entry1).getTime()
-    return diff / (1000*3600*24)
-}
-
 module.exports = {
     isCleared: (date, log)=> {
-        let last = log.entries[log.entries.length-1]        
-        let diff = dayDiff(last, date)
+        let entry = log.entries[log.entries.length-1]
+        let cleared = 
+            entry.year == date.year && entry.month == date.month
+            ||
+            entry.year == date.year && entry.month == date.month-1
+            ||
+            entry.year == date.year && entry.month == date.month-2 && entry.day > date.day
+            ||
+            entry.year == date.year-1 && entry.month == 12 && date.month == 1
+            ||
+            entry.year == date.year-1 && entry.month == 12 && date.month == 2 && entry.day > date.day
+            ||
+            entry.year == date.year-1 && entry.month == 11 && date.month == 1 && entry.day > date.day
 
-        return diff < 60
+        return cleared
     }
 }

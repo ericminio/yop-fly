@@ -3,15 +3,21 @@ const rule = require('./rule.two')
 
 describe('rule #2', ()=>{
 
-    it('says you can fly when you flew 12h in the last 12 months', ()=>{
-        let log = {
-            entries: [                
-                { day: 15, month:10, year:2014, time:11 },
-                { day: 15, month:1, year:2015, time:1 }
-            ]
-        }
-        let today = { day: 22, month:1, year:2015 }
+    let log = {
+        entries: [                
+            { day: 15, month:2, year:2014, time:1 },
+            { day: 15, month:10, year:2014, time:10 },
+            { day: 15, month:1, year:2015, time:1 }
+        ]
+    }
+    it('says you can fly when you flew 12 h during the last 12 months', ()=>{
+        let today = { day: 14, month:2, year:2015 }
 
         expect(rule.isCleared(today, log)).to.equal(true)
+    })
+    it('says you cannot fly when you did not fly enough', ()=>{
+        let today = { day: 15, month:2, year:2015 }
+
+        expect(rule.isCleared(today, log)).to.equal(false)
     })
 })
