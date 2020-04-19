@@ -20,4 +20,13 @@ describe('rule #2', ()=>{
 
         expect(rule.isCleared(today, log)).to.equal(false)
     })
+    describe('grounding', ()=>{
+        
+        it('may happen', ()=>{
+            expect(rule.firstGroundedDate(log)).to.deep.equal({ day: 15, month:2, year:2015 })
+        })
+        it('resists empty log', ()=>{
+            expect(rule.firstGroundedDate({ entries:[] })).to.deep.equal({ day: 1, month:1, year:9999 })
+        })
+    })
 })

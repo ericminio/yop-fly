@@ -19,4 +19,21 @@ describe('rule #1', ()=>{
 
         expect(rule.isCleared(today, log)).to.equal(false)
     })
+    describe('grounding', ()=>{
+        
+        it('may happen', ()=>{
+            expect(rule.firstGroundedDate(log)).to.deep.equal({ day: 15, month:3, year:2015 })
+        })
+        it('resists december', ()=>{
+            expect(rule.firstGroundedDate({entries:[{ day:15, month:12, year:2014 }]}))
+                .to.deep.equal({ day: 15, month:2, year:2015 })
+        })
+        it('resists november', ()=>{
+            expect(rule.firstGroundedDate({entries:[{ day:15, month:11, year:2014 }]}))
+                .to.deep.equal({ day: 15, month:1, year:2015 })
+        })
+        it('resists empty log', ()=>{
+            expect(rule.firstGroundedDate({ entries:[] })).to.deep.equal({ day: 1, month:1, year:2020 })
+        })
+    })
 })
