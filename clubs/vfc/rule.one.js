@@ -1,5 +1,7 @@
 module.exports = {
     isCleared: (date, log)=> {
+        if (log.entries.length == 0) { return false }
+
         let entry = log.entries[log.entries.length-1]
         let cleared = 
             entry.year == date.year && entry.month == date.month

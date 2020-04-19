@@ -19,6 +19,10 @@ describe('rule #1', ()=>{
 
         expect(rule.isCleared(today, log)).to.equal(false)
     })
+    it('resists empty log', ()=>{
+        expect(rule.isCleared({ day: 15, month:1, year:2015 }, { entries:[] })).to.equal(false)
+    })
+    
     describe('grounding', ()=>{
         
         it('may happen', ()=>{
