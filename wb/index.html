@@ -3,6 +3,8 @@
 
 <head>
     <link rel="stylesheet" href="assets/wb.css">
+    <script src="assets/types/all-types.js"></script>
+    <script src="assets/types/172s.js"></script>
     <script src="assets/planes.js"></script>
     <script src="assets/digest.js"></script>
     <script src="assets/change.inputs.js"></script>
@@ -54,6 +56,7 @@
 
     <script>
         setTimeout(function() {
+            loadTypes(document, types);
             loadPlanes(document, planes);
             selectPlane(document, planes[0].name);
 			updateTotalWeight(document);

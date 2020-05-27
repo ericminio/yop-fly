@@ -1,8 +1,21 @@
+var loadTypes = function(document, types) {
+    document.types = types;
+};
 var loadPlanes = function(document, planes) {
+    document.planes = [];
     for (var i=0; i<planes.length; i++) {
-        var plane = document.createElement('option');
-        plane.id = planes[i].name;
-        plane.innerHTML = planes[i].name;
-        document.getElementById('planes').appendChild(plane);
+        var plane = planes[i]
+        var planeoption = document.createElement('option');
+        planeoption.id = plane.name;
+        planeoption.innerHTML = plane.name;
+        document.getElementById('planes').appendChild(planeoption);
+
+        for (var j=0; j<document.types.length; j++) {
+            if (document.types[j].id == plane.type) {
+                plane.type = document.types[j]; 
+                break;                
+            }
+        }
+        document.planes.push(plane);
     }
 };

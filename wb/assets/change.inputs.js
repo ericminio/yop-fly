@@ -1,10 +1,11 @@
 var selectPlane = function(document, name) {
     var plane;
-    for (var i = 0; i < planes.length; i++) {
-        if (planes[i].name == name) {
-            plane = planes[i];
+    for (var i = 0; i < document.planes.length; i++) {
+        if (document.planes[i].name == name) {
+            plane = document.planes[i];
         }
     }
+    document.plane = plane;
     document.getElementById('zerofuel-weight').value = plane.weight
     document.getElementById('zerofuel-moment').value = plane.moment
     updatePlaneArm(document);
