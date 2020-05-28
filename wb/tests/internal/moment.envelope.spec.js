@@ -65,14 +65,14 @@ describe('Moment envelope graph', ()=>{
                 ],
                 graphs: [
                     {
-                        id: 'weightAndBalance',
+                        type: 'weightAndBalance',
                         ranges: {
                             min: { x:45, y:1500 },
                             max: { x:130, y:2600 }
                         }
                     },
                     {
-                        id: 'loading',
+                        type: 'loading',
                         ranges: {
                             min: { x:0, y:0 },
                             max: { x:35, y:450 }
