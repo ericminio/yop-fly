@@ -32,6 +32,78 @@ describe('Moment envelope graph', ()=>{
             </svg>
         `, { runScripts: 'dangerously' }).window;
         document = window.document;
+        document.plane = {
+            totals: { weight:0, moment:0 },
+            zerofuel: { weight:0, moment:0 },
+            type: {
+                stations: [
+                    {
+                        id: 'frontseat',
+                        maxWeight: 400,
+                        arm: 37
+                    },
+                    {
+                        id: 'backseat',
+                        maxWeight: 400,
+                        arm: 73
+                    },
+                    {
+                        id: 'fuel',
+                        maxWeight: 318,
+                        arm: 48
+                    },
+                    {
+                        id: 'baggage1',
+                        maxWeight: 120,
+                        arm: 95
+                    },
+                    {
+                        id: 'baggage2',
+                        maxWeight: 50,
+                        arm: 123
+                    }
+                ],
+                graphs: [
+                    {
+                        id: 'weightAndBalance',
+                        ranges: {
+                            min: { x:45, y:1500 },
+                            max: { x:130, y:2600 }
+                        }
+                    },
+                    {
+                        id: 'loading',
+                        ranges: {
+                            min: { x:0, y:0 },
+                            max: { x:35, y:450 }
+                        }
+                    }        
+                ],
+                envelopes: [
+                    {
+                        id: 'normal-category',
+                        points: [
+                            { x:52, y:1500 },
+                            { x:68, y:1950 },
+                            { x:83, y:2200 },
+                            { x:104.5, y:2550 },
+                            { x:121, y:2550 },
+                            { x:70.5, y:1500 }
+                        ]
+                    },
+                    {
+                        id: 'utility-category',
+                        points: [
+                            { x:52, y:1500 },
+                            { x:68, y:1950 },
+                            { x:83, y:2200 },
+                            { x:89, y:2200 },
+                            { x:60.5, y:1500 }
+                        ]
+                    }
+                ]
+            }
+        }
     });
 
     describe('ramp point', ()=>{
@@ -60,54 +132,23 @@ describe('Moment envelope graph', ()=>{
             let points = [];
             points.push({ x:45, y:1500 });
             points.push({ x:130, y:2600 });
-            drawEnvelope(document, { element:graph, ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600}} }, { points:points, css:'blue' });
+            drawEnvelope(document, { element:graph, ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600}} }, { points:points, id:'this-envelope' });
 
-            expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0" class="blue"></polyline>');
+            expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0" class="this-envelope"></polyline>');
         });
-    });
-
-    let data = {
-        totals: {
-            weight:2164.90,
-            moment:87930
-        },
-        zerofuel: {
-            weight:1924.90,
-            moment:76410
-        },
-        plane: {
-            envelopes: {
-                ranges:{ min:{x:45, y:1500}, max:{x:130, y:2600} },
-                actual: { color:'orange' },
-                normal: {
-                    css: 'blue',
-                    points: [
-                        { x:45, y:1500 },
-                        { x:130, y:2600 }
-                    ]
-                },
-                utility: {
-                    css: 'green',
-                    points: [
-                        { x:45, y:2600 },
-                        { x:130, y:1500 }
-                    ]
-                }
-            }
-        }
-    };
+    });    
 
     it('displays normal category shape', ()=>{
-        drawEnvelopeGraph(document, data);
+        drawEnvelopeGraph(document, document.plane);
         graph = document.getElementById('envelope');
 
-        expect(graph.innerHTML).to.contain('<polyline points="0,80 100,0" class="blue"></polyline>');
+        expect(graph.innerHTML).to.contain('<polyline points="8,80 27,47 45,29 70,4 89,4 30,80" class="normal-category">');
     });
 
     it('displays utility category shape', ()=>{
-        drawEnvelopeGraph(document, data);
+        drawEnvelopeGraph(document, document.plane);
         graph = document.getElementById('envelope');
 
-        expect(graph.innerHTML).to.contain('<polyline points="0,0 100,80" class="green"></polyline>');
+        expect(graph.innerHTML).to.contain(' <polyline points="8,80 27,47 45,29 52,29 18,80" class="utility-category">');
     });
 });

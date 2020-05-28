@@ -5,6 +5,7 @@ Background:
         """
             {
                 name: 'CGSAM',
+                type: '172s',
                 weight: 1642.15,
                 moment: 66200.42
             }

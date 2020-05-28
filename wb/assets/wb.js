@@ -1,123 +1,105 @@
+var initialize = function(plane) {
+    plane.stations = [];
+    for (var i=0; i<plane.type.stations.length; i++) {
+        var station = plane.type.stations[i];
+        plane.stations.push({
+            id: station.id,
+            arm:station.arm,
+            weight:0,
+            maxWeight:station.maxWeight
+        });
+    }        
+};
+var station = function(id, plane) {
+    for (var i=0; i<plane.stations.length; i++) {
+        var candidate = plane.stations[i];
+        if (candidate.id == id) {
+            return candidate;
+        }
+    }
+};
+var injectFlight = function(plane, document) {
+    station('frontseat', plane).weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
+    station('backseat', plane).weight = parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value);
+    station('fuel', plane).weight = parseInt(document.getElementById('fuel').value);
+    station('baggage1', plane).weight = parseInt(document.getElementById('baggage-1').value);
+    station('baggage2', plane).weight = parseInt(document.getElementById('baggage-2').value);
+    plane.weight = parseInt(document.getElementById('zerofuel-weight').value);
+    plane.moment = parseInt(document.getElementById('zerofuel-moment').value);
+};
 var childs = [];
 var drawGraphs = function(document) {
     for (var i=0;i<childs.length;i++) {
         childs[i].remove();
     }
-    var data = {
-        frontSeat: {
-            arm: 37,
-            weight: parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value),
-            max:400,
-            css:'station station-frontseat'
-        },
-        backSeat: {
-            arm: 73,
-            weight: parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value),
-            max:400,
-            css:'station station-backseat'
-        },
-        fuel: {
-            arm: 48,
-            weight: parseInt(document.getElementById('fuel').value),
-            max:318,
-            css:'station station-fuel'
-        },
-        baggage1: {
-            arm: 95,
-            weight: parseInt(document.getElementById('baggage-1').value),
-            max:120,
-            css:'station station-baggage1'
-        },
-        baggage2: {
-            arm: 123,
-            weight: parseInt(document.getElementById('baggage-2').value),
-            max:50,
-            css:'station station-baggage2'
-        },
-        plane: {
-            weight: parseInt(document.getElementById('zerofuel-weight').value),
-            moment: parseInt(document.getElementById('zerofuel-moment').value),
-            envelopes: {
-                ranges: {
-                    min: { x:45, y:1500 },
-                    max: { x:130, y:2600 }
-                },
-                actual: {
-                    css: 'actual'
-                },
-                normal: {
-                    css: 'normal-category',
-                    points: [
-                        { x:52, y:1500 },
-                        { x:68, y:1950 },
-                        { x:83, y:2200 },
-                        { x:104.5, y:2550 },
-                        { x:121, y:2550 },
-                        { x:70.5, y:1500 }
-                    ]
-                },
-                utility: {
-                    css: 'utility-category',
-                    points: [
-                        { x:52, y:1500 },
-                        { x:68, y:1950 },
-                        { x:83, y:2200 },
-                        { x:89, y:2200 },
-                        { x:60.5, y:1500 }
-                    ]
-                }
-            },
-            loading: {
-                ranges: {
-                    min: { x:0, y:0 },
-                    max: { x:35, y:450 }
-                }
-            }
-        },
-        totals: {
-
-        },
-        zerofuel: {
-
+    var plane = document.plane;
+    initialize(plane);
+    injectFlight(plane, document);
+    computeMoments(plane);    
+    computeTotals(plane);
+    computeZeroFuel(plane);
+    
+    drawEnvelopeGraph(document, plane);
+    drawLoadingGraph(document, plane);
+};
+var computeMoment = function(station) {
+    station.moment = station.weight * station.arm;
+};
+var computeMoments = function(plane) {
+    for (var i=0; i<plane.stations.length; i++) {
+        var station = plane.stations[i]
+        computeMoment(station);
+    }    
+};
+var computeTotals = function(plane) {
+    plane.totals = { weight:plane.weight, moment:plane.moment };    
+    for (var i=0; i<plane.stations.length; i++) {
+        var station = plane.stations[i]
+        plane.totals.weight += station.weight;
+        plane.totals.moment += station.moment;     
+    }
+};
+var computeZeroFuel = function(plane) {
+    plane.zerofuel = { weight:plane.weight, moment:plane.moment };
+    for (var i=0; i<plane.stations.length; i++) {
+        var station = plane.stations[i]
+        if (station.id !== 'fuel') {
+            plane.zerofuel.weight += station.weight;
+            plane.zerofuel.moment += station.moment;
         }
-    };
-    computeMoments(data);
-    computeTotals(data);
-    computeZeroFuel(data);
-    drawEnvelopeGraph(document, data);
-    drawLoadingGraph(document, data);
-};
-var computeMoment = function(data, field) {
-    data[field].moment = data[field].weight * data[field].arm;
-};
-var computeMoments = function(data) {
-    computeMoment(data, 'frontSeat');
-    computeMoment(data, 'backSeat');
-    computeMoment(data, 'fuel');
-    computeMoment(data, 'baggage1');
-    computeMoment(data, 'baggage2');
-};
-var computeTotals = function(data) {
-    data.totals.weight = data.plane.weight + data.frontSeat.weight + data.backSeat.weight + data.fuel.weight + data.baggage1.weight + data.baggage2.weight;
-    data.totals.moment = data.plane.moment + data.frontSeat.moment + data.backSeat.moment + data.fuel.moment + data.baggage1.moment + data.baggage2.moment;
-};
-var computeZeroFuel = function(data) {
-    data.zerofuel.weight = data.plane.weight + data.frontSeat.weight + data.backSeat.weight + data.baggage1.weight + data.baggage2.weight;
-    data.zerofuel.moment = data.plane.moment + data.frontSeat.moment + data.backSeat.moment + data.baggage1.moment + data.baggage2.moment;
+    }
 };
 
-var drawEnvelopeGraph = function(document, data) {
-    var graph = { element:document.getElementById('envelope'), ranges:data.plane.envelopes.ranges };
+var ranges = function(id, plane) {
+    var graphs = plane.type.graphs;
+    for (var i=0; i<graphs.length; i++) {
+        var graph = graphs[i];
+        if (graph.id == id) {
+            return graph.ranges;
+        }
+    }
+};
+var envelope = function(id, plane) {
+    var envelopes = plane.type.envelopes;
+    for (var i=0; i<envelopes.length; i++) {
+        var envelope = envelopes[i];
+        if (envelope.id == id) {
+            return envelope;
+        }
+    }
+};
+var drawEnvelopeGraph = function(document, plane) {
+    var graph = { element:document.getElementById('envelope'), ranges:ranges('weightAndBalance', plane) };
+    
+    drawEnvelope(document, graph, envelope('utility-category', plane));
+    drawEnvelope(document, graph, envelope('normal-category', plane));
 
-    drawEnvelope(document, graph, data.plane.envelopes.utility);
-    drawEnvelope(document, graph, data.plane.envelopes.normal);
+    var ramp = convertPointForGraph({ x:plane.totals.moment/1000, y:plane.totals.weight }, graph.ranges);
+    var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/1000, y:plane.zerofuel.weight }, graph.ranges);
+    drawLineOnGraph(document, graph.element, ramp, zerofuel, 'actual');
 
-    var ramp = convertPointForGraph({ x:data.totals.moment/1000, y:data.totals.weight }, graph.ranges);
-    var zerofuel = convertPointForGraph({ x:data.zerofuel.moment/1000, y:data.zerofuel.weight }, graph.ranges);
-    drawLineOnGraph(document, graph.element, ramp, zerofuel, data.plane.envelopes.actual.css);
-
-    drawPointOnEnvelope(document, graph, ramp, data.plane.envelopes.actual.css, 'ramp', 'ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, data.plane.envelopes.actual.css, 'zero fuel', 'zero-fuel');
+    drawPointOnEnvelope(document, graph, ramp, 'actual', 'ramp', 'ramp');
+    drawPointOnEnvelope(document, graph, zerofuel, 'actual', 'zero fuel', 'zero-fuel');
 };
 var drawEnvelope = function(document, graph, envelope) {
     var line = '';
@@ -125,33 +107,32 @@ var drawEnvelope = function(document, graph, envelope) {
         var point = convertPointForGraph(envelope.points[i], graph.ranges);
         line += point.x + ',' + point.y + ' ';
     }
-    drawPolylineOnGraph(document, graph.element, line.trim(), envelope.css);
+    drawPolylineOnGraph(document, graph.element, line.trim(), envelope.id);
 };
 var drawPointOnEnvelope = function(document, graph, point, className, text, id) {
     drawCircleOnGraph(document, graph.element, point, {className:className, radius:'2', id:id+'-circle'});
     drawLabelOnGraph(document, graph.element, point, text, id+'-text');
 };
 
-var drawLoadingGraph = function(document, data) {
-    var graph = { element:document.getElementById('load'), ranges:data.plane.loading.ranges };
+var drawLoadingGraph = function(document, plane) {
+    var graph = { element:document.getElementById('load'), ranges:ranges('loading', plane) };
 
-    drawStation(document, graph, data.frontSeat);
-    drawStation(document, graph, data.fuel);
-    drawStation(document, graph, data.backSeat);
-    drawStation(document, graph, data.baggage1);
-    drawStation(document, graph, data.baggage2);
+    for (var i=0; i<plane.stations.length; i++) {
+        var station = plane.stations[i]
+        drawStation(document, graph, station);
+    }
 };
 var drawStation = function(document, graph, station) {
     drawLineOnGraph(document, graph.element,
         { x:0, y:80 },
-        convertPointForGraph({ x:station.max*station.arm/1000, y:station.max }, graph.ranges),
-        station.css
+        convertPointForGraph({ x:station.maxWeight*station.arm/1000, y:station.maxWeight }, graph.ranges),
+        'station station-' + station.id
     );
     var center = convertPointForGraph({
         x:station.weight*station.arm/1000,
         y:station.weight,
     }, graph.ranges);
-    drawCircleOnGraph(document, graph.element, center, {className:station.css, radius:'2'});
+    drawCircleOnGraph(document, graph.element, center, {className:'station station-' + station.id, radius:'2'});
 };
 
 var convertPointForGraph = function(point, ranges) {

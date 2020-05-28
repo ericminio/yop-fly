@@ -5,11 +5,13 @@ Background:
         """
             {
                 name: 'CGSAM',
+                type: '172s',
                 weight: 1642.15,
                 moment: 66200.42
             },
             {
                 name: 'CGINH',
+                type: '172s',
                 weight: 1509.1,
                 moment: 65080.81
             }

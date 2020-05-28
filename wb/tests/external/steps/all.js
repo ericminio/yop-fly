@@ -12,7 +12,7 @@ const { expect } = require('chai');
 let LocalServer = require('../../support/local.server');
 
 let server;
-Before((done)=>{
+Before((testCase, done)=>{
     server = new LocalServer({
         '/': fs.readFileSync('./index.html').toString(),
     });
@@ -33,6 +33,10 @@ When('I access the home page', (done) => {
     browser.visit('http://localhost:' + server.port, ()=>{
         setTimeout(()=>{done();}, 300)
     });
+});
+When('I click to refresh the graphs', function(done) {
+    browser.click('#go')
+    setTimeout(()=>{done();}, 300)
 });
 
 Then('I see that the only planes that can be selected are:', (value) => {
@@ -79,9 +83,6 @@ When('I change the fuel\'s volume to {string}', function (value) {
 });
 Then('I see that the fuel\'s weight is {string}', function (value) {
     browser.assert.input('#fuel', value)
-});
-When('I click to refresh the graphs', function() {
-    browser.click('#go')
 });
 Then('I see the normal envelope\'s points: {string}', function(value) {
     browser.assert.attribute('#envelope polyline.normal-category', 'points', value)
