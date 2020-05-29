@@ -67,12 +67,16 @@ types.push({
         }        
     ],
     injectFlight: function(document, plane) {
-        station('frontseat', plane).weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
-        station('backseat', plane).weight = parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value);
-        station('tank', plane).weight = parseInt(document.getElementById('tank').value);
-        station('baggage1', plane).weight = parseInt(document.getElementById('baggage-1').value);
-        station('baggage2', plane).weight = parseInt(document.getElementById('baggage-2').value);
-        plane.weight = parseInt(document.getElementById('zerofuel-weight').value);
-        plane.moment = parseInt(document.getElementById('zerofuel-moment').value);
-    }
+        station('frontseat', plane).weight = parseFloat(document.getElementById('front-seat-left').value) + parseFloat(document.getElementById('front-seat-right').value);
+        station('backseat', plane).weight = parseFloat(document.getElementById('back-seat-left').value) + parseFloat(document.getElementById('back-seat-right').value);
+        station('tank', plane).weight = parseFloat(document.getElementById('tank').value);
+        station('baggage1', plane).weight = parseFloat(document.getElementById('baggage-1').value);
+        station('baggage2', plane).weight = parseFloat(document.getElementById('baggage-2').value);
+        plane.weight = parseFloat(document.getElementById('zerofuel-weight').value);
+        plane.moment = parseFloat(document.getElementById('zerofuel-moment').value);
+    },
+    updateFuel: function(document) {
+        var gallons = parseFloat(document.getElementById('gallons').value);
+        document.getElementById('tank').value = gallons * 6;
+    }    
 });

@@ -16,19 +16,12 @@ var updatePlaneArm = function(document) {
     var arm = (moment / weight).toFixed(3);
     document.getElementById('zerofuel-arm').innerHTML = '(arm:' + arm + 'in)';
 };
-var updateFuel = function(document) {
-    var gallons = parseFloat(document.getElementById('gallons').value);
-    document.getElementById('tank').value = gallons * 6;
-};
 var updateTotalWeight = function(document) {
-    var weight = parseFloat(document.getElementById('baggage-2').value)
-		+ parseFloat(document.getElementById('baggage-1').value)
-		+ parseFloat(document.getElementById('tank').value)
-		+ parseFloat(document.getElementById('back-seat-left').value)
-		+ parseFloat(document.getElementById('back-seat-right').value)
-		+ parseFloat(document.getElementById('front-seat-left').value)
-		+ parseFloat(document.getElementById('front-seat-right').value)
-		+ parseFloat(document.getElementById('zerofuel-weight').value)
-		;
-    document.getElementById('total-weight').innerHTML = 'Ramp weight: ' + weight + ' lbs';
+    var plane = document.plane;
+    initializeStations(plane);
+    plane.type.injectFlight(document, plane);
+    computeMoments(plane);    
+    computeTotals(plane);
+    computeZeroFuel(plane);
+    document.getElementById('total-weight').innerHTML = 'Ramp weight: ' + plane.totals.weight + ' lbs';
 };

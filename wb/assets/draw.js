@@ -4,12 +4,6 @@ var drawGraphs = function(document) {
         childs[i].remove();
     }
     var plane = document.plane;
-    initializeStations(plane);
-    document.plane.type.injectFlight(document, document.plane);
-    computeMoments(plane);    
-    computeTotals(plane);
-    computeZeroFuel(plane);
-    
     drawWeightAndBalance(document, plane);
     drawLoading(document, plane);
 };
