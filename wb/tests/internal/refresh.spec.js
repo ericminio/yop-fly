@@ -14,7 +14,7 @@ describe('Page', function() {
     beforeEach((done)=>{
         server = new LocalServer({
             '/': fs.readFileSync('./index.html').toString(),
-            '/assets/wb.js': fs.readFileSync('./assets/wb.js').toString(),
+            '/assets/wb.js': fs.readFileSync('./assets/draw.js').toString(),
             '/assets/planes.js': fs.readFileSync('./assets/planes.js').toString()
         });
         server.start(()=>{
