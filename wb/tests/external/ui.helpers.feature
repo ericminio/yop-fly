@@ -36,7 +36,7 @@ Scenario: Live update of ramp weight
         | front-seat-right |    110 |
 		| back-seat-left   |    120 |
         | back-seat-right  |    130 |
-        | fuel             |    240 |
+        | tank             |    240 |
 		| baggage-1        |     20 |
 		| baggage-2        |     20 |
 	Then I see that the ramp weight is "2462.15"

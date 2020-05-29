@@ -1,4 +1,4 @@
-Feature: Weight and balance
+Feature: Loading
 
 Background:
     Given the following planes:
@@ -19,7 +19,5 @@ Scenario: Easy ride
         | front-seat-right |    110 |
         | tank             |    240 |
     When I click to refresh the graphs
-    Then I see the normal envelope's points: "8,80 27,47 45,29 70,4 89,4 30,80"
-    Then I see the utility envelope's points: "8,80 27,47 45,29 52,29 18,80"
-    Then I see the "ramp" point at "51, 31" with label "ramp"
-    Then I see the "zero-fuel" point at "38, 49" with label "zero fuel"
+    Then I see the "frontseat" loading line from origin to "42,9" with mark at "31,28"
+    Then I see the "tank" loading line from origin to "44,23" with mark at "33,37"

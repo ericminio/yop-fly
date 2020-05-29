@@ -18,12 +18,12 @@ var updatePlaneArm = function(document) {
 };
 var updateFuel = function(document) {
     var gallons = parseFloat(document.getElementById('gallons').value);
-    document.getElementById('fuel').value = gallons * 6;
+    document.getElementById('tank').value = gallons * 6;
 };
 var updateTotalWeight = function(document) {
     var weight = parseFloat(document.getElementById('baggage-2').value)
 		+ parseFloat(document.getElementById('baggage-1').value)
-		+ parseFloat(document.getElementById('fuel').value)
+		+ parseFloat(document.getElementById('tank').value)
 		+ parseFloat(document.getElementById('back-seat-left').value)
 		+ parseFloat(document.getElementById('back-seat-right').value)
 		+ parseFloat(document.getElementById('front-seat-left').value)

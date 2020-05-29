@@ -57,7 +57,7 @@ var computeZeroFuel = function(plane) {
     plane.zerofuel = { weight:plane.weight, moment:plane.moment };
     for (var i=0; i<plane.stations.length; i++) {
         var station = plane.stations[i];
-        if (station.id.indexOf('fuel') == -1) {
+        if (station.id.indexOf('tank') == -1) {
             plane.zerofuel.weight += station.weight;
             plane.zerofuel.moment += station.moment;
         }

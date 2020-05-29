@@ -82,7 +82,7 @@ When('I change the fuel\'s volume to {string}', function (value) {
     browser.fill('#gallons', value)
 });
 Then('I see that the fuel\'s weight is {string}', function (value) {
-    browser.assert.input('#fuel', value)
+    browser.assert.input('#tank', value)
 });
 Then('I see the normal envelope\'s points: {string}', function(value) {
     browser.assert.attribute('#envelope polyline.normal-category', 'points', value)
@@ -109,4 +109,22 @@ Then('I see the {string} point at {string} with label {string}', function(point,
 });
 Then('I see that the ramp weight is {string}', function (value) {
 	browser.assert.text('#total-weight', 'Ramp weight: ' + value + ' lbs')
+});
+Then('I see the {string} loading line from origin to {string} with mark at {string}', function (station, max, mark) {
+    let parts = max.split(',');
+    let x = parts[0];
+    let y = parts[1];
+    browser.assert.attribute('#load line.station-'+station, 'x1', '0')
+    browser.assert.attribute('#load line.station-'+station, 'y1', '80')
+    browser.assert.attribute('#load line.station-'+station, 'x2', x)
+    browser.assert.attribute('#load line.station-'+station, 'y2', y)
+    parts = mark.split(',');
+    x = parts[0];
+    y = parts[1];
+    browser.assert.attribute('#load circle#loading-'+station+'.station-'+station, 'cx', x)
+    browser.assert.attribute('#load circle#loading-'+station+'.station-'+station, 'cy', y)
+
+    let element = browser.document.querySelector('#load circle#loading-'+station);
+    let style = browser.window.getComputedStyle(element);
+    let stroke = style.getPropertyValue('stroke');
 });

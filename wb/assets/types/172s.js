@@ -12,7 +12,7 @@ types.push({
             arm: 73
         },
         {
-            id: 'fuel',
+            id: 'tank',
             maxWeight: 318,
             arm: 48
         },
