@@ -16,12 +16,12 @@ var updatePlaneArm = function(document) {
     var arm = (moment / weight).toFixed(3);
     document.getElementById('zerofuel-arm').innerHTML = '(arm:' + arm + 'in)';
 };
-var updateTotalWeight = function(document) {
+var updateFlight = function(document) {
     var plane = document.plane;
     initializeStations(plane);
     plane.type.injectFlight(document, plane);
     computeMoments(plane);    
     computeTotals(plane);
     computeZeroFuel(plane);
-    document.getElementById('total-weight').innerHTML = 'Ramp weight: ' + plane.totals.weight + ' lbs';
+    document.getElementById('total-weight').innerHTML = 'Ramp weight: ' + plane.totals.weight.toFixed(2) + ' lbs';
 };
