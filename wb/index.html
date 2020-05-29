@@ -2,7 +2,8 @@
 <meta charset="utf-8" />
 
 <head>
-    <link rel="stylesheet" href="assets/wb.css">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/types/172s.css">
     <script src="assets/types/all-types.js"></script>
     <script src="assets/types/172s.js"></script>
     <script src="assets/planes.js"></script>
@@ -25,21 +26,22 @@
         <br/>
         <label id="zerofuel-arm"></label>
         <br/>
-        <br/>
-        <input id="front-seat-left" value="180" oninput="updateTotalWeight(document);" />lbs
-        <input id="front-seat-right" value="110" oninput="updateTotalWeight(document);" />lbs
-        <br/>
-        <input id="back-seat-left" value="0" oninput="updateTotalWeight(document);" />lbs
-        <input id="back-seat-right" value="0" oninput="updateTotalWeight(document);" />lbs
-        <br/>
-        <input id="gallons" value="40" class="small" oninput="updateFuel(document); updateTotalWeight(document);" />gallons x 6 lbs/gal =
-        <input id="tank" value="240" class="small" oninput="updateTotalWeight(document);" />lbs
-        <br/>
-        <input id="baggage-1" value="0" oninput="updateTotalWeight(document);" />lbs baggage #1
-        <br/>
-        <input id="baggage-2" value="0" oninput="updateTotalWeight(document);" />lbs baggage #2
-		<br/>
-		<br/>
+        <label>Stations:</label>            
+        <div id="stations">
+            <input id="front-seat-left" value="180" oninput="updateTotalWeight(document);" />lbs
+            <input id="front-seat-right" value="110" oninput="updateTotalWeight(document);" />lbs
+            <br/>
+            <input id="back-seat-left" value="0" oninput="updateTotalWeight(document);" />lbs
+            <input id="back-seat-right" value="0" oninput="updateTotalWeight(document);" />lbs
+            <br/>
+            <input id="gallons" value="40" class="small" oninput="updateFuel(document); updateTotalWeight(document);" />gallons x 6 lbs/gal =
+            <input id="tank" value="240" class="small" oninput="updateTotalWeight(document);" />lbs
+            <br/>
+            <input id="baggage-1" value="0" oninput="updateTotalWeight(document);" />lbs baggage #1
+            <br/>
+            <input id="baggage-2" value="0" oninput="updateTotalWeight(document);" />lbs baggage #2
+        </div>
+
         <label id="total-weight"></label>
         <br/>
 		<br/>

@@ -1,26 +1,24 @@
-var injectFlight = function(plane, document) {
-    station('frontseat', plane).weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
-    station('backseat', plane).weight = parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value);
-    station('tank', plane).weight = parseInt(document.getElementById('tank').value);
-    station('baggage1', plane).weight = parseInt(document.getElementById('baggage-1').value);
-    station('baggage2', plane).weight = parseInt(document.getElementById('baggage-2').value);
-    plane.weight = parseInt(document.getElementById('zerofuel-weight').value);
-    plane.moment = parseInt(document.getElementById('zerofuel-moment').value);
-};
 var childs = [];
 var drawGraphs = function(document) {
     for (var i=0;i<childs.length;i++) {
         childs[i].remove();
     }
     var plane = document.plane;
-    initialize(plane);
-    injectFlight(plane, document);
+    initializeStations(plane);
+    document.plane.type.injectFlight(document, document.plane);
     computeMoments(plane);    
     computeTotals(plane);
     computeZeroFuel(plane);
     
     drawWeightAndBalance(document, plane);
     drawLoading(document, plane);
+};
+
+var convertPointForGraph = function(point, ranges) {
+    return {
+        x:Math.round((point.x-ranges.min.x)*100/(ranges.max.x-ranges.min.x)),
+        y:Math.round(80-(point.y-ranges.min.y)*80/(ranges.max.y-ranges.min.y))
+    };
 };
 
 var drawWeightAndBalance = function(document, plane) {
@@ -70,11 +68,4 @@ var drawStation = function(document, graph, station) {
         y:station.weight,
     }, graph.ranges);
     drawCircle(document, graph.element, center, { id:'loading-'+station.id, className:'station station-' + station.id, radius:'2'});
-};
-
-var convertPointForGraph = function(point, ranges) {
-    return {
-        x:Math.round((point.x-ranges.min.x)*100/(ranges.max.x-ranges.min.x)),
-        y:Math.round(80-(point.y-ranges.min.y)*80/(ranges.max.y-ranges.min.y))
-    };
 };

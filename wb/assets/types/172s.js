@@ -65,5 +65,14 @@ types.push({
                 max: { x:35, y:450 }
             }
         }        
-    ]    
+    ],
+    injectFlight: function(document, plane) {
+        station('frontseat', plane).weight = parseInt(document.getElementById('front-seat-left').value) + parseInt(document.getElementById('front-seat-right').value);
+        station('backseat', plane).weight = parseInt(document.getElementById('back-seat-left').value) + parseInt(document.getElementById('back-seat-right').value);
+        station('tank', plane).weight = parseInt(document.getElementById('tank').value);
+        station('baggage1', plane).weight = parseInt(document.getElementById('baggage-1').value);
+        station('baggage2', plane).weight = parseInt(document.getElementById('baggage-2').value);
+        plane.weight = parseInt(document.getElementById('zerofuel-weight').value);
+        plane.moment = parseInt(document.getElementById('zerofuel-moment').value);
+    }
 });

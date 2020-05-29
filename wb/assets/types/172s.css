@@ -1,0 +1,33 @@
+.station-frontseat {
+    stroke:blue;
+}
+.station-backseat {
+    stroke:orange;
+}
+.station-tank {
+    stroke:red;
+}
+.station-baggage1 {
+    stroke:green;
+    stroke-width: 0.5;
+}
+.station-baggage2 {
+    stroke:purple;
+    stroke-width: 0.5;
+}
+
+
+.normal-category {
+    fill: none;
+    stroke: blue;
+    stroke-width: 0.5;
+}
+.utility-category {
+    fill: none;
+    stroke: green;
+    stroke-width: 0.5;
+}
+.actual {
+    stroke: orange;
+    stroke-width: 1;
+}

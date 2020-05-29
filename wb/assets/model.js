@@ -1,4 +1,4 @@
-var initialize = function(plane) {
+var initializeStations = function(plane) {
     plane.stations = [];
     for (var i=0; i<plane.type.stations.length; i++) {
         var station = plane.type.stations[i];

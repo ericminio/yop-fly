@@ -50,40 +50,14 @@
     }
 }
 
-.normal-category {
-    fill: none;
-    stroke: blue;
-    stroke-width: 1;
-}
-.utility-category {
-    fill: none;
-    stroke: green;
-    stroke-width: 1;
-}
-.actual {
-    stroke: orange;
-    stroke-width: 1;
+.graph, .actual, .station {
+    fill: lightgray;
 }
 
 .station {
     stroke-width: 1;
 }
-.station-frontseat {
-    stroke:blue;
-}
-.station-backseat {
-    stroke:orange;
-}
-.station-tank {
-    stroke:red;
-}
-.station-baggage1 {
-    stroke:green;
-}
-.station-baggage2 {
-    stroke:purple;
-}
 
-.graph, .actual, .station {
-    fill: lightgray;
+#stations {
+    margin: 5px 0px 5px 15px;
 }
