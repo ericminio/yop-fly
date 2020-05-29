@@ -70,11 +70,11 @@ var computeZeroFuel = function(plane) {
     }
 };
 
-var diagram = function(type, plane) {
+var diagram = function(id, plane) {
     var diagrams = plane.type.diagrams;
     for (var i=0; i<diagrams.length; i++) {
         var candidate = diagrams[i];
-        if (candidate.type == type) {
+        if (candidate.id == id) {
             return candidate;
         }
     }

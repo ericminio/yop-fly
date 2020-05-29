@@ -29,7 +29,7 @@ types.push({
     ],
     diagrams: [
         {
-            type: 'weightAndBalance',
+            id: 'weightAndBalance',
             ranges: {
                 min: { x:45, y:1500 },
                 max: { x:130, y:2600 }
@@ -59,7 +59,7 @@ types.push({
             ]
         },
         {
-            type: 'loading',
+            id: 'loading',
             ranges: {
                 min: { x:0, y:0 },
                 max: { x:35, y:450 }
