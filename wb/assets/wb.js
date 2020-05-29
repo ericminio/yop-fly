@@ -70,29 +70,30 @@ var computeZeroFuel = function(plane) {
     }
 };
 
-var ranges = function(type, plane) {
-    var graphs = plane.type.graphs;
-    for (var i=0; i<graphs.length; i++) {
-        var graph = graphs[i];
-        if (graph.type == type) {
-            return graph.ranges;
+var diagram = function(type, plane) {
+    var diagrams = plane.type.diagrams;
+    for (var i=0; i<diagrams.length; i++) {
+        var candidate = diagrams[i];
+        if (candidate.type == type) {
+            return candidate;
         }
     }
 };
-var envelope = function(id, plane) {
-    var envelopes = plane.type.envelopes;
+var envelope = function(id, diagram) {
+    var envelopes = diagram.envelopes;
     for (var i=0; i<envelopes.length; i++) {
-        var envelope = envelopes[i];
-        if (envelope.id == id) {
-            return envelope;
+        var candidate = envelopes[i];
+        if (candidate.id == id) {
+            return candidate;
         }
     }
 };
 var drawEnvelopeGraph = function(document, plane) {
-    var graph = { element:document.getElementById('envelope'), ranges:ranges('weightAndBalance', plane) };
+    var wb = diagram('weightAndBalance', plane);
+    var graph = { element:document.getElementById('envelope'), ranges:wb.ranges };
     
-    drawEnvelope(document, graph, envelope('utility-category', plane));
-    drawEnvelope(document, graph, envelope('normal-category', plane));
+    drawEnvelope(document, graph, envelope('utility-category', wb));
+    drawEnvelope(document, graph, envelope('normal-category', wb));
 
     var ramp = convertPointForGraph({ x:plane.totals.moment/1000, y:plane.totals.weight }, graph.ranges);
     var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/1000, y:plane.zerofuel.weight }, graph.ranges);
@@ -115,7 +116,8 @@ var drawPointOnEnvelope = function(document, graph, point, className, text, id) 
 };
 
 var drawLoadingGraph = function(document, plane) {
-    var graph = { element:document.getElementById('load'), ranges:ranges('loading', plane) };
+    var loading = diagram('loading', plane);
+    var graph = { element:document.getElementById('load'), ranges:loading.ranges };
 
     for (var i=0; i<plane.stations.length; i++) {
         var station = plane.stations[i]

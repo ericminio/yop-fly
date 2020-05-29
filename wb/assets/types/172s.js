@@ -27,13 +27,36 @@ types.push({
             arm: 123
         }
     ],
-    graphs: [
+    diagrams: [
         {
             type: 'weightAndBalance',
             ranges: {
                 min: { x:45, y:1500 },
                 max: { x:130, y:2600 }
-            }
+            },
+            envelopes: [
+                {
+                    id: 'normal-category',
+                    points: [
+                        { x:52, y:1500 },
+                        { x:68, y:1950 },
+                        { x:83, y:2200 },
+                        { x:104.5, y:2550 },
+                        { x:121, y:2550 },
+                        { x:70.5, y:1500 }
+                    ]
+                },
+                {
+                    id: 'utility-category',
+                    points: [
+                        { x:52, y:1500 },
+                        { x:68, y:1950 },
+                        { x:83, y:2200 },
+                        { x:89, y:2200 },
+                        { x:60.5, y:1500 }
+                    ]
+                }
+            ]
         },
         {
             type: 'loading',
@@ -42,28 +65,5 @@ types.push({
                 max: { x:35, y:450 }
             }
         }        
-    ],
-    envelopes: [
-        {
-            id: 'normal-category',
-            points: [
-                { x:52, y:1500 },
-                { x:68, y:1950 },
-                { x:83, y:2200 },
-                { x:104.5, y:2550 },
-                { x:121, y:2550 },
-                { x:70.5, y:1500 }
-            ]
-        },
-        {
-            id: 'utility-category',
-            points: [
-                { x:52, y:1500 },
-                { x:68, y:1950 },
-                { x:83, y:2200 },
-                { x:89, y:2200 },
-                { x:60.5, y:1500 }
-            ]
-        }
-    ]
+    ]    
 });
