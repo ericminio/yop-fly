@@ -4,6 +4,7 @@ var drawGraphs = function(document) {
         childs[i].remove();
     }
     var plane = document.plane;
+    
     drawWeightAndBalance(document, plane);
     drawLoading(document, plane);
     drawCG(document, plane);
@@ -16,45 +17,59 @@ var convertPointForGraph = function(point, ranges) {
     };
 };
 
-var drawWeightAndBalance = function(document, plane) {
-    var wb = diagram('weightAndBalance', plane);
-    var graph = { element:document.getElementById('envelope'), ranges:wb.ranges };
-    
-    drawEnvelope(document, graph, envelope('utility-category', wb));
-    drawEnvelope(document, graph, envelope('normal-category', wb));
-
-    var ramp = convertPointForGraph({ x:plane.totals.moment/1000, y:plane.totals.weight }, graph.ranges);
-    var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/1000, y:plane.zerofuel.weight }, graph.ranges);
-    drawLine(document, graph.element, ramp, zerofuel, 'actual');
-
-    drawPointOnEnvelope(document, graph, ramp, 'actual', 'ramp', 'wb-ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, 'actual', 'zero fuel', 'wb-zero-fuel');
-};
-var drawEnvelope = function(document, graph, envelope) {
-    var line = '';
-    for (var i=0; i<envelope.points.length; i++) {
-        var point = convertPointForGraph(envelope.points[i], graph.ranges);
-        line += point.x + ',' + point.y + ' ';
-    }
-    drawPolyline(document, graph.element, line.trim(), envelope.id);
-};
-var drawPointOnEnvelope = function(document, graph, point, className, text, id) {
-    drawCircle(document, graph.element, point, {className:className, radius:'2', id:id+'-circle'});
-    drawLabel(document, graph.element, point, text, id+'-text');
-};
-
 var drawLoading = function(document, plane) {
-    var loading = diagram('loading', plane);
-    var graph = { element:document.getElementById('load'), ranges:loading.ranges };
+    var diagram = diagramWithId('loading', plane);
+    var element = document.getElementById('load');
 
     for (var i=0; i<plane.stations.length; i++) {
         var station = plane.stations[i]
-        drawStation(document, graph, station);
+        drawStation(document, element, diagram.ranges, station);
     }
 };
-var drawStation = function(document, graph, station) {
-    var lineEnd = convertPointForGraph({ x:station.maxWeight*station.arm/1000, y:station.maxWeight }, graph.ranges);
-    drawLine(document, graph.element,
+var drawWeightAndBalance = function(document, plane) {
+    var diagram = diagramWithId('weightAndBalance', plane);
+    var element = document.getElementById('envelope');    
+    
+    drawEnvelope(document, element, diagram.ranges, envelope('utility-category', diagram));
+    drawEnvelope(document, element, diagram.ranges, envelope('normal-category', diagram));
+
+    var ramp = convertPointForGraph({ x:plane.totals.moment/1000, y:plane.totals.weight }, diagram.ranges);
+    var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/1000, y:plane.zerofuel.weight }, diagram.ranges);
+    drawLine(document, element, ramp, zerofuel, 'actual');
+
+    drawPointOnEnvelope(document, element, ramp, 'actual', 'ramp', 'wb-ramp');
+    drawPointOnEnvelope(document, element, zerofuel, 'actual', 'zero fuel', 'wb-zero-fuel');
+};
+var drawCG = function(document, plane) {
+    var diagram = diagramWithId('cg', plane);
+    var element = document.getElementById('cg');
+    
+    drawEnvelope(document, element, diagram.ranges, envelope('utility-category', diagram));
+    drawEnvelope(document, element, diagram.ranges, envelope('normal-category', diagram));
+
+    var ramp = convertPointForGraph({ x:plane.totals.moment/plane.totals.weight, y:plane.totals.weight }, diagram.ranges);
+    var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/plane.zerofuel.weight, y:plane.zerofuel.weight }, diagram.ranges);
+    drawLine(document, element, ramp, zerofuel, 'actual');
+
+    drawPointOnEnvelope(document, element, ramp, 'actual', 'ramp', 'cg-ramp');
+    drawPointOnEnvelope(document, element, zerofuel, 'actual', 'zero fuel', 'cg-zero-fuel');
+};
+
+var drawEnvelope = function(document, element, ranges, envelope) {
+    var line = '';
+    for (var i=0; i<envelope.points.length; i++) {
+        var point = convertPointForGraph(envelope.points[i], ranges);
+        line += point.x + ',' + point.y + ' ';
+    }
+    drawPolyline(document, element, line.trim(), envelope.id);
+};
+var drawPointOnEnvelope = function(document, element, point, className, text, id) {
+    drawCircle(document, element, point, {className:className, radius:'2', id:id+'-circle'});
+    drawLabel(document, element, point, text, id+'-text');
+};
+var drawStation = function(document, element, ranges, station) {
+    var lineEnd = convertPointForGraph({ x:station.maxWeight*station.arm/1000, y:station.maxWeight }, ranges);
+    drawLine(document, element,
         { x:0, y:80 },
         lineEnd,
         'station station-' + station.id
@@ -62,21 +77,7 @@ var drawStation = function(document, graph, station) {
     var center = convertPointForGraph({
         x:station.weight*station.arm/1000,
         y:station.weight,
-    }, graph.ranges);
-    drawCircle(document, graph.element, center, { id:'loading-'+station.id, className:'station station-' + station.id, radius:'2'});
-    drawLabel(document, graph.element, lineEnd, station.id, 'loading-station-' + station.id + '-text');
-};
-var drawCG = function(document, plane) {
-    var cg = diagram('cg', plane);
-    var graph = { element:document.getElementById('cg'), ranges:cg.ranges };
-    
-    drawEnvelope(document, graph, envelope('utility-category', cg));
-    drawEnvelope(document, graph, envelope('normal-category', cg));
-
-    var ramp = convertPointForGraph({ x:plane.totals.moment/plane.totals.weight, y:plane.totals.weight }, graph.ranges);
-    var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/plane.zerofuel.weight, y:plane.zerofuel.weight }, graph.ranges);
-    drawLine(document, graph.element, ramp, zerofuel, 'actual');
-
-    drawPointOnEnvelope(document, graph, ramp, 'actual', 'ramp', 'cg-ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, 'actual', 'zero fuel', 'cg-zero-fuel');
+    }, ranges);
+    drawCircle(document, element, center, { id:'loading-'+station.id, className:'station station-' + station.id, radius:'2'});
+    drawLabel(document, element, lineEnd, station.id, 'loading-station-' + station.id + '-text');
 };

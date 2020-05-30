@@ -18,7 +18,7 @@ var station = function(id, plane) {
         }
     }
 };
-var diagram = function(id, plane) {
+var diagramWithId = function(id, plane) {
     var diagrams = plane.type.diagrams;
     for (var i=0; i<diagrams.length; i++) {
         var candidate = diagrams[i];
