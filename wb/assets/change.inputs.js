@@ -18,10 +18,12 @@ var updatePlaneArm = function(document) {
 };
 var updateFlight = function(document) {
     var plane = document.plane;
+    
     initializeStations(plane);
     plane.type.injectFlight(document, plane);
     computeMoments(plane);    
     computeTotals(plane);
     computeZeroFuel(plane);
-    document.getElementById('total-weight').innerHTML = 'Ramp weight: ' + plane.totals.weight.toFixed(2) + ' lbs';
+    document.getElementById('total-weight').innerHTML = 'Ramp weight: ' + plane.totals.weight.toFixed(2) + ' lbs';    
+    drawGraphs(document);
 };

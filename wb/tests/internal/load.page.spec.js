@@ -23,18 +23,7 @@ describe('Page', function() {
     });
 
     it('loads', ()=> {
-        browser.assert.text('.title', 'Cessna 172s');
-    });
-
-    describe('refresh button', ()=>{
-
-        beforeEach((done)=> {
-            browser.click('#go', done);
-        });
-
-        it('should be successful', function() {
-            browser.assert.success();
-        });
+        browser.assert.text('.title', "Let's go fly!");
     });
 
 });

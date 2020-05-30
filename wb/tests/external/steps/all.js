@@ -34,8 +34,7 @@ When('I access the home page', (done) => {
         setTimeout(()=>{done();}, 300)
     });
 });
-When('I click to refresh the graphs', function(done) {
-    browser.click('#go')
+When('I wait for the graphs to refresh', function(done) {
     setTimeout(()=>{done();}, 300)
 });
 
@@ -118,6 +117,9 @@ Then('I see the {string} loading line from origin to {string} with mark at {stri
     browser.assert.attribute('#load line.station-'+station, 'y1', '80')
     browser.assert.attribute('#load line.station-'+station, 'x2', x)
     browser.assert.attribute('#load line.station-'+station, 'y2', y)
+    browser.assert.attribute('#load text#loading-station-'+station+'-text', 'x', x)
+    browser.assert.attribute('#load text#loading-station-'+station+'-text', 'y', y)
+    browser.assert.text('#load text#loading-station-'+station+'-text', station)
     parts = mark.split(',');
     x = parts[0];
     y = parts[1];

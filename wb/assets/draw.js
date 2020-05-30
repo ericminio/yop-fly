@@ -52,9 +52,10 @@ var drawLoading = function(document, plane) {
     }
 };
 var drawStation = function(document, graph, station) {
+    var lineEnd = convertPointForGraph({ x:station.maxWeight*station.arm/1000, y:station.maxWeight }, graph.ranges);
     drawLine(document, graph.element,
         { x:0, y:80 },
-        convertPointForGraph({ x:station.maxWeight*station.arm/1000, y:station.maxWeight }, graph.ranges),
+        lineEnd,
         'station station-' + station.id
     );
     var center = convertPointForGraph({
@@ -62,4 +63,5 @@ var drawStation = function(document, graph, station) {
         y:station.weight,
     }, graph.ranges);
     drawCircle(document, graph.element, center, { id:'loading-'+station.id, className:'station station-' + station.id, radius:'2'});
+    drawLabel(document, graph.element, lineEnd, station.id, 'loading-station-' + station.id + '-text');
 };
