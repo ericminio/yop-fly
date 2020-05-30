@@ -11,6 +11,7 @@
     <script src="assets/svg.js"></script>
     <script src="assets/digest.js"></script>
     <script src="assets/change.inputs.js"></script>
+    <script src="assets/decode.flight.js"></script>
     <script src="assets/draw.js"></script>
 </head>
 
@@ -65,6 +66,10 @@
         setTimeout(function() {
             loadTypes(document, types);
             loadPlanes(document, planes);
+
+            var flight = decodeFlight(window.location.search, window);
+            console.log('Injected flight is', flight);
+
             selectPlane(document, planes[0].name);
             updateFlight(document);
         }, 100);
