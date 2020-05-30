@@ -2,6 +2,7 @@ let expect = require('chai').expect;
 let { JSDOM } = require("jsdom");
 let fs = require('fs');
 let decodeFlight = (new Function( fs.readFileSync('./assets/decode.flight.js').toString() + ' return decodeFlight;'))();
+let encodeFlight = (new Function( fs.readFileSync('./assets/decode.flight.js').toString() + ' return encodeFlight;'))();
 
 describe('Encode/Decode', ()=>{
 
@@ -14,7 +15,7 @@ describe('Encode/Decode', ()=>{
         let flight = {
             plane: 'CGSDZ'
         }
-        let encoded = window.btoa(JSON.stringify(flight));
+        let encoded = encodeFlight(flight, window);
         expect(encoded).to.equal('eyJwbGFuZSI6IkNHU0RaIn0=')
 
         let decoded = window.atob('eyJwbGFuZSI6IkNHU0RaIn0=');

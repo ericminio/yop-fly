@@ -1,10 +1,14 @@
-var selectPlane = function(document, name) {
-    var plane;
+var selectPlaneIndex = function(document, name) {
     for (var i = 0; i < document.planes.length; i++) {
         if (document.planes[i].name == name) {
-            plane = document.planes[i];
+            return i;
         }
     }
+    return undefined;
+}
+var selectPlane = function(document, name) {
+    var planeIndex = selectPlaneIndex(document, name);
+    var plane = document.planes[planeIndex?planeIndex:0];
     document.plane = plane;
     document.getElementById('zerofuel-weight').value = plane.weight
     document.getElementById('zerofuel-moment').value = plane.moment

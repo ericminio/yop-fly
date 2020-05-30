@@ -62,15 +62,38 @@
         </svg>
     </div>
 
+    <div>
+        <button id="share" onclick="createFlightLink(document)">Share</button>
+        <br/>
+        <a id="flight-link" href=""></a>
+    </div>
+
     <script>
+        createFlightLink = function(document) {
+            var flight = {
+                plane: document.plane.name
+            }
+            var encoded = encodeFlight(flight, window);
+            var url = window.location.pathname + '?flight=' + encoded;
+            var link = document.getElementById('flight-link');
+            link.href = url;
+            link.innerHTML = window.location.pathname + '?flight=' + encoded.substring(0, 5) + '...';
+        };
+
         setTimeout(function() {
             loadTypes(document, types);
             loadPlanes(document, planes);
+            selectPlane(document, planes[0].name);
 
             var flight = decodeFlight(window.location.search, window);
-            console.log('Injected flight is', flight);
-
-            selectPlane(document, planes[0].name);
+            if (flight !== undefined) {
+                var planeIndex = selectPlaneIndex(document, flight.plane);
+                if (planeIndex !== undefined) {
+                    var select = document.getElementById('planes');
+                    select.selectedIndex = planeIndex;
+                    selectPlane(document, flight.plane);                    
+                }
+            }
             updateFlight(document);
         }, 100);
     </script>

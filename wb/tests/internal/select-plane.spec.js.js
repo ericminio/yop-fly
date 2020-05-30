@@ -32,4 +32,19 @@ describe('Select plane', ()=>{
 
         expect(document.plane.selected).to.equal('yes');
     });
+
+    it('resists unknown plane', ()=>{
+        let types = [
+            { id:'ignored-here' }
+        ]
+        let planes = [
+            { name:'first' },
+            { name:'second' }
+        ]
+        loadTypes(document, types);
+        loadPlanes(document, planes);
+        selectPlane(document, 'unknown');        
+
+        expect(document.plane.name).to.equal('first');
+    });
 });

@@ -12,12 +12,12 @@ LocalServer.prototype.wrapHandler = function() {
     else {
         let self = this;
         return function(request, response) {
+            var parsed = url.parse(request.url, true);
             response.setHeader('Access-Control-Allow-Origin', '*');
-            if (self.handler[request.url]) {
-                response.write(self.handler[request.url]);
+            if (self.handler[parsed.pathname]) {
+                response.write(self.handler[parsed.pathname]);
             }
-            else {
-                var parsed = url.parse(request.url, true);
+            else {                
                 var pattern = /^\/(.*)\.js$/;
                 if (pattern.test(parsed.pathname)) {
                     var path = require('path').join(__dirname, '..', '..', pattern.exec(parsed.pathname)[1] + '.js');

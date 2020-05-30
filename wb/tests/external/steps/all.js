@@ -15,9 +15,10 @@ let server;
 Before((testCase, done)=>{
     server = new LocalServer({
         '/': fs.readFileSync('./index.html').toString(),
+        '/index.html': fs.readFileSync('./index.html').toString(),
     });
     server.start(()=>{
-        browser.visit('http://localhost:' + server.port, done);
+        browser.visit('http://localhost:' + server.port +'/', done);
     });
 });
 After((done)=>{
@@ -31,6 +32,11 @@ Given('the following planes:', function (value) {
 });
 When('I access the home page', (done) => {
     browser.visit('http://localhost:' + server.port, ()=>{
+        setTimeout(()=>{done();}, 300)
+    });
+});
+When('I access the home page with flight info {string}', function (encoded, done) {
+    browser.visit('http://localhost:' + server.port + '/?flight=' + encoded, ()=>{
         setTimeout(()=>{done();}, 300)
     });
 });
@@ -58,6 +64,7 @@ Then('I see that the only planes that can be selected are:', (value) => {
 });
 Given('the selected plane is {string}', function (name) {
     browser.assert.input('#planes', name)
+    expect(browser.document.plane.name).to.equal(name);
 });
 When('I select the plane {string}', function (name) {
     browser.select('planes', name)
