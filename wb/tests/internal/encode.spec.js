@@ -1,10 +1,10 @@
 let expect = require('chai').expect;
 let { JSDOM } = require("jsdom");
 let fs = require('fs');
-let decodeFlight = (new Function( fs.readFileSync('./assets/decode.flight.js').toString() + ' return decodeFlight;'))();
-let encodeFlight = (new Function( fs.readFileSync('./assets/decode.flight.js').toString() + ' return encodeFlight;'))();
+let decodeFlight = (new Function( fs.readFileSync('./assets/encoding.js').toString() + ' return decodeFlight;'))();
+let encodeFlight = (new Function( fs.readFileSync('./assets/encoding.js').toString() + ' return encodeFlight;'))();
 
-describe('Encode/Decode', ()=>{
+describe.only('Encode/Decode', ()=>{
 
     let window;
     beforeEach(()=>{
@@ -13,12 +13,20 @@ describe('Encode/Decode', ()=>{
 
     it('is provided by window', ()=>{
         let flight = {
-            plane: 'CGSDZ'
+            plane: 'CGSDZ',
+            'front-seat-left': 10,
+            'front-seat-right': 20,
+            'back-seat-left:': 30,
+            'back-seat-right': 40,
+            'gallons': 50,
+            'tank': 300,
+            'baggage-1': 60,
+            'baggage-2': 70
         }
         let encoded = encodeFlight(flight, window);
-        expect(encoded).to.equal('eyJwbGFuZSI6IkNHU0RaIn0=')
+        expect(encoded).to.equal('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0OiI6MzAsImJhY2stc2VhdC1yaWdodCI6NDAsImdhbGxvbnMiOjUwLCJ0YW5rIjozMDAsImJhZ2dhZ2UtMSI6NjAsImJhZ2dhZ2UtMiI6NzB9')
 
-        let decoded = window.atob('eyJwbGFuZSI6IkNHU0RaIn0=');
+        let decoded = window.atob('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0OiI6MzAsImJhY2stc2VhdC1yaWdodCI6NDAsImdhbGxvbnMiOjUwLCJ0YW5rIjozMDAsImJhZ2dhZ2UtMSI6NjAsImJhZ2dhZ2UtMiI6NzB9');
         let parsed = JSON.parse(decoded);
         expect(parsed).to.deep.equal(flight);
     });

@@ -11,7 +11,7 @@
     <script src="assets/svg.js"></script>
     <script src="assets/digest.js"></script>
     <script src="assets/change.inputs.js"></script>
-    <script src="assets/decode.flight.js"></script>
+    <script src="assets/encoding.js"></script>
     <script src="assets/draw.js"></script>
 </head>
 
@@ -67,7 +67,15 @@
     <script>
         createFlightLink = function(document) {
             var flight = {
-                plane: document.plane.name
+                plane: document.plane.name,
+                'front-seat-left': document.getElementById('front-seat-left').value,
+                'front-seat-right': document.getElementById('front-seat-right').value,
+                'back-seat-left': document.getElementById('back-seat-left').value,
+                'back-seat-right': document.getElementById('back-seat-right').value,
+                'gallons': document.getElementById('gallons').value,
+                'tank': document.getElementById('tank').value,
+                'baggage-1': document.getElementById('baggage-1').value,
+                'baggage-2': document.getElementById('baggage-2').value,
             }
             var encoded = encodeFlight(flight, window);
             var url = window.location.pathname + '?flight=' + encoded;
@@ -87,7 +95,16 @@
                 if (planeIndex !== undefined) {
                     var select = document.getElementById('planes');
                     select.selectedIndex = planeIndex;
-                    selectPlane(document, flight.plane);                    
+                    selectPlane(document, flight.plane);  
+                    
+                    document.getElementById('front-seat-left').value = flight['front-seat-left']
+                    document.getElementById('front-seat-right').value = flight['front-seat-right']
+                    document.getElementById('back-seat-left').value = flight['back-seat-left']
+                    document.getElementById('back-seat-right').value = flight['back-seat-right']
+                    document.getElementById('gallons').value = flight['gallons']
+                    document.getElementById('tank').value = flight['tank']
+                    document.getElementById('baggage-1').value = flight['baggage-1']
+                    document.getElementById('baggage-2').value = flight['baggage-2']
                 }
             }
             updateFlight(document);
