@@ -21,6 +21,8 @@
     </div>
     <div class="data">
         <select name="planes" id="planes" onchange="selectPlane(document, this.options[this.selectedIndex].id); updateFlight(document);"></select>
+        <button id="share" onclick="createFlightLink(document)">Share</button>
+        <a id="flight-link" href=""></a>
         <br/>
         <input id="zerofuel-weight" oninput="updatePlaneArm(document); updateFlight(document);"/>lbs
         <input id="zerofuel-moment" oninput="updatePlaneArm(document);" class="large"/>lbs-in
@@ -62,12 +64,6 @@
         </svg>
     </div>
 
-    <div>
-        <button id="share" onclick="createFlightLink(document)">Share</button>
-        <br/>
-        <a id="flight-link" href=""></a>
-    </div>
-
     <script>
         createFlightLink = function(document) {
             var flight = {
@@ -77,7 +73,7 @@
             var url = window.location.pathname + '?flight=' + encoded;
             var link = document.getElementById('flight-link');
             link.href = url;
-            link.innerHTML = window.location.pathname + '?flight=' + encoded.substring(0, 5) + '...';
+            link.innerHTML = '...?flight=' + encoded.substring(0, 5) + '...';
         };
 
         setTimeout(function() {
