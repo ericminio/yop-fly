@@ -100,11 +100,11 @@ Given('load is:', function (dataTable) {
 Then('I see the {string} point at {string} with label {string}', function(point, value, label) {
     let x = value.split(',')[0].trim()
     let y = value.split(',')[1].trim()
-    browser.assert.attribute('#envelope circle#'+point+'-circle', 'cx', x)
-    browser.assert.attribute('#envelope circle#'+point+'-circle', 'cy', y)
-    browser.assert.attribute('#envelope text#'+point+'-text', 'x', x)
-    browser.assert.attribute('#envelope text#'+point+'-text', 'y', y)
-    browser.assert.text('#envelope text#'+point+'-text', label)
+    browser.assert.attribute('circle#wb-'+point+'-circle', 'cx', x)
+    browser.assert.attribute('circle#wb-'+point+'-circle', 'cy', y)
+    browser.assert.attribute('text#wb-'+point+'-text', 'x', x)
+    browser.assert.attribute('text#wb-'+point+'-text', 'y', y)
+    browser.assert.text('text#wb-'+point+'-text', label)
 });
 Then('I see that the ramp weight is {string}', function (value) {
 	browser.assert.text('#total-weight', 'Ramp weight: ' + value + ' lbs')
@@ -129,4 +129,19 @@ Then('I see the {string} loading line from origin to {string} with mark at {stri
     let element = browser.document.querySelector('#load circle#loading-'+station);
     let style = browser.window.getComputedStyle(element);
     let stroke = style.getPropertyValue('stroke');
+});
+Then('I see the CG graph displays the normal envelope\'s points: {string}', function(value) {
+    browser.assert.attribute('#cg polyline.normal-category', 'points', value)
+});
+Then('I see the CG graph displays the utility envelope\'s points: {string}', function(value) {
+    browser.assert.attribute('#cg polyline.utility-category', 'points', value)
+});
+Then('I see the CG graph displays the {string} point at {string} with label {string}', function(point, value, label) {
+    let x = value.split(',')[0].trim()
+    let y = value.split(',')[1].trim()
+    browser.assert.attribute('circle#cg-'+point+'-circle', 'cx', x)
+    browser.assert.attribute('circle#cg-'+point+'-circle', 'cy', y)
+    browser.assert.attribute('text#cg-'+point+'-text', 'x', x)
+    browser.assert.attribute('text#cg-'+point+'-text', 'y', y)
+    browser.assert.text('text#cg-'+point+'-text', label)
 });

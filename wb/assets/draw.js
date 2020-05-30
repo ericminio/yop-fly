@@ -6,6 +6,7 @@ var drawGraphs = function(document) {
     var plane = document.plane;
     drawWeightAndBalance(document, plane);
     drawLoading(document, plane);
+    drawCG(document, plane);
 };
 
 var convertPointForGraph = function(point, ranges) {
@@ -26,8 +27,8 @@ var drawWeightAndBalance = function(document, plane) {
     var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/1000, y:plane.zerofuel.weight }, graph.ranges);
     drawLine(document, graph.element, ramp, zerofuel, 'actual');
 
-    drawPointOnEnvelope(document, graph, ramp, 'actual', 'ramp', 'ramp');
-    drawPointOnEnvelope(document, graph, zerofuel, 'actual', 'zero fuel', 'zero-fuel');
+    drawPointOnEnvelope(document, graph, ramp, 'actual', 'ramp', 'wb-ramp');
+    drawPointOnEnvelope(document, graph, zerofuel, 'actual', 'zero fuel', 'wb-zero-fuel');
 };
 var drawEnvelope = function(document, graph, envelope) {
     var line = '';
@@ -64,4 +65,18 @@ var drawStation = function(document, graph, station) {
     }, graph.ranges);
     drawCircle(document, graph.element, center, { id:'loading-'+station.id, className:'station station-' + station.id, radius:'2'});
     drawLabel(document, graph.element, lineEnd, station.id, 'loading-station-' + station.id + '-text');
+};
+var drawCG = function(document, plane) {
+    var cg = diagram('cg', plane);
+    var graph = { element:document.getElementById('cg'), ranges:cg.ranges };
+    
+    drawEnvelope(document, graph, envelope('utility-category', cg));
+    drawEnvelope(document, graph, envelope('normal-category', cg));
+
+    var ramp = convertPointForGraph({ x:plane.totals.moment/plane.totals.weight, y:plane.totals.weight }, graph.ranges);
+    var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/plane.zerofuel.weight, y:plane.zerofuel.weight }, graph.ranges);
+    drawLine(document, graph.element, ramp, zerofuel, 'actual');
+
+    drawPointOnEnvelope(document, graph, ramp, 'actual', 'ramp', 'cg-ramp');
+    drawPointOnEnvelope(document, graph, zerofuel, 'actual', 'zero fuel', 'cg-zero-fuel');
 };

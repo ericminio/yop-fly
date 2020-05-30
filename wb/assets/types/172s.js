@@ -64,7 +64,37 @@ types.push({
                 min: { x:0, y:0 },
                 max: { x:35, y:450 }
             }
-        }        
+        },   
+        {
+            id: 'cg',
+            ranges: {
+                min: { x:34, y:1500 },
+                max: { x:49, y:2600 }
+            },
+            envelopes: [
+                {
+                    id: 'normal-category',
+                    points: [
+                        { x:35, y:1500 },
+                        { x:35, y:1950 },
+                        { x:37.5, y:2200 },
+                        { x:41, y:2550 },
+                        { x:47, y:2550 },
+                        { x:47, y:1500 }
+                    ]
+                },
+                {
+                    id: 'utility-category',
+                    points: [
+                        { x:35, y:1500 },
+                        { x:35, y:1950 },
+                        { x:37.5, y:2200 },
+                        { x:40.5, y:2200 },
+                        { x:40.5, y:1500 }
+                    ]
+                }
+            ]
+        }
     ],
     injectFlight: function(document, plane) {
         plane.weight = parseFloat(document.getElementById('zerofuel-weight').value);
