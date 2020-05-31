@@ -6,7 +6,8 @@ var initializeStations = function(plane) {
             id: station.id,
             arm:station.arm,
             weight:0,
-            maxWeight:station.maxWeight
+            maxWeight:station.maxWeight,
+            count: station.count
         });
     }        
 };

@@ -20,11 +20,35 @@ var updatePlaneArm = function(document) {
     var arm = (moment / weight).toFixed(3);
     document.getElementById('zerofuel-arm').innerHTML = '(arm:' + arm + 'in)';
 };
+var injectFlight = function(document, plane) {
+    plane.weight = parseFloat(document.getElementById('zerofuel-weight').value);
+    plane.moment = parseFloat(document.getElementById('zerofuel-moment').value);
+    var stations = plane.stations;
+    for (var i=0; i<stations.length; i++) {
+        var station = stations[i];
+        if (station.count == 1) {
+            station.weight = parseFloat(document.getElementById(station.id).value);
+        }
+        else {
+            station.weight = 0;
+            for (var j=1; j<=station.count; j++) {
+                station.weight += parseFloat(document.getElementById(station.id+'-'+j).value);                    
+            }
+        }
+    }
+};
+var onUpdate = function(field, document) {
+    if (field.id.indexOf('gallons') != -1) {
+        var gallons = parseFloat(document.getElementById(field.id).value);
+        document.getElementById(field.id.replace('gallons', 'tank')).value = gallons * 6;
+    }
+    updateFlight(document);
+};
 var updateFlight = function(document) {
     var plane = document.plane;
     
     initializeStations(plane);
-    plane.type.injectFlight(document, plane);
+    injectFlight(document, plane);
     updateFlightLink(document);
 
     computeMoments(plane);    
