@@ -12,6 +12,7 @@
     "license": "MIT",
     "devDependencies": {
         "chai": "^4.2.0",
+        "chai-string": "^1.5.0",
         "cucumber": "^5.0.2",
         "jsdom": "^12.2.0",
         "mocha": "^5.2.0",

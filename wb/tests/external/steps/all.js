@@ -9,6 +9,8 @@ const Browser = require('zombie');
 const browser = new Browser();
 const fs = require('fs');
 const { expect } = require('chai');
+var chai = require('chai');
+chai.use(require('chai-string'));
 let LocalServer = require('../../support/local.server');
 
 let server;
@@ -64,7 +66,6 @@ Then('I see that the only planes that can be selected are:', (value) => {
 });
 Given('the selected plane is {string}', function (name) {
     browser.assert.input('#planes', name)
-    expect(browser.document.plane.name).to.equal(name);
 });
 When('I select the plane {string}', function (name) {
     browser.select('planes', name)
@@ -151,4 +152,11 @@ Then('I see the CG graph displays the {string} point at {string} with label {str
     browser.assert.attribute('text#cg-'+point+'-text', 'x', x)
     browser.assert.attribute('text#cg-'+point+'-text', 'y', y)
     browser.assert.text('text#cg-'+point+'-text', label)
+});
+Then('I see that the weight of station {string} is {string}', function (station, value) {
+    browser.assert.input('#'+station, value)
+});
+Then('the flight link info is {string}', function (value) {
+    let link = browser.document.getElementById('flight-link');
+    expect(link.href).to.endsWith('?flight=' + value);
 });
