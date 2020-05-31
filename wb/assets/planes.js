@@ -6,6 +6,12 @@ var planes = [
         moment: 67045.35
     },
     {
+        name: 'CFOJL',
+        type: '152',
+        weight: 1138,
+        moment: 34000
+    },
+    {
         name: 'CGJZB',
         type: '172s',
         weight: 1647.3,

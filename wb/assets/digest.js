@@ -24,6 +24,8 @@ var updateView = function(flight, document) {
     var elements = stationElements(plane);
     for (var i=0; i<elements.length; i++) {
         var id = elements[i];
-        document.getElementById(id).value = flight[id];
+        if (flight[id]) {
+            document.getElementById(id).value = flight[id];
+        }
     }    
 };
