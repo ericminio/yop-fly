@@ -4,7 +4,7 @@ let fs = require('fs');
 let decodeFlight = (new Function( fs.readFileSync('./assets/encoding.js').toString() + ' return decodeFlight;'))();
 let encodeFlight = (new Function( fs.readFileSync('./assets/encoding.js').toString() + ' return encodeFlight;'))();
 
-describe.only('Encode/Decode', ()=>{
+describe('Encode/Decode', ()=>{
 
     let window;
     beforeEach(()=>{
@@ -16,7 +16,7 @@ describe.only('Encode/Decode', ()=>{
             plane: 'CGSDZ',
             'front-seat-left': 10,
             'front-seat-right': 20,
-            'back-seat-left:': 30,
+            'back-seat-left': 30,
             'back-seat-right': 40,
             'gallons': 50,
             'tank': 300,
@@ -24,9 +24,9 @@ describe.only('Encode/Decode', ()=>{
             'baggage-2': 70
         }
         let encoded = encodeFlight(flight, window);
-        expect(encoded).to.equal('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0OiI6MzAsImJhY2stc2VhdC1yaWdodCI6NDAsImdhbGxvbnMiOjUwLCJ0YW5rIjozMDAsImJhZ2dhZ2UtMSI6NjAsImJhZ2dhZ2UtMiI6NzB9')
+        expect(encoded).to.equal('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0IjozMCwiYmFjay1zZWF0LXJpZ2h0Ijo0MCwiZ2FsbG9ucyI6NTAsInRhbmsiOjMwMCwiYmFnZ2FnZS0xIjo2MCwiYmFnZ2FnZS0yIjo3MH0=')
 
-        let decoded = window.atob('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0OiI6MzAsImJhY2stc2VhdC1yaWdodCI6NDAsImdhbGxvbnMiOjUwLCJ0YW5rIjozMDAsImJhZ2dhZ2UtMSI6NjAsImJhZ2dhZ2UtMiI6NzB9');
+        let decoded = window.atob('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0IjozMCwiYmFjay1zZWF0LXJpZ2h0Ijo0MCwiZ2FsbG9ucyI6NTAsInRhbmsiOjMwMCwiYmFnZ2FnZS0xIjo2MCwiYmFnZ2FnZS0yIjo3MH0=');
         let parsed = JSON.parse(decoded);
         expect(parsed).to.deep.equal(flight);
     });

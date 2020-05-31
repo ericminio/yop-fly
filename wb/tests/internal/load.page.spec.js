@@ -23,7 +23,7 @@ describe('Page', function() {
     });
 
     it('loads', ()=> {
-        browser.assert.text('.title', "Let's go fly!");
+        browser.assert.text('title', "Yop, fly!");
     });
 
 });

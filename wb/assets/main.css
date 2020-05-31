@@ -30,7 +30,7 @@
 .data {
     margin:auto;
     margin-bottom: 10px;
-    padding:0px 10px 10px 10px;
+    padding:10px 10px 10px 10px;
     border:1px gray solid;
 }
 #zerofuel-arm {

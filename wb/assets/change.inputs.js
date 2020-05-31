@@ -25,6 +25,8 @@ var updateFlight = function(document) {
     
     initializeStations(plane);
     plane.type.injectFlight(document, plane);
+    updateFlightLink(document);
+
     computeMoments(plane);    
     computeTotals(plane);
     computeZeroFuel(plane);
