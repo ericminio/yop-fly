@@ -4,27 +4,32 @@ types.push({
         {
             id: 'frontseat',
             maxWeight: 400,
-            arm: 37
+            arm: 37,
+            count: 2
         },
         {
             id: 'backseat',
             maxWeight: 400,
-            arm: 73
+            arm: 73,
+            count: 2
         },
         {
             id: 'tank',
             maxWeight: 318,
-            arm: 48
+            arm: 48,
+            count: 1
         },
         {
             id: 'baggage1',
             maxWeight: 120,
-            arm: 95
+            arm: 95,
+            count: 1
         },
         {
             id: 'baggage2',
             maxWeight: 50,
-            arm: 123
+            arm: 123,
+            count: 1
         }
     ],
     diagrams: [
@@ -111,5 +116,5 @@ types.push({
             document.getElementById('tank').value = gallons * 6;
         }
         updateFlight(document);
-    }    
+    }  
 });

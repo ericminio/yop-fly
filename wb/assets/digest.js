@@ -19,3 +19,25 @@ var loadPlanes = function(document, planes) {
         document.planes.push(plane);
     }
 };
+var updateView = function(flight, document) {
+    var plane = document.plane;
+    var stations = plane.type.stations;
+    var updateElement = function(elementId, document, flight) {
+        document.getElementById(elementId).value = flight[elementId];
+        if (elementId.indexOf('tank') != -1) {
+            var gallonsStationId = elementId.replace('tank', 'gallons');
+            document.getElementById(gallonsStationId).value = flight[gallonsStationId];
+        }
+    };
+    for (var i=0; i<stations.length; i++) {
+        var station = stations[i];
+        if (station.count == 1) {
+            updateElement(station.id, document, flight);
+        }
+        else {
+            for (var j=1; j<=station.count; j++) {
+                updateElement(station.id+'-'+j, document, flight);
+            }
+        }
+    }
+};

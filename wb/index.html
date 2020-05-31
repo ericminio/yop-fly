@@ -93,16 +93,8 @@
                 if (planeIndex !== undefined) {
                     var select = document.getElementById('planes');
                     select.selectedIndex = planeIndex;
-                    selectPlane(document, flight.plane);  
-                    
-                    document.getElementById('frontseat-1').value = flight['frontseat-1']
-                    document.getElementById('frontseat-2').value = flight['frontseat-2']
-                    document.getElementById('backseat-1').value = flight['backseat-1']
-                    document.getElementById('backseat-2').value = flight['backseat-2']
-                    document.getElementById('gallons').value = flight['gallons']
-                    document.getElementById('tank').value = flight['tank']
-                    document.getElementById('baggage1').value = flight['baggage1']
-                    document.getElementById('baggage2').value = flight['baggage2']
+                    selectPlane(document, flight.plane);                      
+                    updateView(flight, document);                    
                 }
             }
             updateFlight(document);
