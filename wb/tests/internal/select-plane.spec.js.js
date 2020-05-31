@@ -14,6 +14,9 @@ describe('Select plane', ()=>{
             <input id="zerofuel-weight" />
             <input id="zerofuel-moment" />
             <label id="zerofuel-arm"></label>
+            
+            <div id="stations">
+            </div>
         `, { runScripts: 'dangerously' }).window;
         document = window.document;
     });
@@ -24,7 +27,7 @@ describe('Select plane', ()=>{
         ]
         let planes = [
             { name:'first', selected:'no' },
-            { name:'second', selected:'yes' }
+            { name:'second', selected:'yes', type: { stations:[] } }
         ]
         loadTypes(document, types);
         loadPlanes(document, planes);
@@ -38,7 +41,7 @@ describe('Select plane', ()=>{
             { id:'ignored-here' }
         ]
         let planes = [
-            { name:'first' },
+            { name:'first', type: { stations:[] } },
             { name:'second' }
         ]
         loadTypes(document, types);

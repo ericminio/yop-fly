@@ -19,28 +19,6 @@ var loadPlanes = function(document, planes) {
         document.planes.push(plane);
     }
 };
-var stationElements = function(plane) {
-    var elements = [];
-    var addElement = function(id) {
-        if (id.indexOf('tank') != -1) {
-            elements.push(id.replace('tank', 'gallons'));
-        }
-        elements.push(id);
-    }
-    var stations = plane.type.stations;
-    for (var i=0; i<stations.length; i++) {
-        var station = stations[i];
-        if (station.count == 1) {
-            addElement(station.id);
-        }
-        else {
-            for (var j=1; j<=station.count; j++) {
-                addElement(station.id+'-'+j);
-            }
-        }
-    }
-    return elements;
-}
 var updateView = function(flight, document) {
     var plane = document.plane;
     var elements = stationElements(plane);

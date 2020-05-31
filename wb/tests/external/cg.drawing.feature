@@ -17,7 +17,7 @@ Scenario: Easy ride
         |    station    | weight |
         | frontseat-1   |    180 |
         | frontseat-2   |    110 |
-        | tank          |    240 |
+        | gallons       |    40 |
     When I wait for the graphs to refresh
     Then I see the CG graph displays the normal envelope's points: "7,80 7,47 23,29 47,4 87,4 87,80"
     Then I see the CG graph displays the utility envelope's points: "7,80 7,47 23,29 43,29 43,80"

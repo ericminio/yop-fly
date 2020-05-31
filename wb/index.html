@@ -26,25 +26,12 @@
         <label id="zerofuel-arm"></label>
         <br/>
         <label>Stations:</label>            
-        <div id="stations">
-            <input id="frontseat-1" value="180" oninput="onUpdate(this, document);" />lbs
-            <input id="frontseat-2" value="110" oninput="onUpdate(this, document);" />lbs
-            <br/>
-            <input id="backseat-1" value="0" oninput="onUpdate(this, document);" />lbs
-            <input id="backseat-2" value="0" oninput="onUpdate(this, document);" />lbs
-            <br/>
-            <input id="gallons" value="40" class="small" oninput="onUpdate(this, document);" />gallons x 6 lbs/gal =
-            <input id="tank" value="240" class="small" oninput="onUpdate(this, document);" />lbs
-            <br/>
-            <input id="baggage1" value="0" oninput="onUpdate(this, document);" />lbs baggage #1
-            <br/>
-            <input id="baggage2" value="0" oninput="onUpdate(this, document);" />lbs baggage #2
-        </div>
+            <div id="stations">            
+            </div>
 
         <label id="total-weight"></label>
         <br/>
-        <label>Link to flight: </label><a id="flight-link" href=""></a>
-        
+        <label>Link to flight: </label><a id="flight-link" href=""></a>        
     </div>
     <div class="graph">
         <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
@@ -63,20 +50,6 @@
     </div>
 
     <script>
-        updateFlightLink = function(document) {
-            var flight = { plane: document.plane.name };
-            var elements = stationElements(document.plane);
-            for (var i=0; i<elements.length; i++) {
-                var id = elements[i];
-                flight[id] = document.getElementById(id).value;
-            }    
-            var encoded = encodeFlight(flight, window);
-            var url = window.location.pathname + '?flight=' + encoded;
-            var link = document.getElementById('flight-link');
-            link.href = url;
-            link.innerHTML = encoded.substring(0, 7) + '...';
-        };
-
         setTimeout(function() {
             loadTypes(document, types);
             loadPlanes(document, planes);
@@ -86,10 +59,10 @@
             if (flight !== undefined) {
                 var planeIndex = selectPlaneIndex(document, flight.plane);
                 if (planeIndex !== undefined) {
+                    document.flight = flight;
                     var select = document.getElementById('planes');
                     select.selectedIndex = planeIndex;
-                    selectPlane(document, flight.plane);                      
-                    updateView(flight, document);                    
+                    selectPlane(document, flight.plane);                    
                 }
             }
             updateFlight(document);

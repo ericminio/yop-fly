@@ -19,7 +19,7 @@ Scenario: Live update of flight link url
 		| backseat-1      |    120 |
         | backseat-2      |    130 |
         | gallons         |     30 |
-        | tank            |    180 |
+        | gallons         |     30 |
 		| baggage1        |     55 |
 		| baggage2        |     25 |
 	Then the flight link info is "eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnRzZWF0LTEiOiIxODAiLCJmcm9udHNlYXQtMiI6IjExMCIsImJhY2tzZWF0LTEiOiIxMjAiLCJiYWNrc2VhdC0yIjoiMTMwIiwiZ2FsbG9ucyI6IjMwIiwidGFuayI6IjE4MCIsImJhZ2dhZ2UxIjoiNTUiLCJiYWdnYWdlMiI6IjI1In0="
