@@ -64,22 +64,17 @@
 
     <script>
         updateFlightLink = function(document) {
-            var flight = {
-                plane: document.plane.name,
-                'frontseat-1': document.getElementById('frontseat-1').value,
-                'frontseat-2': document.getElementById('frontseat-2').value,
-                'backseat-1': document.getElementById('backseat-1').value,
-                'backseat-2': document.getElementById('backseat-2').value,
-                'gallons': document.getElementById('gallons').value,
-                'tank': document.getElementById('tank').value,
-                'baggage1': document.getElementById('baggage1').value,
-                'baggage2': document.getElementById('baggage2').value,
-            }
+            var flight = { plane: document.plane.name };
+            var elements = stationElements(document.plane);
+            for (var i=0; i<elements.length; i++) {
+                var id = elements[i];
+                flight[id] = document.getElementById(id).value;
+            }    
             var encoded = encodeFlight(flight, window);
             var url = window.location.pathname + '?flight=' + encoded;
             var link = document.getElementById('flight-link');
             link.href = url;
-            link.innerHTML = encoded.substring(0, 5) + '...';
+            link.innerHTML = encoded.substring(0, 7) + '...';
         };
 
         setTimeout(function() {
