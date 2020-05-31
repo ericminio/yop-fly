@@ -35,3 +35,13 @@ Scenario: Select a different plane
     Then I see that the plane's weight is "1509.1"
     And I see that the plane's moment is "65080.81"
     And I see that the plane's arm is "43.126"
+
+Scenario: Keep flight config
+    When I access the home page
+    When load is:
+        |     station      | weight |
+        | front-seat-left  |     80 |
+        | front-seat-right |     70 |
+     When I select the plane "CGINH"
+     Then I see that the weight of station "front-seat-left" is "80"
+     Then I see that the weight of station "front-seat-right" is "70"
