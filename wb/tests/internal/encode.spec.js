@@ -14,19 +14,20 @@ describe('Encode/Decode', ()=>{
     it('is provided by window', ()=>{
         let flight = {
             plane: 'CGSDZ',
-            'front-seat-left': 10,
-            'front-seat-right': 20,
-            'back-seat-left': 30,
-            'back-seat-right': 40,
-            'gallons': 50,
-            'tank': 300,
-            'baggage-1': 60,
-            'baggage-2': 70
+            'frontseat-1': "180",
+            'frontseat-2': "110",
+            'backseat-1': "120",
+            'backseat-2': "130",
+            'gallons': "30",
+            'tank': "180",
+            'baggage1': "55",
+            'baggage2': "25"
         }
-        let encoded = encodeFlight(flight, window);
-        expect(encoded).to.equal('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0IjozMCwiYmFjay1zZWF0LXJpZ2h0Ijo0MCwiZ2FsbG9ucyI6NTAsInRhbmsiOjMwMCwiYmFnZ2FnZS0xIjo2MCwiYmFnZ2FnZS0yIjo3MH0=')
+        let actual = encodeFlight(flight, window);
+        let expected = 'eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnRzZWF0LTEiOiIxODAiLCJmcm9udHNlYXQtMiI6IjExMCIsImJhY2tzZWF0LTEiOiIxMjAiLCJiYWNrc2VhdC0yIjoiMTMwIiwiZ2FsbG9ucyI6IjMwIiwidGFuayI6IjE4MCIsImJhZ2dhZ2UxIjoiNTUiLCJiYWdnYWdlMiI6IjI1In0=';
+        expect(actual).to.equal(expected)
 
-        let decoded = window.atob('eyJwbGFuZSI6IkNHU0RaIiwiZnJvbnQtc2VhdC1sZWZ0IjoxMCwiZnJvbnQtc2VhdC1yaWdodCI6MjAsImJhY2stc2VhdC1sZWZ0IjozMCwiYmFjay1zZWF0LXJpZ2h0Ijo0MCwiZ2FsbG9ucyI6NTAsInRhbmsiOjMwMCwiYmFnZ2FnZS0xIjo2MCwiYmFnZ2FnZS0yIjo3MH0=');
+        let decoded = window.atob(expected);
         let parsed = JSON.parse(decoded);
         expect(parsed).to.deep.equal(flight);
     });

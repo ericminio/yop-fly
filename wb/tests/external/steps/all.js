@@ -28,9 +28,12 @@ After((done)=>{
     else { done(); }
 });
 
-Given('the following planes:', function (value) {
+Given('the following planes:', function (value, done) {
     let planes = 'let planes=[\n'+ value + '\n];'
     server.handler['/assets/planes.js'] = planes;
+    browser.visit('http://localhost:' + server.port, ()=>{
+        setTimeout(()=>{done();}, 300)
+    });
 });
 When('I access the home page', (done) => {
     browser.visit('http://localhost:' + server.port, ()=>{

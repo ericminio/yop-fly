@@ -99,11 +99,11 @@ types.push({
     injectFlight: function(document, plane) {
         plane.weight = parseFloat(document.getElementById('zerofuel-weight').value);
         plane.moment = parseFloat(document.getElementById('zerofuel-moment').value);
-        station('frontseat', plane).weight = parseFloat(document.getElementById('front-seat-left').value) + parseFloat(document.getElementById('front-seat-right').value);
-        station('backseat', plane).weight = parseFloat(document.getElementById('back-seat-left').value) + parseFloat(document.getElementById('back-seat-right').value);
+        station('frontseat', plane).weight = parseFloat(document.getElementById('frontseat-1').value) + parseFloat(document.getElementById('frontseat-2').value);
+        station('backseat', plane).weight = parseFloat(document.getElementById('backseat-1').value) + parseFloat(document.getElementById('backseat-2').value);
         station('tank', plane).weight = parseFloat(document.getElementById('tank').value);
-        station('baggage1', plane).weight = parseFloat(document.getElementById('baggage-1').value);
-        station('baggage2', plane).weight = parseFloat(document.getElementById('baggage-2').value);
+        station('baggage1', plane).weight = parseFloat(document.getElementById('baggage1').value);
+        station('baggage2', plane).weight = parseFloat(document.getElementById('baggage2').value);
     },
     onUpdate: function(field, document) {
         if (field.id == 'gallons') {

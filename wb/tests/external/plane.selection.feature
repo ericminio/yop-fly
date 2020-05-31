@@ -39,9 +39,9 @@ Scenario: Select a different plane
 Scenario: Keep flight config
     When I access the home page
     When load is:
-        |     station      | weight |
-        | front-seat-left  |     80 |
-        | front-seat-right |     70 |
+        |     station     | weight |
+        | frontseat-1     |     80 |
+        | frontseat-2     |     70 |
      When I select the plane "CGINH"
-     Then I see that the weight of station "front-seat-left" is "80"
-     Then I see that the weight of station "front-seat-right" is "70"
+     Then I see that the weight of station "frontseat-1" is "80"
+     Then I see that the weight of station "frontseat-2" is "70"

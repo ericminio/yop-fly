@@ -31,12 +31,12 @@ Scenario: Live update of fuel weight
 
 Scenario: Live update of ramp weight
 	Given load is:
-        |     station      | weight |
-        | front-seat-left  |    180 |
-        | front-seat-right |    110 |
-		| back-seat-left   |    120 |
-        | back-seat-right  |    130 |
-        | tank             |    240 |
-		| baggage-1        |     20 |
-		| baggage-2        |     20 |
+        |     station     | weight |
+        | frontseat-1     |    180 |
+        | frontseat-2     |    110 |
+		| backseat-1      |    120 |
+        | backseat-2      |    130 |
+        | tank            |    240 |
+		| baggage1        |     20 |
+		| baggage2        |     20 |
 	Then I see that the ramp weight is "2462.15"

@@ -27,18 +27,18 @@
         <br/>
         <label>Stations:</label>            
         <div id="stations">
-            <input id="front-seat-left" value="180" oninput="document.plane.type.onUpdate(this, document);" />lbs
-            <input id="front-seat-right" value="110" oninput="document.plane.type.onUpdate(this, document);" />lbs
+            <input id="frontseat-1" value="180" oninput="document.plane.type.onUpdate(this, document);" />lbs
+            <input id="frontseat-2" value="110" oninput="document.plane.type.onUpdate(this, document);" />lbs
             <br/>
-            <input id="back-seat-left" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs
-            <input id="back-seat-right" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs
+            <input id="backseat-1" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs
+            <input id="backseat-2" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs
             <br/>
             <input id="gallons" value="40" class="small" oninput="document.plane.type.onUpdate(this, document);" />gallons x 6 lbs/gal =
             <input id="tank" value="240" class="small" oninput="document.plane.type.onUpdate(this, document);" />lbs
             <br/>
-            <input id="baggage-1" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs baggage #1
+            <input id="baggage1" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs baggage #1
             <br/>
-            <input id="baggage-2" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs baggage #2
+            <input id="baggage2" value="0" oninput="document.plane.type.onUpdate(this, document);" />lbs baggage #2
         </div>
 
         <label id="total-weight"></label>
@@ -66,14 +66,14 @@
         updateFlightLink = function(document) {
             var flight = {
                 plane: document.plane.name,
-                'front-seat-left': document.getElementById('front-seat-left').value,
-                'front-seat-right': document.getElementById('front-seat-right').value,
-                'back-seat-left': document.getElementById('back-seat-left').value,
-                'back-seat-right': document.getElementById('back-seat-right').value,
+                'frontseat-1': document.getElementById('frontseat-1').value,
+                'frontseat-2': document.getElementById('frontseat-2').value,
+                'backseat-1': document.getElementById('backseat-1').value,
+                'backseat-2': document.getElementById('backseat-2').value,
                 'gallons': document.getElementById('gallons').value,
                 'tank': document.getElementById('tank').value,
-                'baggage-1': document.getElementById('baggage-1').value,
-                'baggage-2': document.getElementById('baggage-2').value,
+                'baggage1': document.getElementById('baggage1').value,
+                'baggage2': document.getElementById('baggage2').value,
             }
             var encoded = encodeFlight(flight, window);
             var url = window.location.pathname + '?flight=' + encoded;
@@ -95,14 +95,14 @@
                     select.selectedIndex = planeIndex;
                     selectPlane(document, flight.plane);  
                     
-                    document.getElementById('front-seat-left').value = flight['front-seat-left']
-                    document.getElementById('front-seat-right').value = flight['front-seat-right']
-                    document.getElementById('back-seat-left').value = flight['back-seat-left']
-                    document.getElementById('back-seat-right').value = flight['back-seat-right']
+                    document.getElementById('frontseat-1').value = flight['frontseat-1']
+                    document.getElementById('frontseat-2').value = flight['frontseat-2']
+                    document.getElementById('backseat-1').value = flight['backseat-1']
+                    document.getElementById('backseat-2').value = flight['backseat-2']
                     document.getElementById('gallons').value = flight['gallons']
                     document.getElementById('tank').value = flight['tank']
-                    document.getElementById('baggage-1').value = flight['baggage-1']
-                    document.getElementById('baggage-2').value = flight['baggage-2']
+                    document.getElementById('baggage1').value = flight['baggage1']
+                    document.getElementById('baggage2').value = flight['baggage2']
                 }
             }
             updateFlight(document);
