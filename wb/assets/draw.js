@@ -30,8 +30,9 @@ var drawWeightAndBalance = function(document, plane) {
     var diagram = diagramWithId('weightAndBalance', plane);
     var element = document.getElementById('envelope');    
     
-    drawEnvelope(document, element, diagram.ranges, envelope('utility-category', diagram));
-    drawEnvelope(document, element, diagram.ranges, envelope('normal-category', diagram));
+    for (var i=0; i<diagram.envelopes.length; i++) {
+        drawEnvelope(document, element, diagram.ranges, diagram.envelopes[i]);    
+    }
 
     var ramp = convertPointForGraph({ x:plane.totals.moment/1000, y:plane.totals.weight }, diagram.ranges);
     var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/1000, y:plane.zerofuel.weight }, diagram.ranges);
@@ -44,8 +45,9 @@ var drawCG = function(document, plane) {
     var diagram = diagramWithId('cg', plane);
     var element = document.getElementById('cg');
     
-    drawEnvelope(document, element, diagram.ranges, envelope('utility-category', diagram));
-    drawEnvelope(document, element, diagram.ranges, envelope('normal-category', diagram));
+    for (var i=0; i<diagram.envelopes.length; i++) {
+        drawEnvelope(document, element, diagram.ranges, diagram.envelopes[i]);    
+    }
 
     var ramp = convertPointForGraph({ x:plane.totals.moment/plane.totals.weight, y:plane.totals.weight }, diagram.ranges);
     var zerofuel = convertPointForGraph({ x:plane.zerofuel.moment/plane.zerofuel.weight, y:plane.zerofuel.weight }, diagram.ranges);
