@@ -10,15 +10,26 @@
       xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
       xhr.send(null);
     };
+    var info = function() {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+          document.getElementById('info').innerHTML = xhr.responseText;
+      };
+      xhr.open('GET', 'https://api.checkwx.com/station/cyyj');
+      xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
+      xhr.send(null);
+    };
   </script>
 </head>
 <body>
   <div id="metar"></div>
   <div id="taf"></div>
+  <div id="info"></div>
   
   <script>
     fetch('metar');
     fetch('taf');
+    info();
   </script>
 </body>
 </html>
