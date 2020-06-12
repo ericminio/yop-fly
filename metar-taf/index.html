@@ -24,7 +24,7 @@
         sunsetXhr.onload = function() {
           var sun = JSON.parse(sunsetXhr.responseText);
           console.log(JSON.stringify(sun, null, 4));
-          document.getElementById('sunset').innerHTML = sun.results.sunset + ' UTC';
+          document.getElementById('sunset-value').innerHTML = sun.results.sunset + ' UTC';
         };
         sunsetXhr.open('GET', sunsetUrl);
         sunsetXhr.send(null);
@@ -42,7 +42,7 @@
     <div id="latitude">Latitude:  <label id="latitude-value"></label></div>
     <div id="longitude">Longitude: <label id="longitude-value"></label></div>
     <div id="timezone">Timezone: <label id="timezone-value"></label></div>
-    <div id="sunset"></div>
+    <div id="sunset">Sunset: <label id="sunset-value"></label></div>
   </div>
   
   <script>
