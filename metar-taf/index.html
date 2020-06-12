@@ -14,7 +14,9 @@
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
           var data = JSON.parse(xhr.responseText).data[0];
-          document.getElementById('info').innerHTML = JSON.stringify(data, null, 4);
+          console.log(JSON.stringify(data, null, 4));
+          document.getElementById('latitude-value').innerHTML = data.latitude;
+          document.getElementById('longitude-value').innerHTML = data.longitude;
       };
       xhr.open('GET', 'https://api.checkwx.com/station/cyyj');
       xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
@@ -25,7 +27,11 @@
 <body>
   <div id="metar"></div>
   <div id="taf"></div>
-  <div id="info"></div>
+  <div id="info">
+    <div id="latitude">Latitude:  <label id="longitude-value"></label></div>
+    <div id="longitude">Longitude: <label id="latitude-value"></label></div>
+    <div id="sunset"></div>
+  </div>
   
   <script>
     fetch('metar');
