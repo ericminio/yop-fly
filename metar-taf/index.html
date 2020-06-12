@@ -19,7 +19,7 @@
         document.getElementById('longitude-value').innerHTML = JSON.stringify(data.longitude);
         document.getElementById('timezone-value').innerHTML = JSON.stringify(data.timezone);
 
-        var sunsetUrl = `https://api.sunrise-sunset.org/json?lat=${data.longitude.decimal}&lng=${data.longitude.decimal}&formatted=0`;
+        var sunsetUrl = `https://api.sunrise-sunset.org/json?lat=${data.latitude.decimal}&lng=${data.longitude.decimal}&formatted=0`;
         console.log('sunset call', sunsetUrl);
         var sunsetXhr = new XMLHttpRequest();
         sunsetXhr.onload = function() {
