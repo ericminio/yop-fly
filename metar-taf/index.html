@@ -17,6 +17,7 @@
         console.log(JSON.stringify(data, null, 4));
         document.getElementById('latitude-value').innerHTML = JSON.stringify(data.latitude);
         document.getElementById('longitude-value').innerHTML = JSON.stringify(data.longitude);
+        document.getElementById('timezone-value').innerHTML = JSON.stringify(data.timezone);
 
         var sunsetUrl = `https://api.sunrise-sunset.org/json?lat=${data.longitude.decimal}&lng=${data.longitude.decimal}`
         var sunsetXhr = new XMLHttpRequest();
@@ -40,6 +41,7 @@
   <div id="info">
     <div id="latitude">Latitude:  <label id="latitude-value"></label></div>
     <div id="longitude">Longitude: <label id="longitude-value"></label></div>
+    <div id="timezone">Timezone: <label id="timezone-value"></label></div>
     <div id="sunset"></div>
   </div>
   
