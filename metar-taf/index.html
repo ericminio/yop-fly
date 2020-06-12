@@ -23,7 +23,7 @@
         sunsetXhr.onload = function() {
           var sun = JSON.parse(sunsetXhr.responseText);
           console.log(JSON.stringify(sun, null, 4));
-          document.getElementById('sunset').innerHTML = JSON.stringify(sun.sunset);
+          document.getElementById('sunset').innerHTML = JSON.stringify(sun.results.sunset);
         };
         sunsetXhr.open('GET', sunsetUrl);
         sunsetXhr.send(null);
