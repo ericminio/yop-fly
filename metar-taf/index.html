@@ -13,10 +13,20 @@
     var info = function() {
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
-          var data = JSON.parse(xhr.responseText).data[0];
-          console.log(JSON.stringify(data, null, 4));
-          document.getElementById('latitude-value').innerHTML = JSON.stringify(data.latitude);
-          document.getElementById('longitude-value').innerHTML = JSON.stringify(data.longitude);
+        var data = JSON.parse(xhr.responseText).data[0];
+        console.log(JSON.stringify(data, null, 4));
+        document.getElementById('latitude-value').innerHTML = JSON.stringify(data.latitude);
+        document.getElementById('longitude-value').innerHTML = JSON.stringify(data.longitude);
+
+        var sunsetUrl = `https://api.sunrise-sunset.org/json?lat=${data.longitude.decimal}&lng=${data.longitude.decimal}`
+        var sunsetXhr = new XMLHttpRequest();
+        sunsetXhr.onload = function() {
+          var sun = JSON.parse(sunsetXhr.responseText);
+          console.log(sun);
+          document.getElementById('sunset').innerHTML = JSON.stringify(sun.sunset);
+        };
+        sunsetXhr.open('GET', sunsetUrl);
+        sunsetXhr.send(null);
       };
       xhr.open('GET', 'https://api.checkwx.com/station/cyyj');
       xhr.setRequestHeader('X-API-KEY', '01ad05ea5201752f22e2e5d0fe');
