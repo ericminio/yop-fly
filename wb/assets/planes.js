@@ -58,5 +58,11 @@ var planes = [
         type: '152',
         weight: 1138,
         moment: 34000
+    },
+    {
+        name: 'CFGIM',
+        type: '172s',
+        weight: 1665.51,
+        moment: 66299.84
     }
 ];
