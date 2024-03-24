@@ -1,12 +1,12 @@
 var planes = [
     {
-        name: 'CGBMO',
+        name: 'CGUPA',
         type: '172s',
         weight: 1440.2,
         moment: 56191.0
     },
     {
-        name: 'CGUPA',
+        name: 'CGBMO',
         type: '172s',
         weight: 1659.25,
         moment: 67211.94
