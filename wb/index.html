@@ -1,74 +1,99 @@
 <html>
-<meta charset="utf-8" />
+    <meta charset="utf-8" />
 
-<head>
-    <title>Yop, fly!</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/graph.css">    
-    <script src="assets/types/all-types.js"></script>
-    <script src="assets/types/172s.js"></script>
-    <script src="assets/types/152.js"></script>
-    <script src="assets/planes.js"></script>
-    <script src="assets/model.js"></script>
-    <script src="assets/svg.js"></script>
-    <script src="assets/digest.js"></script>
-    <script src="assets/change.inputs.js"></script>
-    <script src="assets/encoding.js"></script>
-    <script src="assets/draw.js"></script>
-</head>
+    <head>
+        <title>Yop, fly!</title>
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/graph.css" />
+        <script src="assets/types/all-types.js"></script>
+        <script src="assets/types/172s.js"></script>
+        <script src="assets/types/172n.js"></script>
+        <script src="assets/types/152.js"></script>
+        <script src="assets/planes.js"></script>
+        <script src="assets/model.js"></script>
+        <script src="assets/svg.js"></script>
+        <script src="assets/digest.js"></script>
+        <script src="assets/change.inputs.js"></script>
+        <script src="assets/encoding.js"></script>
+        <script src="assets/draw.js"></script>
+    </head>
 
-<body>
-    <div class="data">
-        <select name="planes" id="planes" onchange="selectPlane(document, this.options[this.selectedIndex].id); updateFlight(document);"></select>
-        <br/>
-        <input id="zerofuel-weight" oninput="updatePlaneArm(document); updateFlight(document);"/>lbs
-        <input id="zerofuel-moment" oninput="updatePlaneArm(document);" class="large"/>lbs-in
-        <br/>
-        <label id="zerofuel-arm"></label>
-        <br/>
-        <label>Stations:</label>            
-            <div id="stations">            
-            </div>
+    <body>
+        <div class="data">
+            <select
+                name="planes"
+                id="planes"
+                onchange="selectPlane(document, this.options[this.selectedIndex].id); updateFlight(document);"
+            ></select>
+            <br />
+            <input
+                id="zerofuel-weight"
+                oninput="updatePlaneArm(document); updateFlight(document);"
+            />lbs
+            <input
+                id="zerofuel-moment"
+                oninput="updatePlaneArm(document);"
+                class="large"
+            />lbs-in
+            <br />
+            <label id="zerofuel-arm"></label>
+            <br />
+            <label>Stations:</label>
+            <div id="stations"></div>
 
-        <label id="total-weight"></label>
-        <br/>
-        <label>Link to flight: </label><a id="flight-link" href=""></a>        
-    </div>
-    <div class="graph">
-        <svg id="load" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
-        	<rect x="0" y="0" width="100" height="80"/>
-        </svg>
-    </div>
-    <div class="graph">
-        <svg id="envelope" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
-        	<rect x="0" y="0" width="100" height="80"/>
-        </svg>
-    </div>
-    <div class="graph">
-        <svg id="cg" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
-        	<rect x="0" y="0" width="100" height="80"/>
-        </svg>
-    </div>
+            <label id="total-weight"></label>
+            <br />
+            <label>Link to flight: </label><a id="flight-link" href=""></a>
+        </div>
+        <div class="graph">
+            <svg
+                id="load"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 80"
+            >
+                <rect x="0" y="0" width="100" height="80" />
+            </svg>
+        </div>
+        <div class="graph">
+            <svg
+                id="envelope"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 80"
+            >
+                <rect x="0" y="0" width="100" height="80" />
+            </svg>
+        </div>
+        <div class="graph">
+            <svg
+                id="cg"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 80"
+            >
+                <rect x="0" y="0" width="100" height="80" />
+            </svg>
+        </div>
 
-    <script>
-        setTimeout(function() {
-            loadTypes(document, types);
-            loadPlanes(document, planes);
-            selectPlane(document, planes[0].name);
+        <script>
+            setTimeout(function () {
+                loadTypes(document, types);
+                loadPlanes(document, planes);
+                selectPlane(document, planes[0].name);
 
-            var flight = decodeFlight(window.location.search, window);
-            if (flight !== undefined) {
-                var planeIndex = selectPlaneIndex(document, flight.plane);
-                if (planeIndex !== undefined) {
-                    document.flight = flight;
-                    var select = document.getElementById('planes');
-                    select.selectedIndex = planeIndex;
-                    selectPlane(document, flight.plane);                    
+                var flight = decodeFlight(window.location.search, window);
+                if (flight !== undefined) {
+                    var planeIndex = selectPlaneIndex(document, flight.plane);
+                    if (planeIndex !== undefined) {
+                        document.flight = flight;
+                        var select = document.getElementById("planes");
+                        select.selectedIndex = planeIndex;
+                        selectPlane(document, flight.plane);
+                    }
                 }
-            }
-            updateFlight(document);
-        }, 100);
-    </script>
-</body>
-
+                updateFlight(document);
+            }, 100);
+        </script>
+    </body>
 </html>
