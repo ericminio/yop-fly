@@ -1,0 +1,15 @@
+version: "3.4"
+
+services:
+    ubuntu:
+        build: .
+        image: ubuntu:nvm
+        container_name: ubuntu-node
+        volumes:
+            - ../package.json:/root/code/package.json
+            - ../package-lock.json:/root/code/package-lock.json
+            - ../.nvmrc:/root/code/.nvmrc
+            - ../assets:/root/code/assets
+            - ../tests:/root/code/tests
+            - ../index.html:/root/code/index.html
+            - ./run.sh:/root/code/run.sh
