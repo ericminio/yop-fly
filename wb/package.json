@@ -6,7 +6,8 @@
     "scripts": {
         "test": "npm run tests:external ; npm run tests:internal",
         "tests:internal": "mocha tests/internal",
-        "tests:external": "./node_modules/.bin/cucumber-js  -r tests/external/steps --exit tests/external"
+        "tests:external": "./node_modules/.bin/cucumber-js  -r tests/external/steps --exit tests/external",
+        "prettier": "prettier . --write"
     },
     "author": "",
     "license": "MIT",
@@ -16,6 +17,7 @@
         "cucumber": "^5.0.2",
         "jsdom": "^12.2.0",
         "mocha": "^5.2.0",
+        "prettier": "^3.2.5",
         "zombie": "^6.1.4"
     }
 }

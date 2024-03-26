@@ -9,6 +9,8 @@ services:
             - ../package.json:/root/code/package.json
             - ../package-lock.json:/root/code/package-lock.json
             - ../.nvmrc:/root/code/.nvmrc
+            - ../.prettierignore:/root/code/.prettierignore
+            - ../.prettierrc:/root/code/.prettierrc
             - ../assets:/root/code/assets
             - ../tests:/root/code/tests
             - ../index.html:/root/code/index.html

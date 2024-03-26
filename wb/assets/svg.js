@@ -1,15 +1,18 @@
-var drawLine = function(document, element, p1, p2, className) {
-    var line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1', ''+p1.x);
-    line.setAttribute('y1', ''+p1.y);
-    line.setAttribute('x2', ''+p2.x);
-    line.setAttribute('y2', ''+p2.y);
+var drawLine = function (document, element, p1, p2, className) {
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', '' + p1.x);
+    line.setAttribute('y1', '' + p1.y);
+    line.setAttribute('x2', '' + p2.x);
+    line.setAttribute('y2', '' + p2.y);
     line.setAttribute('class', className);
     element.appendChild(line);
     childs.push(line);
 };
-var drawCircle = function(document, element, center, attributes) {
-    var circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+var drawCircle = function (document, element, center, attributes) {
+    var circle = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'circle',
+    );
     circle.id = attributes.id;
     circle.setAttribute('cx', '' + center.x);
     circle.setAttribute('cy', '' + center.y);
@@ -18,8 +21,8 @@ var drawCircle = function(document, element, center, attributes) {
     element.appendChild(circle);
     childs.push(circle);
 };
-var drawLabel = function(document, element, point, text, id) {
-    var label = document.createElementNS('http://www.w3.org/2000/svg','text');
+var drawLabel = function (document, element, point, text, id) {
+    var label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     label.id = id;
     label.setAttribute('fill', 'black');
     label.setAttribute('x', '' + point.x);
@@ -29,8 +32,11 @@ var drawLabel = function(document, element, point, text, id) {
     element.appendChild(label);
     childs.push(label);
 };
-var drawPolyline = function(document, element, points, category) {
-    var polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+var drawPolyline = function (document, element, points, category) {
+    var polyline = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'polyline',
+    );
     polyline.setAttribute('points', points);
     polyline.setAttribute('class', category);
     element.appendChild(polyline);

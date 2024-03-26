@@ -1,21 +1,20 @@
 .station-frontseat {
-    stroke:blue;
+    stroke: blue;
 }
 .station-backseat {
-    stroke:orange;
+    stroke: orange;
 }
 .station-tank {
-    stroke:red;
+    stroke: red;
 }
 .station-baggage1 {
-    stroke:green;
+    stroke: green;
     stroke-width: 0.5;
 }
 .station-baggage2 {
-    stroke:purple;
+    stroke: purple;
     stroke-width: 0.5;
 }
-
 
 .normal-category {
     fill: none;

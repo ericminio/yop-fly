@@ -1,5 +1,8 @@
 @media screen and (max-width: 992px) {
-    body, input, select, button {
+    body,
+    input,
+    select,
+    button {
         font-size: 50px;
     }
     select {
@@ -12,37 +15,37 @@
         height: 90px;
     }
     input.small {
-        width: 150px
+        width: 150px;
     }
     input.large {
-        width: 300px
+        width: 300px;
     }
     #go {
-        height:150px;
+        height: 150px;
     }
 }
 
 .title {
-    margin:10px;
-    padding:10px;
+    margin: 10px;
+    padding: 10px;
     text-align: center;
 }
 .data {
-    margin:auto;
+    margin: auto;
     margin-bottom: 10px;
-    padding:10px 10px 10px 10px;
-    border:1px gray solid;
+    padding: 10px 10px 10px 10px;
+    border: 1px gray solid;
 }
 #zerofuel-arm {
     color: lightgray;
 }
 .graph {
-    display:inline-block;
+    display: inline-block;
     width: 49%;
-    margin:auto;
+    margin: auto;
     margin-bottom: 10px;
-    padding:0px;
-    border:1px gray solid;
+    padding: 0px;
+    border: 1px gray solid;
 }
 @media screen and (max-width: 992px) {
     .graph {
@@ -50,7 +53,9 @@
     }
 }
 
-.graph, .actual, .station {
+.graph,
+.actual,
+.station {
     fill: lightgray;
 }
 
