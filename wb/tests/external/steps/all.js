@@ -120,7 +120,7 @@ Then("I see the utility envelope's points: {string}", function (value) {
     );
 });
 Given('load is:', function (dataTable) {
-    let loads = dataTable.rows();
+    let loads = dataTable.raw();
     for (let i = 0; i < loads.length; i++) {
         let station = loads[i][0];
         let weight = loads[i][1];

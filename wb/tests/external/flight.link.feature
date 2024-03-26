@@ -13,7 +13,6 @@ Background:
 
 Scenario: Live update of flight link url
 	Given load is:
-        |     station     | weight |
         | frontseat-1     |    180 |
         | frontseat-2     |    110 |
 		| backseat-1      |    120 |

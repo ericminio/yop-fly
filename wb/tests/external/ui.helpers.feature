@@ -31,7 +31,6 @@ Scenario: Live update of fuel weight
 
 Scenario: Live update of ramp weight
 	Given load is:
-        |     station     | weight |
         | frontseat-1     |    180 |
         | frontseat-2     |    110 |
 		| backseat-1      |    120 |

@@ -14,7 +14,6 @@ Background:
 
 Scenario: Easy ride
     Given load is:
-        |    station    | weight |
         | frontseat-1   |    180 |
         | frontseat-2   |    110 |
         | gallons       |     40 |

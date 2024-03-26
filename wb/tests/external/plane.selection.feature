@@ -39,7 +39,6 @@ Scenario: Select a different plane
 Scenario: Keep flight config
     When I access the home page
     When load is:
-        |     station     | weight |
         | frontseat-1     |     80 |
         | frontseat-2     |     70 |
      When I select the plane "CGINH"
