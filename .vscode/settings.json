@@ -4,5 +4,7 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "svg.preview.background": "transparent"
+    "svg.preview.background": "transparent",
+    "cucumber.features": ["wb/tests/external/*.feature"],
+    "cucumber.glue": ["wb/tests/external/steps/*.js"]
 }
